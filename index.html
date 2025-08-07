@@ -5,73 +5,156 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Cilaos Au coeur de La Réunion</title>
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="script.js">
+	
+	<!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> 
+	<script src="script.js" defer></script>
+	
+	<!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
 </head>
 <body>
-<header class="navbar">
-  <div class="logo">Cilaos</div>
-  <div class="logo-desc">Au coeur de La Réunion</div>
-	
-  <!-- responsive test-->
-  <button class="nav-toggle" aria-label="menu toggle">
-    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-  </button>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Cilaos</div>
+        
+        <button class="nav-toggle" aria-label="menu toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
 
-  <nav class="nav-menu">
-    <ul>
-      <li><a href="#">A découvrir</a></li>
-      <li><a href="#">Séjours</a></li>
-      <li><a href="#">Tourisme</a></li>
-      <li><a href="#">Infos Pratiques</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-    <a href="#" class="btn">Connect</a>
-  </nav>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#decouvrir">À découvrir</a></li>
+                <li><a href="#sejours">Séjours</a></li>
+                <li><a href="#tourisme">Tourisme</a></li>
+                <li><a href="#infos">Infos Pratiques</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#" class="btn">PRO</a>
+        </nav>
+    </header>
 
-  <!-- z -->
-  <div id="nav_big_text"></div>
-</header>
+    <!-- Main Content -->
+    <main>
+        <!-- Section 1 - Hero avec fond aquarelle -->
+        <section class="snap-section" id="hero">
+            <div class="hero-content">
+                <h1>Cilaos</h1>
+                <p>Au cœur de La Réunion</p>
+                <a href="#stories" class="btn">Explorer</a>
+            </div>
+        </section>
 
-<!-- test -->
-<main class="snap-container">
-  <section class="snap-section">Section 1</section>
-  <section class="snap-section">Section 2</section>
-  <section class="snap-section">Section 3</section>
+        <!-- Section 2 - À propos -->
+        <section class="snap-section" id="about">
+            <div class="hero-content">
+                <h2>Un cirque naturel d'exception</h2>
+                <p>Entre modernité, randonnées et traditions créoles</p>
+            </div>
+        </section>
 
+        <!-- Section 3 - Stories avec layout horizontal -->
+        <section class="snap-section" id="stories">
+            <div class="stories-wrapper">
+                <!-- Sidebar avec bulles verticales -->
+                <div class="stories-sidebar">
+                    <h2 class="stories-title">Galerie</h2>
+                    
+                    <div class="story-circles-vertical">
+                        <div class="story-item" data-story="culture">
+                            <div class="story-circle">
+                                <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=300&h=300&fit=crop" alt="Culture">
+                            </div>
+                            <p class="story-label">La vi lé isi</p>
+                        </div>
+                        
+                        <div class="story-item" data-story="randonnees">
+                            <div class="story-circle">
+                                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=300&h=300&fit=crop" alt="Randonnées">
+                            </div>
+                            <p class="story-label">Gravir Cilaos</p>
+                        </div>
 
-	<footer>
-  		<div class="footer-container">
-    		<div class="footer-section">
-      			<h3>Office de Tourisme de Cilaos</h3>
-      			<p>2 Rue des Écoles<br>97413 Cilaos, La Réunion</p>
-    		</div>
+                        <div class="story-item" data-story="gastronomie">
+                            <div class="story-circle">
+                                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" alt="Gastronomie">
+                            </div>
+                            <p class="story-label">Manzé Cilaos</p>
+                        </div>
 
-    		<div class="footer-section">
-      			<h4>Contact</h4>
-      			<p>Téléphone : <a href="tel:+262262317030">+262 262 31 70 30</a></p>
-      			<p>Email : <a href="mailto:info@ot-cilaos.re">info@ot-cilaos.re</a></p>
-    		</div>
+                        <div class="story-item" data-story="thermes">
+                            <div class="story-circle">
+                                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300&h=300&fit=crop" alt="Cilaos">
+                            </div>
+                            <p class="story-label">Zot lakaz lé ici</p>
+                        </div>
+                    </div>
+                </div>
 
-    		<div class="footer-section">
-      			<h4>Horaires d'ouverture</h4>
-      			<p>Lundi au Samedi : 9h00 - 12h00 / 13h30 - 17h00</p>
-      			<p>Dimanche : 9h00 - 12h00</p>
-    		</div>
+                <!-- Zone d'affichage -->
+                <div class="story-display" id="storyDisplay">
+                    <!-- Contenu de bienvenue par défaut -->
+                    <div class="welcome-content" id="welcomeContent">
+                        <h2>Bienvenue à Cilaos</h2>
+                        <p>
+                            Nichée au coeur de l'île de La Réunion, Cilaos est un cirque naturel d'une beauté à couper le souffle. 
+                            Entre ses sommets vertigineux et ses sources thermales, découvrez un lieu où la nature et la culture créole 
+                            se rencontrent en parfaite harmonie.
+                        </p>
+                        <p>
+                            Des randonnées mythiques du Piton des Neiges aux saveurs authentiques de la cuisine créole, 
+                            en passant par les thermes centenaires et les traditions artisanales, Cilaos vous invite à explorer 
+                            ses multiples facettes.
+                        </p>
+                        <p>
+                            <strong>Cliquez sur une bulle pour découvrir nos histoires...</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    		<div class="footer-section">
-      			<h4>Suivez-nous</h4>
-      			<div class="social-icons">
-        			<a href="https://www.facebook.com/otcilaos" target="_blank">Facebook</a>
-        			<a href="https://www.instagram.com/ot_cilaos" target="_blank">Instagram</a>
-        			<a href="https://www.youtube.com/channel/UCilaos" target="_blank">YouTube</a>
-      			</div>
-    		</div>
-  		</div>
-  <div class="footer-bottom">
-    <p>&copy; 2025 Office de Tourisme de Cilaos. Tous droits réservés.</p>
-  </div>
-</footer>
-</main>
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>Office de Tourisme de Cilaos</h3>
+                    <p>2 Rue des Écoles<br>97413 Cilaos, La Réunion</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Téléphone : <a href="tel:+262262317030">+262 262 31 70 30</a></p>
+                    <p>Email : <a href="mailto:info@ot-cilaos.re">info@ot-cilaos.re</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Horaires d'ouverture</h4>
+                    <p>Lundi au Samedi : 9h00 - 12h00 / 13h30 - 17h00</p>
+                    <p>Dimanche : 9h00 - 12h00</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Suivez-nous</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/otcilaos" target="_blank">Facebook</a>
+                        <a href="https://www.instagram.com/ot_cilaos" target="_blank">Instagram</a>
+                        <a href="https://www.youtube.com/channel/UCilaos" target="_blank">YouTube</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Office de Tourisme de Cilaos. Tous droits réservés.</p>
+            </div>
+        </footer>
+    </main> 
 </body>
 </html>
 
