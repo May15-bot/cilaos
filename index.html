@@ -1,110 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Cilaos Au coeur de La Réunion</title>
-	<link rel="stylesheet" href="style.css">
-	
-	<!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> 
-	<script src="script.js" defer></script>
-	
-	<!-- Swiper CSS -->
+    <meta charset="UTF-8">
+    <!-- Cette meta tag est CRUCIALE pour la responsivité
+         Elle dit au navigateur d'adapter la largeur de la page à l'écran
+         et définit le niveau de zoom initial à 100% -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    
+    <!-- Meta tags pour améliorer l'expérience mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#A0C878">
+    
+    <!-- SEO et description -->
+    <meta name="description" content="Découvrez Cilaos, cirque naturel au cœur de La Réunion. Randonnées, thermes, gastronomie créole et traditions.">
+    <meta name="keywords" content="Cilaos, La Réunion, tourisme, randonnée, thermes, créole">
+    
+    <title>Cilaos - Au cœur de La Réunion | Office de Tourisme</title>
+    
+    <!-- Préchargement des polices pour améliorer les performances -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Swiper JS pour les stories -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Script JavaScript différé pour ne pas bloquer le rendu -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-<body>
-    <!-- Navbar -->
-    <header class="navbar">
-        <div class="logo">Cilaos</div>
+    <!-- NAVBAR ACCESSIBLE ET RESPONSIVE -->
+    <header class="navbar" role="banner">
+        <div class="logo" aria-label="Logo Cilaos">Cilaos</div>
         
-        <button class="nav-toggle" aria-label="menu toggle">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+        <!-- Bouton hamburger avec ARIA pour l'accessibilité
+             Le label change dynamiquement selon l'état du menu -->
+        <button class="nav-toggle" 
+                aria-label="Ouvrir le menu de navigation" 
+                aria-expanded="false"
+                aria-controls="nav-menu">
+            <span class="bar" aria-hidden="true"></span>
+            <span class="bar" aria-hidden="true"></span>
+            <span class="bar" aria-hidden="true"></span>
         </button>
 
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="#decouvrir">À découvrir</a></li>
-                <li><a href="#sejours">Séjours</a></li>
-                <li><a href="#tourisme">Tourisme</a></li>
-                <li><a href="#infos">Infos Pratiques</a></li>
-                <li><a href="#contact">Contact</a></li>
+        <!-- Navigation principale avec rôle sémantique -->
+        <nav class="nav-menu" id="nav-menu" role="navigation">
+            <ul role="list">
+                <li><a href="#decouvrir" aria-label="Section À découvrir">À découvrir</a></li>
+                <li><a href="#sejours" aria-label="Section Séjours">Séjours</a></li>
+                <li><a href="#tourisme" aria-label="Section Tourisme">Tourisme</a></li>
+                <li><a href="#infos" aria-label="Section Infos Pratiques">Infos Pratiques</a></li>
+                <li><a href="#contact" aria-label="Section Contact">Contact</a></li>
             </ul>
-            <a href="#" class="btn">PRO</a>
+            <a href="#" class="btn" aria-label="Accès professionnel">PRO</a>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Section 1 - Hero avec fond aquarelle -->
-        <section class="snap-section" id="hero">
+    <!-- CONTENU PRINCIPAL -->
+    <main role="main">
+        <!-- SECTION 1 - HERO AVEC SLIDESHOW EN ARRIÈRE-PLAN -->
+        <section class="snap-section" id="hero" aria-label="Section d'accueil">
+            <!-- Conteneur du slideshow -->
+            <div class="hero-slideshow" aria-hidden="true">
+                <!-- Les slides seront générées dynamiquement par JavaScript
+                     Chaque slide aura cette structure :
+                     - Une div avec la classe "slideshow-slide"
+                     - Un background-image appliqué via JavaScript
+                     - Une transition douce entre les images -->
+                
+                <!-- Slide 1 : Vue panoramique de Cilaos -->
+                <div class="slideshow-slide active" 
+                     data-slide="1"
+                     style="background-image: url('https://images.unsplash.com/photo-1590073844006-33379778ae09?w=1920&q=80');">
+                </div>
+                
+                <!-- Slide 2 : Piton des Neiges -->
+                <div class="slideshow-slide" 
+                     data-slide="2"
+                     style="background-image: url('https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1920&q=80');">
+                </div>
+                
+                <!-- Slide 3 : Village de Cilaos -->
+                <div class="slideshow-slide" 
+                     data-slide="3"
+                     style="background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=1920&q=80');">
+                </div>
+                
+                <!-- Slide 4 : Cascade -->
+                <div class="slideshow-slide" 
+                     data-slide="4"
+                     style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=1920&q=80');">
+                </div>
+                
+                <!-- Slide 5 : Coucher de soleil sur les montagnes -->
+                <div class="slideshow-slide" 
+                     data-slide="5"
+                     style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80');">
+                </div>
+                
+                <!-- Overlay pour améliorer la lisibilité du texte -->
+                <div class="slideshow-overlay"></div>
+            </div>
+            
+            <!-- Contenu hero par-dessus le slideshow -->
             <div class="hero-content">
                 <h1>Cilaos</h1>
                 <p>Au cœur de La Réunion</p>
-                <a href="#stories" class="btn">Explorer</a>
+                <a href="#stories" class="btn" aria-label="Explorer les histoires de Cilaos">Explorer</a>
             </div>
+         
+  <!-- BARRE DE PREVIEW EN BAS -->
+  <div class="preview-bar" aria-label="Prévisualisations des sections">
+    <div class="preview-card" data-section="evenements">
+      <div class="preview-slideshow">
+        <div class="preview-slide active" style="background-image: url('votre-image-1.jpg');"></div>
+        <div class="preview-slide" style="background-image: url('votre-image-2.jpg');"></div>
+      </div>
+      <div class="preview-overlay">
+        <div class="preview-title">Événements</div>
+        <div class="preview-subtitle">Agenda culturel</div>
+      </div>
+    </div>
+
+    <div class="preview-card" data-section="votre-section">
+      <div class="preview-slideshow">
+        <div class="preview-slide active" style="background-image: url('image1.jpg');"></div>
+        <div class="preview-slide" style="background-image: url('image2.jpg');"></div>
+      </div>
+      <div class="preview-overlay">
+        <div class="preview-title">Titre</div>
+        <div class="preview-subtitle">Sous-titre</div>
+      </div>
+    </div>
+    <div class="preview-card" data-section="votre-section">
+      <div class="preview-slideshow">
+        <div class="preview-slide active" style="background-image: url('image1.jpg');"></div>
+        <div class="preview-slide" style="background-image: url('image2.jpg');"></div>
+      </div>
+      <div class="preview-overlay">
+        <div class="preview-title">Titre</div>
+        <div class="preview-subtitle">Sous-titre</div>
+      </div>
+    </div>
+    <div class="preview-card" data-section="votre-section">
+      <div class="preview-slideshow">
+        <div class="preview-slide active" style="background-image: url('image1.jpg');"></div>
+        <div class="preview-slide" style="background-image: url('image2.jpg');"></div>
+      </div>
+      <div class="preview-overlay">
+        <div class="preview-title">Titre</div>
+        <div class="preview-subtitle">Sous-titre</div>
+      </div>
+    </div>
+  </div>
         </section>
 
-        <!-- Section 2 - À propos -->
-        <section class="snap-section" id="about">
+        <!-- SECTION 2 - À PROPOS -->
+        <section class="snap-section" id="about" aria-label="À propos de Cilaos">
             <div class="hero-content">
                 <h2>Un cirque naturel d'exception</h2>
                 <p>Entre modernité, randonnées et traditions créoles</p>
             </div>
         </section>
 
-        <!-- Section 3 - Stories avec layout horizontal -->
-        <section class="snap-section" id="stories">
+        <!-- SECTION 3 - STORIES INTERACTIVES -->
+        <section class="snap-section" id="stories" aria-label="Galerie d'histoires">
             <div class="stories-wrapper">
-                <!-- Sidebar avec bulles verticales -->
-                <div class="stories-sidebar">
+                <!-- Sidebar avec les bulles de navigation -->
+                <aside class="stories-sidebar" role="complementary">
                     <h2 class="stories-title">Galerie</h2>
                     
-                    <div class="story-circles-vertical">
-                        <div class="story-item" data-story="culture">
+                    <!-- Navigation des stories sous forme de bulles -->
+                    <nav class="story-circles-vertical" role="navigation" aria-label="Navigation des histoires">
+                        <!-- Histoire 1 : Culture -->
+                        <button class="story-item" 
+                                data-story="culture"
+                                aria-label="Découvrir la culture créole"
+                                role="button">
                             <div class="story-circle">
-                                <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=300&h=300&fit=crop" alt="Culture">
+                                <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=300&h=300&fit=crop" 
+                                     alt="Architecture créole de Cilaos"
+                                     loading="lazy">
                             </div>
                             <p class="story-label">La vi lé isi</p>
-                        </div>
+                        </button>
                         
-                        <div class="story-item" data-story="randonnees">
+                        <!-- Histoire 2 : Randonnées -->
+                        <button class="story-item" 
+                                data-story="randonnees"
+                                aria-label="Explorer les randonnées"
+                                role="button">
                             <div class="story-circle">
-                                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=300&h=300&fit=crop" alt="Randonnées">
+                                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=300&h=300&fit=crop" 
+                                     alt="Sentiers de randonnée à Cilaos"
+                                     loading="lazy">
                             </div>
                             <p class="story-label">Gravir Cilaos</p>
-                        </div>
+                        </button>
 
-                        <div class="story-item" data-story="gastronomie">
+                        <!-- Histoire 3 : Gastronomie -->
+                        <button class="story-item" 
+                                data-story="gastronomie"
+                                aria-label="Découvrir la gastronomie locale"
+                                role="button">
                             <div class="story-circle">
-                                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" alt="Gastronomie">
+                                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop" 
+                                     alt="Gastronomie créole"
+                                     loading="lazy">
                             </div>
                             <p class="story-label">Manzé Cilaos</p>
-                        </div>
+                        </button>
 
-                        <div class="story-item" data-story="thermes">
+                        <!-- Histoire 4 : Thermes -->
+                        <button class="story-item" 
+                                data-story="thermes"
+                                aria-label="Visiter les thermes"
+                                role="button">
                             <div class="story-circle">
-                                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300&h=300&fit=crop" alt="Cilaos">
+                                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300&h=300&fit=crop" 
+                                     alt="Thermes de Cilaos"
+                                     loading="lazy">
                             </div>
                             <p class="story-label">Zot lakaz lé ici</p>
-                        </div>
-                    </div>
-                </div>
+                        </button>
+                    </nav>
+                </aside>
 
-                <!-- Zone d'affichage -->
-                <div class="story-display" id="storyDisplay">
+                <!-- Zone d'affichage principale des stories -->
+                <div class="story-display" 
+                     id="storyDisplay" 
+                     role="region" 
+                     aria-label="Contenu de l'histoire sélectionnée">
                     <!-- Contenu de bienvenue par défaut -->
-                    <div class="welcome-content" id="welcomeContent">
+                    <article class="welcome-content" id="welcomeContent">
                         <h2>Bienvenue à Cilaos</h2>
                         <p>
-                            Nichée au coeur de l'île de La Réunion, Cilaos est un cirque naturel d'une beauté à couper le souffle. 
+                            Nichée au cœur de l'île de La Réunion, Cilaos est un cirque naturel d'une beauté à couper le souffle. 
                             Entre ses sommets vertigineux et ses sources thermales, découvrez un lieu où la nature et la culture créole 
                             se rencontrent en parfaite harmonie.
                         </p>
@@ -116,46 +255,71 @@
                         <p>
                             <strong>Cliquez sur une bulle pour découvrir nos histoires...</strong>
                         </p>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="site-footer">
+        <!-- FOOTER RESPONSIVE -->
+        <footer class="site-footer" role="contentinfo">
             <div class="footer-container">
+                <!-- Coordonnées -->
                 <div class="footer-section">
                     <h3>Office de Tourisme de Cilaos</h3>
-                    <p>2 Rue des Écoles<br>97413 Cilaos, La Réunion</p>
+                    <address>
+                        2 Rue des Écoles<br>
+                        97413 Cilaos, La Réunion
+                    </address>
                 </div>
 
+                <!-- Contact -->
                 <div class="footer-section">
                     <h4>Contact</h4>
                     <p>Téléphone : <a href="tel:+262262317030">+262 262 31 70 30</a></p>
                     <p>Email : <a href="mailto:info@ot-cilaos.re">info@ot-cilaos.re</a></p>
                 </div>
 
+                <!-- Horaires -->
                 <div class="footer-section">
                     <h4>Horaires d'ouverture</h4>
                     <p>Lundi au Samedi : 9h00 - 12h00 / 13h30 - 17h00</p>
                     <p>Dimanche : 9h00 - 12h00</p>
                 </div>
 
+                <!-- Réseaux sociaux -->
                 <div class="footer-section">
                     <h4>Suivez-nous</h4>
-                    <div class="social-icons">
-                        <a href="https://www.facebook.com/otcilaos" target="_blank">Facebook</a>
-                        <a href="https://www.instagram.com/ot_cilaos" target="_blank">Instagram</a>
-                        <a href="https://www.youtube.com/channel/UCilaos" target="_blank">YouTube</a>
+                    <div class="social-icons" role="navigation" aria-label="Réseaux sociaux">
+                        <a href="https://www.facebook.com/otcilaos" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           aria-label="Facebook de l'Office de Tourisme">Facebook</a>
+                        <a href="https://www.instagram.com/ot_cilaos" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           aria-label="Instagram de l'Office de Tourisme">Instagram</a>
+                        <a href="https://www.youtube.com/channel/UCilaos" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           aria-label="YouTube de l'Office de Tourisme">YouTube</a>
                     </div>
                 </div>
             </div>
+            
+            <!-- Copyright -->
             <div class="footer-bottom">
                 <p>&copy; 2025 Office de Tourisme de Cilaos. Tous droits réservés.</p>
             </div>
         </footer>
-    </main> 
+    </main>
+    
+    <!-- Script de secours si JavaScript est désactivé -->
+    <noscript>
+        <style>
+            .hero-slideshow { display: none; }
+            .nav-toggle { display: none; }
+            .nav-menu { position: static; transform: none; }
+        </style>
+    </noscript>
 </body>
 </html>
-
-
