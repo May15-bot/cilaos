@@ -1,995 +1,335 @@
-// Configuration du slideshow
-const SLIDESHOW_CONFIG = {
-    autoPlayDelay: 5000,        // Délai entre chaque slide en millisecondes
-    transitionDuration: 2000,   // Durée de la transition entre slides
-    pauseOnHover: false,        // Ne pas mettre en pause au survol (arrière-plan)
-    loop: true                  // Recommencer après la dernière slide
-};
+/* ================================================
+   JAVASCRIPT SIMPLIFIÉ POUR LE SITE CILAOS
+   Code clair et bien structuré avec explications
+   ================================================ */
 
-// Configuration des stories
-const STORIES_CONFIG = {
-    autoPlayDelay: 5000,        // Délai pour l'autoplay des stories
-    enableSwipe: true,          // Activer le swipe sur mobile
-    keyboardNavigation: true    // Navigation au clavier
-};
+// ------------------------------------------------
+// 1. MENU HAMBURGER (Navigation mobile)
+// ------------------------------------------------
 
-
-/**
- * Initialise le menu hamburger pour les appareils mobiles et tablettes
- * Cette fonction gère l'ouverture/fermeture du menu et l'accessibilité
- */
-function initHamburgerMenu() {
-    const toggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-menu a');
+// On attend que la page soit complètement chargée
+document.addEventListener('DOMContentLoaded', function() {
     
-    if (!toggle || !navMenu) {
-        console.warn('Éléments de navigation non trouvés');
-        return;
+    // Récupération des éléments du menu
+    const navToggle = document.querySelector('.nav-toggle');  // Le bouton hamburger
+    const navMenu = document.querySelector('.nav-menu');      // Le menu de navigation
+    const navLinks = document.querySelectorAll('.nav-menu a'); // Tous les liens du menu
+    
+    // Quand on clique sur le bouton hamburger
+    if (navToggle) {
+        navToggle.addEventListener('click', function() {
+            // On ajoute/enlève la classe 'active' pour ouvrir/fermer le menu
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
     }
     
-    // Gestion du clic sur le bouton hamburger
-    toggle.addEventListener('click', () => {
-        const isOpen = toggle.classList.contains('open');
-        
-        // Toggle des classes pour l'animation
-        toggle.classList.toggle('open');
-        navMenu.classList.toggle('open');
-        
-        // Mise à jour de l'accessibilité ARIA
-        toggle.setAttribute('aria-expanded', !isOpen);
-        toggle.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
-        
-        // Empêcher le scroll du body quand le menu est ouvert (mobile)
-        if (!isOpen && window.innerWidth <= 1146) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    });
-    
-    // Fermer le menu quand on clique sur un lien
+    // Fermer le menu quand on clique sur un lien (pour mobile)
     navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            toggle.classList.remove('open');
-            navMenu.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
+        link.addEventListener('click', function() {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
         });
     });
     
-    // Fermer le menu avec la touche Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && toggle.classList.contains('open')) {
-            toggle.classList.remove('open');
-            navMenu.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
-        }
-    });
+    // ------------------------------------------------
+    // 2. SLIDESHOW AUTOMATIQUE (Arrière-plan hero)
+    // ------------------------------------------------
     
-    // Gérer le redimensionnement de la fenêtre
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            // Si on passe en mode desktop, réinitialiser le menu
-            if (window.innerWidth > 1146) {
-                toggle.classList.remove('open');
-                navMenu.classList.remove('open');
-                document.body.style.overflow = '';
-            }
-        }, 250);
-    });
-}
-
-
-/**
- * Classe pour gérer le slideshow en arrière-plan
- * Utilise le pattern Module pour encapsuler la logique
- */
-class BackgroundSlideshow {
-    constructor(config) {
-        this.config = config;
-        this.currentSlide = 0;
-        this.slides = [];
-        this.indicators = [];
-        this.intervalId = null;
-        this.isPaused = false;
-        this.isTransitioning = false;
-    }
+    // Variables pour le slideshow
+    let currentSlide = 0;  // Index de la slide actuelle (commence à 0)
+    const slides = document.querySelectorAll('.slide');  // Toutes les slides
+    const dots = document.querySelectorAll('.dot');      // Tous les points indicateurs
     
-    /**
-     * Initialise le slideshow
-     */
-    init() {
-        // Récupérer tous les éléments nécessaires
-        this.slides = document.querySelectorAll('.slideshow-slide');
-        this.indicators = document.querySelectorAll('.slideshow-indicators .indicator');
+    // Fonction pour changer de slide
+    function showSlide(index) {
+        // Vérifier qu'il y a des slides
+        if (slides.length === 0) return;
         
-        if (this.slides.length === 0) {
-            console.warn('Aucune slide trouvée pour le slideshow');
-            return;
+        // S'assurer que l'index est valide (boucle infinie)
+        if (index >= slides.length) {
+            currentSlide = 0;  // Retour au début
+        } else if (index < 0) {
+            currentSlide = slides.length - 1;  // Aller à la fin
+        } else {
+            currentSlide = index;
         }
         
-        // Configurer les événements des indicateurs
-        this.setupIndicators();
+        // Enlever la classe 'active' de toutes les slides et dots
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
         
-        // Démarrer le slideshow automatique
-        this.startAutoPlay();
-        
-        // Gérer la visibilité de la page (optimisation performance)
-        this.handlePageVisibility();
-        
-        // Précharger les images pour des transitions fluides
-        this.preloadImages();
-        
-        // Support du swipe sur mobile pour le slideshow
-        if ('ontouchstart' in window) {
-            this.setupTouchSupport();
+        // Ajouter la classe 'active' à la slide et au dot actuels
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) {
+            dots[currentSlide].classList.add('active');
         }
     }
     
-    /**
-     * Configure les indicateurs cliquables
-     */
-    setupIndicators() {
-        this.indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                if (!this.isTransitioning) {
-                    this.goToSlide(index);
-                    this.resetAutoPlay();
-                }
-            });
+    // Fonction pour passer à la slide suivante
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+    
+    // Fonction pour aller à une slide spécifique (quand on clique sur un dot)
+    function goToSlide(index) {
+        showSlide(index);
+    }
+    
+    // Démarrer le slideshow automatique (change toutes les 5 secondes)
+    let slideshowInterval = null;
+    
+    function startSlideshow() {
+        // Ne démarrer que s'il y a plus d'une slide
+        if (slides.length > 1) {
+            slideshowInterval = setInterval(nextSlide, 5000);  // 5000ms = 5 secondes
+        }
+    }
+    
+    // Arrêter le slideshow (utile quand l'utilisateur interagit)
+    function stopSlideshow() {
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+        }
+    }
+    
+    // Redémarrer le slideshow après une interaction
+    function restartSlideshow() {
+        stopSlideshow();
+        startSlideshow();
+    }
+    
+    // Ajouter les événements de clic sur les dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+            goToSlide(index);
+            restartSlideshow();  // Redémarrer le timer après un clic
+        });
+    });
+    
+    // Démarrer le slideshow au chargement de la page
+    startSlideshow();
+    
+    // Optionnel : Arrêter le slideshow quand la page n'est pas visible
+    // (économise les ressources quand l'utilisateur change d'onglet)
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            stopSlideshow();
+        } else {
+            startSlideshow();
+        }
+    });
+    
+    // ------------------------------------------------
+    // 3. STORIES INTERACTIVES (Bulles cliquables)
+    // ------------------------------------------------
+    
+    // Données des différentes stories
+    const storiesData = {
+        culture: {
+            title: "Culture créole",
+            content: `
+                <div class="story-content">
+                    <h3>🎨 La culture créole de Cilaos</h3>
+                    <p>Cilaos est un véritable conservatoire de la culture créole réunionnaise. 
+                    L'architecture des cases créoles, avec leurs varangues et leurs toits en tôle, 
+                    témoigne d'un savoir-faire ancestral.</p>
+                    <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800" alt="Architecture créole">
+                    <p>La broderie de Cilaos, inscrite au patrimoine culturel, est une tradition 
+                    qui se transmet de génération en génération depuis le XIXe siècle.</p>
+                </div>
+            `
+        },
+        randonnees: {
+            title: "Randonnées",
+            content: `
+                <div class="story-content">
+                    <h3>🏔️ Les sentiers de Cilaos</h3>
+                    <p>Le cirque de Cilaos est le paradis des randonneurs avec plus de 100 km de sentiers balisés.</p>
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800" alt="Sentiers de randonnée">
+                    <p>Le Piton des Neiges, point culminant de l'océan Indien à 3070m d'altitude, 
+                    offre une vue exceptionnelle sur toute l'île après une randonnée mythique.</p>
+                </div>
+            `
+        },
+        gastronomie: {
+            title: "Gastronomie",
+            content: `
+                <div class="story-content">
+                    <h3>🍲 Saveurs de Cilaos</h3>
+                    <p>La gastronomie de Cilaos est riche et savoureuse, mélange unique de traditions créoles.</p>
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800" alt="Gastronomie créole">
+                    <p>Les fameuses lentilles de Cilaos, cultivées en terrasses depuis 1850, 
+                    bénéficient d'une IGP (Indication Géographique Protégée) et sont reconnues 
+                    pour leur qualité exceptionnelle.</p>
+                </div>
+            `
+        },
+        thermes: {
+            title: "Thermes",
+            content: `
+                <div class="story-content">
+                    <h3>♨️ Les thermes de Cilaos</h3>
+                    <p>Depuis 1896, les thermes de Cilaos accueillent les curistes venus profiter 
+                    des bienfaits des eaux thermales.</p>
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800" alt="Thermes de Cilaos">
+                    <p>Les eaux, naturellement chaudes et riches en minéraux, sont particulièrement 
+                    recommandées pour les affections rhumatismales et la remise en forme.</p>
+                </div>
+            `
+        }
+    };
+    
+    // Récupération des éléments
+    const storyBubbles = document.querySelectorAll('.story-bubble');
+    const storyDisplay = document.getElementById('storyDisplay');
+    
+    // Ajouter un événement de clic sur chaque bulle
+    storyBubbles.forEach(bubble => {
+        bubble.addEventListener('click', function() {
+            // Récupérer le type de story depuis l'attribut data-story
+            const storyType = this.getAttribute('data-story');
             
-            // Support clavier pour l'accessibilité
-            indicator.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.goToSlide(index);
-                    this.resetAutoPlay();
-                }
-            });
-        });
-    }
-    
-    /**
-     * Passe à une slide spécifique
-     * @param {number} index - Index de la slide cible
-     */
-    goToSlide(index) {
-        if (this.isTransitioning || index === this.currentSlide) return;
-        
-        this.isTransitioning = true;
-        
-        // Retirer la classe active de la slide actuelle
-        this.slides[this.currentSlide].classList.remove('active');
-        this.indicators[this.currentSlide].classList.remove('active');
-        this.indicators[this.currentSlide].setAttribute('aria-selected', 'false');
-        
-        // Mettre à jour l'index
-        this.currentSlide = index;
-        
-        // Ajouter la classe active à la nouvelle slide
-        this.slides[this.currentSlide].classList.add('active');
-        this.indicators[this.currentSlide].classList.add('active');
-        this.indicators[this.currentSlide].setAttribute('aria-selected', 'true');
-        
-        // Débloquer les transitions après l'animation
-        setTimeout(() => {
-            this.isTransitioning = false;
-        }, this.config.transitionDuration);
-    }
-    
-    /**
-     * Passe à la slide suivante
-     */
-    nextSlide() {
-        const nextIndex = (this.currentSlide + 1) % this.slides.length;
-        this.goToSlide(nextIndex);
-    }
-    
-    /**
-     * Passe à la slide précédente
-     */
-    prevSlide() {
-        const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-        this.goToSlide(prevIndex);
-    }
-    
-    /**
-     * Démarre la lecture automatique
-     */
-    startAutoPlay() {
-        if (this.config.autoPlayDelay && !this.intervalId) {
-            this.intervalId = setInterval(() => {
-                if (!this.isPaused) {
-                    this.nextSlide();
-                }
-            }, this.config.autoPlayDelay);
-        }
-    }
-    
-    /**
-     * Arrête la lecture automatique
-     */
-    stopAutoPlay() {
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-            this.intervalId = null;
-        }
-    }
-    
-    /**
-     * Réinitialise l'autoplay (utile après une interaction manuelle)
-     */
-    resetAutoPlay() {
-        this.stopAutoPlay();
-        this.startAutoPlay();
-    }
-    
-    /**
-     * Gère la visibilité de la page pour économiser les ressources
-     */
-    handlePageVisibility() {
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // Page cachée : arrêter le slideshow
-                this.isPaused = true;
-                this.stopAutoPlay();
-            } else {
-                // Page visible : reprendre le slideshow
-                this.isPaused = false;
-                this.startAutoPlay();
-            }
-        });
-    }
-    
-    /**
-     * Précharge les images pour des transitions fluides
-     */
-    preloadImages() {
-        this.slides.forEach(slide => {
-            const bgImage = window.getComputedStyle(slide).backgroundImage;
-            if (bgImage && bgImage !== 'none') {
-                // Extraire l'URL de l'image
-                const urlMatch = bgImage.match(/url\(['"]?([^'")]*)['"]?\)/);
-                if (urlMatch && urlMatch[1]) {
-                    const img = new Image();
-                    img.src = urlMatch[1];
-                }
-            }
-        });
-    }
-    
-    /**
-     * Ajoute le support du swipe tactile pour mobile
-     */
-    setupTouchSupport() {
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const container = document.querySelector('.slideshow-container');
-        
-        if (!container) return;
-        
-        container.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        container.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe(touchStartX, touchEndX);
-        }, { passive: true });
-    }
-    
-    /**
-     * Gère le swipe
-     */
-    handleSwipe(startX, endX) {
-        const swipeThreshold = 50; // Minimum de pixels pour déclencher un swipe
-        const diff = startX - endX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe vers la gauche : slide suivante
-                this.nextSlide();
-            } else {
-                // Swipe vers la droite : slide précédente
-                this.prevSlide();
-            }
-            this.resetAutoPlay();
-        }
-    }
-    
-    /**
-     * Nettoie les ressources
-     */
-    destroy() {
-        this.stopAutoPlay();
-        this.slides = [];
-        this.indicators = [];
-    }
-}
-
-
-// Données des stories (contenu des slides)
-const storiesData = {
-    culture: [
-        {
-            image: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800',
-            title: 'Église de Cilaos',
-            description: 'Architecture créole historique préservée depuis le XIXe siècle'
-        },
-        {
-            image: 'https://images.unsplash.com/photo-1569163139394-de4798aa62b6?w=800',
-            title: 'Cases créoles',
-            description: 'Patrimoine architectural unique aux couleurs vives'
-        },
-        {
-            image: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=800',
-            title: 'Artisanat local',
-            description: 'Broderie de Cilaos, tradition inscrite au patrimoine'
-        }
-    ],
-    randonnees: [
-        {
-            image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800',
-            title: 'Piton des Neiges',
-            description: 'Le point culminant de l\'océan Indien à 3070m'
-        },
-        {
-            image: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800',
-            title: 'Cascade de Bras Rouge',
-            description: 'Randonnée aquatique rafraîchissante'
-        },
-        {
-            image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800',
-            title: 'Sentier du Col du Taïbit',
-            description: 'Vue panoramique sur tout le cirque'
-        }
-    ],
-    gastronomie: [
-        {
-            image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800',
-            title: 'Lentilles de Cilaos',
-            description: 'Produit IGP cultivé en terrasses depuis 1850'
-        },
-        {
-            image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800',
-            title: 'Cari créole',
-            description: 'Saveurs authentiques de la cuisine réunionnaise'
-        }
-    ],
-    thermes: [
-        {
-            image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800',
-            title: 'Thermes de Cilaos',
-            description: 'Sources thermales bienfaisantes depuis 1896'
-        },
-        {
-            image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800',
-            title: 'Soins thermaux',
-            description: 'Rhumatologie et remise en forme naturelle'
-        }
-    ]
-};
-
-// Variables globales pour les stories
-let storySwiper = null;
-let currentStory = null;
-
-// Contenu HTML de bienvenue (sauvegardé pour pouvoir le restaurer)
-const welcomeContentHTML = `
-    <div class="welcome-content" id="welcomeContent">
-        <h2>Bienvenue à Cilaos</h2>
-        <p>
-            Nichée au cœur de l'île de La Réunion, Cilaos est un cirque naturel d'une beauté à couper le souffle. 
-            Entre ses sommets vertigineux et ses sources thermales, découvrez un lieu où la nature et la culture créole 
-            se rencontrent en parfaite harmonie.
-        </p>
-        <p>
-            Des randonnées mythiques du Piton des Neiges aux saveurs authentiques de la cuisine créole, 
-            en passant par les thermes centenaires et les traditions artisanales, Cilaos vous invite à explorer 
-            ses multiples facettes.
-        </p>
-        <p>
-            <strong>Cliquez sur une bulle pour découvrir nos histoires...</strong>
-        </p>
-    </div>
-`;
-
-/**
- * Ouvre une story dans la zone d'affichage
- * @param {string} storyType - Type de story à afficher
- */
-function openStory(storyType) {
-    // Vérifier que le type de story existe
-    if (!storiesData[storyType]) {
-        console.error(`Story type "${storyType}" n'existe pas`);
-        return;
-    }
-    
-    currentStory = storyType;
-    const display = document.getElementById('storyDisplay');
-    
-    if (!display) {
-        console.error('Zone d\'affichage des stories non trouvée');
-        return;
-    }
-    
-    // Activer visuellement la bulle cliquée
-    document.querySelectorAll('.story-circle').forEach(circle => {
-        circle.classList.remove('active');
-    });
-    
-    const activeCircle = document.querySelector(`[data-story="${storyType}"] .story-circle`);
-    if (activeCircle) {
-        activeCircle.classList.add('active');
-    }
-    
-    // Créer le HTML du slider Swiper
-    const slidesHTML = storiesData[storyType].map(slide => `
-        <div class="swiper-slide">
-            <img src="${slide.image}" 
-                 alt="${slide.title}" 
-                 loading="lazy">
-            <div class="slide-content">
-                <h3>${slide.title}</h3>
-                <p>${slide.description}</p>
-            </div>
-        </div>
-    `).join('');
-    
-    // Injecter le slider dans la zone d'affichage
-    display.innerHTML = `
-        <div class="story__slider swiper">
-            <button class="story-close-btn" onclick="closeStoryDisplay()">
-                Retour
-            </button>
-            <div class="swiper-wrapper">
-                ${slidesHTML}
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    `;
-    
-    // Initialiser Swiper avec configuration responsive
-    storySwiper = new Swiper('.story__slider', {
-        loop: true,
-        autoplay: {
-            delay: STORIES_CONFIG.autoPlayDelay,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'progressbar'
-        },
-        keyboard: {
-            enabled: STORIES_CONFIG.keyboardNavigation,
-            onlyInViewport: true
-        },
-        // Configuration responsive
-        breakpoints: {
-            // Quand la largeur de la fenêtre est >= 320px
-            320: {
-                slidesPerView: 1,
-                spaceBetween: 10
-            },
-            // Quand la largeur de la fenêtre est >= 768px
-            768: {
-                slidesPerView: 1,
-                spaceBetween: 20
-            },
-            // Quand la largeur de la fenêtre est >= 1024px
-            1024: {
-                slidesPerView: 1,
-                spaceBetween: 30
-            }
-        },
-        // Accessibilité
-        a11y: {
-            prevSlideMessage: 'Slide précédente',
-            nextSlideMessage: 'Slide suivante',
-            firstSlideMessage: 'Première slide',
-            lastSlideMessage: 'Dernière slide'
-        }
-    });
-    
-    // Animation d'entrée
-    requestAnimationFrame(() => {
-        const slider = display.querySelector('.story__slider');
-        if (slider) {
-            slider.style.animation = 'slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        }
-    });
-}
-
-/**
- * Ferme la story et restaure le contenu de bienvenue
- */
-function closeStoryDisplay() {
-    const display = document.getElementById('storyDisplay');
-    
-    if (!display) return;
-    
-    // Retirer la classe active de toutes les bulles
-    document.querySelectorAll('.story-circle').forEach(circle => {
-        circle.classList.remove('active');
-    });
-    
-    // Détruire l'instance Swiper pour libérer la mémoire
-    if (storySwiper) {
-        storySwiper.destroy(true, true);
-        storySwiper = null;
-    }
-    
-    // Restaurer le contenu de bienvenue avec animation
-    display.style.opacity = '0';
-    setTimeout(() => {
-        display.innerHTML = welcomeContentHTML;
-        display.style.opacity = '1';
-    }, 300);
-    
-    currentStory = null;
-}
-
-/**
- * Initialise les événements des stories
- */
-function initStories() {
-    const storyItems = document.querySelectorAll('.story-item');
-    
-    storyItems.forEach(item => {
-        // Support du clic
-        item.addEventListener('click', () => {
-            const storyType = item.dataset.story;
-            openStory(storyType);
-        });
-        
-        // Support du clavier pour l'accessibilité
-        item.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                const storyType = item.dataset.story;
-                openStory(storyType);
+            // Vérifier que cette story existe dans nos données
+            if (storiesData[storyType]) {
+                // Afficher le contenu de la story
+                storyDisplay.innerHTML = storiesData[storyType].content;
+                
+                // Faire défiler jusqu'à la zone d'affichage (pour mobile)
+                storyDisplay.scrollIntoView({ 
+                    behavior: 'smooth',  // Défilement fluide
+                    block: 'nearest'     // Position la plus proche
+                });
             }
         });
     });
-}
-
-
-/**
- * Initialise le smooth scroll pour tous les liens d'ancrage
- */
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+    
+    // ------------------------------------------------
+    // 4. DÉFILEMENT FLUIDE (Smooth scroll)
+    // ------------------------------------------------
+    
+    // Pour tous les liens qui commencent par #
+    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+    
+    smoothScrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Empêcher le comportement par défaut (saut brusque)
             e.preventDefault();
             
+            // Récupérer l'ID de la cible
             const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            const targetElement = document.querySelector(targetId);
             
-            const target = document.querySelector(targetId);
-            if (target) {
+            if (targetElement) {
                 // Calculer la position en tenant compte de la navbar fixe
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                const targetPosition = target.offsetTop - navbarHeight;
+                const navbarHeight = 70;  // Hauteur de la navbar
+                const targetPosition = targetElement.offsetTop - navbarHeight;
                 
+                // Faire défiler jusqu'à la position
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
                 });
-                
-                // Mettre à jour l'URL sans déclencher le scroll
-                history.pushState(null, null, targetId);
             }
         });
     });
-}
-
-
-/**
- * Ajoute un effet parallax subtil au hero content
- */
-function initParallaxEffect() {
-    let ticking = false;
-    const parallaxElements = document.querySelectorAll('.hero-content');
     
-    // Vérifier si l'utilisateur préfère les animations réduites
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // ------------------------------------------------
+    // 5. ANIMATION AU SCROLL (Optionnel mais sympa)
+    // ------------------------------------------------
     
-    if (prefersReducedMotion || parallaxElements.length === 0) {
-        return; // Ne pas appliquer l'effet parallax
-    }
+    // Observer les éléments pour les animer quand ils apparaissent
+    const observerOptions = {
+        threshold: 0.1,      // Déclencher quand 10% de l'élément est visible
+        rootMargin: '0px'    // Pas de marge supplémentaire
+    };
     
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        
-        parallaxElements.forEach(element => {
-            // Vérifier si l'élément est visible
-            const rect = element.getBoundingClientRect();
-            const isVisible = rect.bottom >= 0 && rect.top <= window.innerHeight;
-            
-            if (isVisible) {
-                const speed = 0.3; // Vitesse de l'effet parallax
-                const yPos = -(scrolled * speed);
-                element.style.transform = `translateY(${yPos}px)`;
+    // Créer l'observer
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Ajouter une classe quand l'élément devient visible
+                entry.target.classList.add('visible');
+                // Optionnel : arrêter d'observer une fois animé
+                observer.unobserve(entry.target);
             }
         });
-        
-        ticking = false;
-    }
+    }, observerOptions);
     
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }, { passive: true });
-}
-
-
-/**
- * Détecte le type d'appareil et applique des optimisations
- */
-function optimizeForMobile() {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    
-    if (isMobile) {
-        // Désactiver le zoom sur double tap (iOS)
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', (e) => {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-        
-        // Optimiser les animations pour mobile
-        document.documentElement.style.setProperty('--animation-duration', '0.3s');
-    }
-    
-    if (isIOS) {
-        // Fix pour le viewport height sur iOS
-        const setViewportHeight = () => {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        };
-        
-        setViewportHeight();
-        window.addEventListener('resize', setViewportHeight);
-        window.addEventListener('orientationchange', setViewportHeight);
-    }
-}
-
-
-/**
- * Implémente le lazy loading natif avec fallback
- */
-function initLazyLoading() {
-    // Vérifier si le navigateur supporte le lazy loading natif
-    if ('loading' in HTMLImageElement.prototype) {
-        // Le navigateur supporte le lazy loading natif
-        const images = document.querySelectorAll('img[loading="lazy"]');
-        images.forEach(img => {
-            // S'assurer que l'attribut est bien défini
-            if (!img.hasAttribute('loading')) {
-                img.setAttribute('loading', 'lazy');
-            }
-        });
-    } else {
-        // Fallback avec Intersection Observer pour les anciens navigateurs
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    const src = img.dataset.src;
-                    
-                    if (src) {
-                        img.src = src;
-                        img.removeAttribute('data-src');
-                    }
-                    
-                    observer.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px 0px', // Commencer le chargement 50px avant
-            threshold: 0.01
-        });
-        
-        // Observer toutes les images avec data-src
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-}
-
-/**
- * Optimise les performances générales
- */
-function optimizePerformance() {
-    // Debounce pour le resize
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        // Éviter les recalculs trop fréquents
-        document.body.classList.add('resize-animation-stopper');
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            document.body.classList.remove('resize-animation-stopper');
-        }, 400);
+    // Observer les cartes d'information
+    const infoCards = document.querySelectorAll('.info-card');
+    infoCards.forEach(card => {
+        observer.observe(card);
     });
     
-    // Optimisation du scroll
-    let scrollTimeout;
-    let isScrolling = false;
+    // ------------------------------------------------
+    // 6. GESTION DES ERREURS ET DEBUG
+    // ------------------------------------------------
     
-    window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            document.body.classList.add('is-scrolling');
-            isScrolling = true;
-        }
-        
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            document.body.classList.remove('is-scrolling');
-            isScrolling = false;
-        }, 150);
-    }, { passive: true });
-}
-
-
-/**
- * Classe pour gérer les preview cards avec slideshows au hover
- * Chaque carte représente une section de la navigation
- */
-class PreviewCards {
-    constructor() {
-        this.cards = [];
-        this.intervals = new Map(); // Stocke les intervalles pour chaque carte
+    // Message de confirmation que le script est chargé
+    console.log('✅ Site Cilaos initialisé avec succès !');
+    
+    // Vérifier que les éléments importants existent
+    if (!slides.length) {
+        console.warn('⚠️ Aucune slide trouvée pour le slideshow');
     }
     
-    /**
-     * Initialise toutes les preview cards
-     */
-    init() {
-        // Récupérer toutes les cartes de preview
-        const cardElements = document.querySelectorAll('.preview-card');
-        
-        if (cardElements.length === 0) {
-            console.warn('Aucune preview card trouvée');
-            return;
-        }
-        
-        cardElements.forEach(card => {
-            this.setupCard(card);
-        });
-        
-        console.log(`✓ ${cardElements.length} preview cards initialisées`);
+    if (!storyBubbles.length) {
+        console.warn('⚠️ Aucune bulle de story trouvée');
     }
     
-    /**
-     * Configure une carte individuelle
-     * @param {HTMLElement} card - L'élément carte à configurer
-     */
-    setupCard(card) {
-        const slides = card.querySelectorAll('.preview-slide');
-        const sectionName = card.dataset.section;
-        
-        if (slides.length <= 1) return; // Pas besoin de slideshow s'il n'y a qu'une slide
-        
-        // Variables pour gérer le slideshow de cette carte
-        let currentSlideIndex = 0;
-        let intervalId = null;
-        
-        /**
-         * Fonction pour changer de slide
-         */
-        const changeSlide = () => {
-            // Masquer la slide actuelle
-            slides[currentSlideIndex].classList.remove('active');
-            
-            // Passer à la slide suivante
-            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-            
-            // Afficher la nouvelle slide
-            slides[currentSlideIndex].classList.add('active');
-        };
-        
-        /**
-         * Démarre le slideshow au hover
-         */
-        const startSlideshow = () => {
-            // Éviter les doublons d'intervalles
-            if (intervalId) return;
-            
-            // Changer immédiatement pour un feedback instantané
-            changeSlide();
-            
-            // Puis continuer à changer toutes les 2 secondes
-            intervalId = setInterval(changeSlide, 2000);
-            this.intervals.set(card, intervalId);
-        };
-        
-        /**
-         * Arrête le slideshow quand on quitte le hover
-         */
-        const stopSlideshow = () => {
-            if (intervalId) {
-                clearInterval(intervalId);
-                intervalId = null;
-                this.intervals.delete(card);
-            }
-            
-            // Réinitialiser à la première slide
-            slides.forEach(slide => slide.classList.remove('active'));
-            currentSlideIndex = 0;
-            slides[0].classList.add('active');
-        };
-        
-        // Événements hover pour desktop
-        card.addEventListener('mouseenter', startSlideshow);
-        card.addEventListener('mouseleave', stopSlideshow);
-        
-        // Support tactile pour mobile (tap pour démarrer/arrêter)
-        let isTouched = false;
-        card.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (isTouched) {
-                stopSlideshow();
-                isTouched = false;
-            } else {
-                startSlideshow();
-                isTouched = true;
-            }
-        }, { passive: false });
-        
-        // Navigation au clic vers la section correspondante
-        card.addEventListener('click', (e) => {
-            // Ne pas naviguer si c'est un touch event
-            if (e.type === 'touchstart') return;
-            
-            // Naviguer vers la section correspondante
-            const targetSection = document.getElementById(sectionName);
-            if (targetSection) {
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                const targetPosition = targetSection.offsetTop - navbarHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Mettre à jour l'URL
-                history.pushState(null, null, `#${sectionName}`);
-            }
-        });
-        
-        // Accessibilité clavier
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
-        card.setAttribute('aria-label', `Aperçu de la section ${sectionName}`);
-        
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                const targetSection = document.getElementById(sectionName);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
-    }
-    
-    /**
-     * Nettoie toutes les ressources
-     */
-    destroy() {
-        // Arrêter tous les intervalles
-        this.intervals.forEach(intervalId => {
-            clearInterval(intervalId);
-        });
-        this.intervals.clear();
-        this.cards = [];
-    }
-}
-
-/**
- * Fonction d'initialisation principale
- * Appelée quand le DOM est complètement chargé
- */
-function init() {
-    console.log('🚀 Initialisation du site Cilaos...');
-    
-    // Initialiser les composants dans l'ordre optimal
-    initHamburgerMenu();
-    console.log('✓ Menu hamburger initialisé');
-    
-    // Initialiser le slideshow en arrière-plan
-    const slideshow = new BackgroundSlideshow(SLIDESHOW_CONFIG);
-    slideshow.init();
-    console.log('✓ Slideshow initialisé');
-    
-    // Initialiser les preview cards avec mini slideshows
-    const previewCards = new PreviewCards();
-    previewCards.init();
-    console.log('✓ Preview cards initialisées');
-    
-    // Initialiser les stories
-    initStories();
-    console.log('✓ Stories initialisées');
-    
-    // Initialiser le smooth scroll
-    initSmoothScroll();
-    console.log('✓ Smooth scroll initialisé');
-    
-    // Initialiser l'effet parallax (si pas de préférence pour animations réduites)
-    initParallaxEffect();
-    console.log('✓ Effet parallax initialisé');
-    
-    // Optimisations mobile
-    optimizeForMobile();
-    console.log('✓ Optimisations mobile appliquées');
-    
-    // Lazy loading des images
-    initLazyLoading();
-    console.log('✓ Lazy loading initialisé');
-    
-    // Optimisations de performance
-    optimizePerformance();
-    console.log('✓ Optimisations de performance appliquées');
-    
-    console.log('✅ Site complètement initialisé !');
-}
-
-// ================================================================
-// LANCEMENT DE L'APPLICATION
-// ================================================================
-
-// Attendre que le DOM soit complètement chargé
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    // Le DOM est déjà chargé (cas rare mais possible)
-    init();
-}
-
-// Rendre la fonction closeStoryDisplay globale pour le bouton de fermeture
-window.closeStoryDisplay = closeStoryDisplay;
-
-// ================================================================
-// GESTION DES ERREURS GLOBALES
-// ================================================================
-
-/**
- * Capture les erreurs JavaScript pour le debugging
- */
-window.addEventListener('error', (e) => {
-    console.error('Erreur capturée:', e.error);
-    // En production, vous pourriez envoyer ces erreurs à un service de monitoring
 });
 
-// ================================================================
-// SERVICE WORKER (OPTIONNEL - POUR LE MODE HORS LIGNE)
-// ================================================================
+// ------------------------------------------------
+// FONCTIONS UTILITAIRES (Réutilisables)
+// ------------------------------------------------
 
 /**
- * Enregistre un service worker pour le cache et le mode hors ligne
- * Décommentez cette section si vous voulez implémenter un PWA
+ * Fonction pour débouncer (limiter la fréquence d'exécution)
+ * Utile pour les événements qui se déclenchent souvent (scroll, resize)
+ * 
+ * @param {Function} func - La fonction à limiter
+ * @param {number} wait - Le délai en millisecondes
+ * @returns {Function} - La fonction limitée
  */
-/*
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('Service Worker enregistré:', registration);
-            })
-            .catch(error => {
-                console.log('Erreur Service Worker:', error);
-            });
-    });
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
-*/
+
+// Exemple d'utilisation du debounce pour le resize
+window.addEventListener('resize', debounce(function() {
+    console.log('Fenêtre redimensionnée');
+    // Ici on pourrait ajuster des éléments selon la nouvelle taille
+}, 250));
+
+// ------------------------------------------------
+// NOTES PÉDAGOGIQUES
+// ------------------------------------------------
+
+/*
+ * Ce fichier JavaScript est organisé en sections logiques :
+ * 
+ * 1. Menu hamburger : Gère l'ouverture/fermeture du menu mobile
+ * 2. Slideshow : Fait défiler automatiquement les images de fond
+ * 3. Stories : Affiche du contenu dynamique quand on clique sur les bulles
+ * 4. Smooth scroll : Défilement fluide vers les sections
+ * 5. Animations : Fait apparaître les éléments progressivement
+ * 
+ * Concepts importants utilisés :
+ * - addEventListener : Pour écouter les événements (clic, scroll, etc.)
+ * - classList : Pour ajouter/enlever des classes CSS
+ * - querySelector : Pour sélectionner des éléments HTML
+ * - setInterval : Pour répéter une action régulièrement
+ * - IntersectionObserver : Pour détecter quand un élément devient visible
+ * 
+ * Le code est écrit de manière simple et lisible, avec des commentaires
+ * expliquant chaque étape importante.
+ */
