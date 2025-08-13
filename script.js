@@ -1,297 +1,377 @@
-/* ================================================
-   JAVASCRIPT SIMPLIFIÉ POUR LE SITE CILAOS
-   Code clair et bien structuré avec explications
-   ================================================ */
-
-// ------------------------------------------------
-// 1. MENU HAMBURGER (Navigation mobile)
-// ------------------------------------------------
-
-// On attend que la page soit complètement chargée
+// ================================================
+// INITIALISATION AU CHARGEMENT DE LA PAGE
+// ================================================
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Site Cilaos initialisé avec succès !');
     
-    // Récupération des éléments du menu
-    const navToggle = document.querySelector('.nav-toggle');  // Le bouton hamburger
-    const navMenu = document.querySelector('.nav-menu');      // Le menu de navigation
-    const navLinks = document.querySelectorAll('.nav-menu a'); // Tous les liens du menu
+    // Initialiser tous les composants
+    initNavMenu();
+    initSlideshow();
+    initAccessTabs();
+    initParallaxMap();
+    initStories();
+});
+
+// ================================================
+// MENU HAMBURGER (Navigation mobile)
+// ================================================
+function initNavMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
     
-    // Quand on clique sur le bouton hamburger
     if (navToggle) {
         navToggle.addEventListener('click', function() {
-            // On ajoute/enlève la classe 'active' pour ouvrir/fermer le menu
             navToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-    }
-    
-    // Fermer le menu quand on clique sur un lien (pour mobile)
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
+        
+        // Fermer le menu quand on clique sur un lien
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
         });
-    });
+    }
+}
+
+// ================================================
+// SLIDESHOW (Section Hero)
+// ================================================
+function initSlideshow() {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
     
-    // ------------------------------------------------
-    // 2. SLIDESHOW AUTOMATIQUE (Arrière-plan hero)
-    // ------------------------------------------------
+    if (slides.length === 0) return;
     
-    // Variables pour le slideshow
-    let currentSlide = 0;  // Index de la slide actuelle (commence à 0)
-    const slides = document.querySelectorAll('.slide');  // Toutes les slides
-    const dots = document.querySelectorAll('.dot');      // Tous les points indicateurs
-    
-    // Fonction pour changer de slide
     function showSlide(index) {
-        // Vérifier qu'il y a des slides
-        if (slides.length === 0) return;
+        if (index >= slides.length) currentSlide = 0;
+        else if (index < 0) currentSlide = slides.length - 1;
+        else currentSlide = index;
         
-        // S'assurer que l'index est valide (boucle infinie)
-        if (index >= slides.length) {
-            currentSlide = 0;  // Retour au début
-        } else if (index < 0) {
-            currentSlide = slides.length - 1;  // Aller à la fin
-        } else {
-            currentSlide = index;
-        }
-        
-        // Enlever la classe 'active' de toutes les slides et dots
+        // Retirer la classe active de toutes les slides et dots
         slides.forEach(slide => slide.classList.remove('active'));
         dots.forEach(dot => dot.classList.remove('active'));
         
-        // Ajouter la classe 'active' à la slide et au dot actuels
+        // Ajouter la classe active à la slide et dot actuelle
         slides[currentSlide].classList.add('active');
         if (dots[currentSlide]) {
             dots[currentSlide].classList.add('active');
         }
     }
     
-    // Fonction pour passer à la slide suivante
-    function nextSlide() {
+    // Changer automatiquement de slide toutes les 5 secondes
+    setInterval(() => {
         showSlide(currentSlide + 1);
-    }
+    }, 5000);
     
-    // Fonction pour aller à une slide spécifique (quand on clique sur un dot)
-    function goToSlide(index) {
-        showSlide(index);
-    }
-    
-    // Démarrer le slideshow automatique (change toutes les 5 secondes)
-    let slideshowInterval = null;
-    
-    function startSlideshow() {
-        // Ne démarrer que s'il y a plus d'une slide
-        if (slides.length > 1) {
-            slideshowInterval = setInterval(nextSlide, 5000);  // 5000ms = 5 secondes
-        }
-    }
-    
-    // Arrêter le slideshow (utile quand l'utilisateur interagit)
-    function stopSlideshow() {
-        if (slideshowInterval) {
-            clearInterval(slideshowInterval);
-        }
-    }
-    
-    // Redémarrer le slideshow après une interaction
-    function restartSlideshow() {
-        stopSlideshow();
-        startSlideshow();
-    }
-    
-    // Ajouter les événements de clic sur les dots
+    // Permettre de cliquer sur les dots pour changer de slide
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            goToSlide(index);
-            restartSlideshow();  // Redémarrer le timer après un clic
+        dot.addEventListener('click', () => {
+            showSlide(index);
         });
     });
+}
+
+// ================================================
+// TABS ACCÈS (Section Accès)
+// ================================================
+function initAccessTabs() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
     
-    // Démarrer le slideshow au chargement de la page
-    startSlideshow();
-    
-    // Optionnel : Arrêter le slideshow quand la page n'est pas visible
-    // (économise les ressources quand l'utilisateur change d'onglet)
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            stopSlideshow();
-        } else {
-            startSlideshow();
-        }
-    });
-    
-    // ------------------------------------------------
-    // 3. STORIES INTERACTIVES (Bulles cliquables)
-    // ------------------------------------------------
-    
-    // Données des différentes stories
-    const storiesData = {
-        culture: {
-            title: "Culture créole",
-            content: `
-                <div class="story-content">
-                    <h3>🎨 La culture créole de Cilaos</h3>
-                    <p>Cilaos est un véritable conservatoire de la culture créole réunionnaise. 
-                    L'architecture des cases créoles, avec leurs varangues et leurs toits en tôle, 
-                    témoigne d'un savoir-faire ancestral.</p>
-                    <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800" alt="Architecture créole">
-                    <p>La broderie de Cilaos, inscrite au patrimoine culturel, est une tradition 
-                    qui se transmet de génération en génération depuis le XIXe siècle.</p>
-                </div>
-            `
-        },
-        randonnees: {
-            title: "Randonnées",
-            content: `
-                <div class="story-content">
-                    <h3>🏔️ Les sentiers de Cilaos</h3>
-                    <p>Le cirque de Cilaos est le paradis des randonneurs avec plus de 100 km de sentiers balisés.</p>
-                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800" alt="Sentiers de randonnée">
-                    <p>Le Piton des Neiges, point culminant de l'océan Indien à 3070m d'altitude, 
-                    offre une vue exceptionnelle sur toute l'île après une randonnée mythique.</p>
-                </div>
-            `
-        },
-        gastronomie: {
-            title: "Gastronomie",
-            content: `
-                <div class="story-content">
-                    <h3>🍲 Saveurs de Cilaos</h3>
-                    <p>La gastronomie de Cilaos est riche et savoureuse, mélange unique de traditions créoles.</p>
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800" alt="Gastronomie créole">
-                    <p>Les fameuses lentilles de Cilaos, cultivées en terrasses depuis 1850, 
-                    bénéficient d'une IGP (Indication Géographique Protégée) et sont reconnues 
-                    pour leur qualité exceptionnelle.</p>
-                </div>
-            `
-        },
-        thermes: {
-            title: "Thermes",
-            content: `
-                <div class="story-content">
-                    <h3>♨️ Les thermes de Cilaos</h3>
-                    <p>Depuis 1896, les thermes de Cilaos accueillent les curistes venus profiter 
-                    des bienfaits des eaux thermales.</p>
-                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800" alt="Thermes de Cilaos">
-                    <p>Les eaux, naturellement chaudes et riches en minéraux, sont particulièrement 
-                    recommandées pour les affections rhumatismales et la remise en forme.</p>
-                </div>
-            `
-        }
-    };
-    
-    // Récupération des éléments
-    const storyBubbles = document.querySelectorAll('.story-bubble');
-    const storyDisplay = document.getElementById('storyDisplay');
-    
-    // Ajouter un événement de clic sur chaque bulle
-    storyBubbles.forEach(bubble => {
-        bubble.addEventListener('click', function() {
-            // Récupérer le type de story depuis l'attribut data-story
-            const storyType = this.getAttribute('data-story');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
             
-            // Vérifier que cette story existe dans nos données
-            if (storiesData[storyType]) {
-                // Afficher le contenu de la story
-                storyDisplay.innerHTML = storiesData[storyType].content;
-                
-                // Faire défiler jusqu'à la zone d'affichage (pour mobile)
-                storyDisplay.scrollIntoView({ 
-                    behavior: 'smooth',  // Défilement fluide
-                    block: 'nearest'     // Position la plus proche
-                });
+            // Retirer la classe active de tous les boutons et panneaux
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Ajouter la classe active au bouton cliqué et au panneau correspondant
+            button.classList.add('active');
+            const activePane = document.getElementById(tabId);
+            if (activePane) {
+                activePane.classList.add('active');
             }
         });
     });
+}
+
+// ================================================
+// EFFET PARALLAX POUR LA CARTE
+// ================================================
+function initParallaxMap() {
+    const etapeSections = document.querySelectorAll('.etape-section');
     
-    // ------------------------------------------------
-    // 4. DÉFILEMENT FLUIDE (Smooth scroll)
-    // ------------------------------------------------
+    if (etapeSections.length === 0) return;
     
-    // Pour tous les liens qui commencent par #
-    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
-    
-    smoothScrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Empêcher le comportement par défaut (saut brusque)
-            e.preventDefault();
-            
-            // Récupérer l'ID de la cible
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                // Calculer la position en tenant compte de la navbar fixe
-                const navbarHeight = 70;  // Hauteur de la navbar
-                const targetPosition = targetElement.offsetTop - navbarHeight;
-                
-                // Faire défiler jusqu'à la position
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-    
-    // ------------------------------------------------
-    // 5. ANIMATION AU SCROLL (Optionnel mais sympa)
-    // ------------------------------------------------
-    
-    // Observer les éléments pour les animer quand ils apparaissent
     const observerOptions = {
-        threshold: 0.1,      // Déclencher quand 10% de l'élément est visible
-        rootMargin: '0px'    // Pas de marge supplémentaire
+        root: null,
+        rootMargin: '-40% 0px -40% 0px',
+        threshold: 0
     };
     
-    // Créer l'observer
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Ajouter une classe quand l'élément devient visible
-                entry.target.classList.add('visible');
-                // Optionnel : arrêter d'observer une fois animé
-                observer.unobserve(entry.target);
+                // Retirer la classe active de toutes les sections
+                etapeSections.forEach(section => section.classList.remove('active'));
+                // Ajouter la classe active à la section visible
+                entry.target.classList.add('active');
+                
+                // Optionnel : vous pouvez déclencher des animations sur la carte ici
+                const segmentId = entry.target.getAttribute('data-segment');
+                console.log('Section active :', segmentId);
             }
         });
     }, observerOptions);
     
-    // Observer les cartes d'information
-    const infoCards = document.querySelectorAll('.info-card');
-    infoCards.forEach(card => {
-        observer.observe(card);
+    etapeSections.forEach(section => {
+        observer.observe(section);
     });
+}
+
+// ================================================
+// STORIES AVEC SWIPER (4 stories en créole)
+// ================================================
+let currentSwiper = null;
+
+function initStories() {
+    const storyBubbles = document.querySelectorAll('.story-bubble');
+    const storiesIntro = document.getElementById('storiesIntro');
+    const swiperContainer = document.getElementById('storySwiper');
     
-    // ------------------------------------------------
-    // 6. GESTION DES ERREURS ET DEBUG
-    // ------------------------------------------------
+    // Données des 4 stories
+    const storiesData = {
+        actualites: {
+            title: 'La vi lé isi - Actualités',
+            slides: [
+                {
+                    image: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800',
+                    title: 'Festival Sakifo 2025',
+                    description: 'Le plu '
+                },
+                {
+                    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800',
+                    title: 'Marché forain du dimanche',
+                    description: 'Chaque dimanche, le marché s\'anime avec les produits locaux, l\'artisanat et les saveurs créoles.'
+                },
+                {
+                    image: 'https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=800',
+                    title: 'Fête des Lentilles',
+                    description: 'Célébration annuelle de la lentille de Cilaos, produit emblématique du cirque.'
+                }
+            ]
+        },
+        randonnees: {
+            title: 'Gravir Cilaos - Randonnées',
+            slides: [
+                {
+                    image: '/images/rando1.png',
+                    title: 'Piton des Neiges',
+                    description: 'Le plus haut sommet de l\'océan Indien vous attend pour une ascension mythique de 3070m.'
+                },
+                {
+                    image: '/images/rando2.png',
+                    title: 'Col du Taïbit',
+                    description: 'Passage historique entre Cilaos et Mafate, une randonnée au cœur de l\'histoire.'
+                },
+                {
+                    image: '/images/rando3.png',
+                    title: 'Roche Merveilleuse',
+                    description: 'Un belvédère naturel offrant une vue panoramique exceptionnelle sur tout le cirque.'
+                }
+            ]
+        },
+        saveurs: {
+            title: 'Manzé Cilaos - Saveurs locales',
+            slides: [
+                {
+                    image: '/images/gastronomie1.png',
+                    title: 'Lentilles de Cilaos IGP',
+                    description: 'Cultivées en terrasses depuis des générations, les lentilles de Cilaos sont uniques au monde.'
+                },
+                {
+                    image: '/images/gastronomie2.png',
+                    title: 'Carry créole traditionnel',
+                    description: 'Le carry poulet, carry boucané ou carry tangue, découvrez les saveurs authentiques créoles.'
+                },
+                {
+                    image: '/images/gastronomie3.png',
+                    title: 'Vin de Cilaos',
+                    description: 'Le seul vignoble tropical d\'altitude de France produit des vins uniques et surprenants.'
+                },
+                {
+                    image: '/images/gastronomie4.png',
+                    title: 'Rhum arrangé',
+                    description: 'Découvrez les secrets du rhum arrangé aux fruits tropicaux, tradition réunionnaise.'
+                }
+            ]
+        },
+        office: {
+            title: 'Zot lakaz lé ici - Notre office',
+            slides: [
+                {
+                    image: '/images/local1.png',
+                    title: 'Accueil personnalisé',
+                    description: 'Notre équipe vous accueille 7j/7 pour vous conseiller et organiser votre séjour.'
+                },
+                {
+                    image: '/images/local2.png',
+                    title: 'Services et réservations',
+                    description: 'Réservation d\'hébergements, activités, guides de montagne, tout est possible à l\'office.'
+                },
+                {
+                    image: '/images/local3.png',
+                    title: 'Documentation gratuite',
+                    description: 'Cartes, brochures, guides pratiques pour explorer Cilaos en toute autonomie.'
+                },
+                {
+                    image: '/images/local4.png',
+                    title: 'Boutique souvenirs',
+                    description: 'Artisanat local, produits du terroir et souvenirs authentiques de Cilaos.'
+                }
+            ]
+        }
+    };
     
-    // Message de confirmation que le script est chargé
-    console.log('✅ Site Cilaos initialisé avec succès !');
+    // Fonction pour afficher une story
+    window.showStory = function(storyType) {
+        const data = storiesData[storyType];
+        if (!data) return;
+        
+        // Cacher le texte d'intro et montrer Swiper
+        if (storiesIntro) storiesIntro.style.display = 'none';
+        if (swiperContainer) swiperContainer.style.display = 'block';
+        
+        // Créer les slides
+        const swiperWrapper = document.getElementById('swiperWrapper');
+        swiperWrapper.innerHTML = '';
+        
+        data.slides.forEach(slide => {
+            const slideElement = document.createElement('div');
+            slideElement.className = 'swiper-slide';
+            slideElement.innerHTML = `
+                <img src="${slide.image}" alt="${slide.title}">
+                <div class="slide-content">
+                    <h3>${slide.title}</h3>
+                    <p>${slide.description}</p>
+                </div>
+            `;
+            swiperWrapper.appendChild(slideElement);
+        });
+        
+        // Détruire l'ancien swiper s'il existe
+        if (currentSwiper) {
+            currentSwiper.destroy();
+        }
+        
+        // Créer le nouveau swiper
+        currentSwiper = new Swiper('.swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+        });
+    };
     
-    // Vérifier que les éléments importants existent
-    if (!slides.length) {
-        console.warn('⚠️ Aucune slide trouvée pour le slideshow');
-    }
+    // Fonction pour fermer une story
+    window.closeStory = function() {
+        // Cacher Swiper et montrer le texte d'intro
+        if (swiperContainer) swiperContainer.style.display = 'none';
+        if (storiesIntro) storiesIntro.style.display = 'block';
+        
+        // Détruire le swiper
+        if (currentSwiper) {
+            currentSwiper.destroy();
+            currentSwiper = null;
+        }
+        
+        // Retirer la classe active de toutes les bulles
+        storyBubbles.forEach(bubble => bubble.classList.remove('active'));
+    };
     
-    if (!storyBubbles.length) {
-        console.warn('⚠️ Aucune bulle de story trouvée');
-    }
-    
+    // Événements sur les bulles
+    storyBubbles.forEach(bubble => {
+        bubble.addEventListener('click', function() {
+            const storyType = this.getAttribute('data-story');
+            
+            // Retirer la classe active de toutes les bulles
+            storyBubbles.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            showStory(storyType);
+        });
+    });
+}
+
+// ================================================
+// SMOOTH SCROLL (Défilement fluide)
+// ================================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const offsetTop = target.offsetTop - 70; // 70px pour la navbar
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
 });
 
-// ------------------------------------------------
-// FONCTIONS UTILITAIRES (Réutilisables)
-// ------------------------------------------------
+// ================================================
+// ANIMATIONS AU SCROLL
+// ================================================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-/**
- * Fonction pour débouncer (limiter la fréquence d'exécution)
- * Utile pour les événements qui se déclenchent souvent (scroll, resize)
- * 
- * @param {Function} func - La fonction à limiter
- * @param {number} wait - Le délai en millisecondes
- * @returns {Function} - La fonction limitée
- */
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observer les éléments à animer
+document.querySelectorAll('.container > *').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+});
+
+// ================================================
+// FONCTION UTILITAIRE : DEBOUNCE
+// ================================================
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -310,26 +390,9 @@ window.addEventListener('resize', debounce(function() {
     // Ici on pourrait ajuster des éléments selon la nouvelle taille
 }, 250));
 
-// ------------------------------------------------
-// NOTES PÉDAGOGIQUES
-// ------------------------------------------------
-
-/*
- * Ce fichier JavaScript est organisé en sections logiques :
- * 
- * 1. Menu hamburger : Gère l'ouverture/fermeture du menu mobile
- * 2. Slideshow : Fait défiler automatiquement les images de fond
- * 3. Stories : Affiche du contenu dynamique quand on clique sur les bulles
- * 4. Smooth scroll : Défilement fluide vers les sections
- * 5. Animations : Fait apparaître les éléments progressivement
- * 
- * Concepts importants utilisés :
- * - addEventListener : Pour écouter les événements (clic, scroll, etc.)
- * - classList : Pour ajouter/enlever des classes CSS
- * - querySelector : Pour sélectionner des éléments HTML
- * - setInterval : Pour répéter une action régulièrement
- * - IntersectionObserver : Pour détecter quand un élément devient visible
- * 
- * Le code est écrit de manière simple et lisible, avec des commentaires
- * expliquant chaque étape importante.
- */
+// ================================================
+// GESTION DES ERREURS
+// ================================================
+window.addEventListener('error', function(e) {
+    console.error('Erreur détectée:', e.message);
+});

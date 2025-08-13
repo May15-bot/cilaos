@@ -1,79 +1,68 @@
 /* ================================================
-   CSS SIMPLIFIÉ POUR LE SITE CILAOS
-   Organisé de manière logique et pédagogique
+   VARIABLES CSS
    ================================================ */
-
-/* ------------------------------------------------
-   1. VARIABLES CSS (Couleurs et espacements)
-   ------------------------------------------------ */
 :root {
-    /* Palette de couleurs principale */
-    --couleur-fond: #FFFDF6;        /* Beige très clair pour le fond */
-    --couleur-surface: #FAF6E9;      /* Beige un peu plus foncé pour les cartes */
-    --couleur-accent: #A0C878;       /* Vert olive pour les boutons et accents */
-    --couleur-texte: #384924;        /* Vert foncé pour le texte */
-    --couleur-blanc: #FFFFFF;        /* Blanc pur */
+    --couleur-fond: #FFFDF6;
+    --couleur-surface: #FAF6E9;
+    --couleur-accent: #A0C878;
+    --couleur-texte: #384924;
+    --couleur-blanc: #FFFFFF;
+    --couleur-route: #D21F3C;
     
-    /* Espacements standards (pour cohérence) */
-    --espacement-petit: 0.5rem;      /* 8px */
-    --espacement-moyen: 1rem;        /* 16px */
-    --espacement-grand: 2rem;        /* 32px */
-    
-    /* Hauteur de la navbar (utile pour les calculs) */
+    --espacement-petit: 0.5rem;
+    --espacement-moyen: 1rem;
+    --espacement-grand: 2rem;
     --hauteur-navbar: 70px;
 }
 
-/* ------------------------------------------------
-   2. RESET CSS (Remise à zéro des styles par défaut)
-   ------------------------------------------------ */
+/* ================================================
+   RESET ET BASE
+   ================================================ */
 * {
-    margin: 0;              /* Enlève toutes les marges par défaut */
-    padding: 0;             /* Enlève tous les paddings par défaut */
-    box-sizing: border-box; /* Inclut padding et border dans la largeur totale */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* ------------------------------------------------
-   3. STYLES DE BASE
-   ------------------------------------------------ */
 html {
-    scroll-behavior: smooth; /* Défilement fluide pour les ancres */
+    scroll-behavior: smooth;
+
+    scroll-snap-type: y proximity;
 }
 
 body {
-    font-family: "Space Grotesk", sans-serif; /* Police principale */
+    font-family: "Space Grotesk", sans-serif;
     background: var(--couleur-fond);
     color: var(--couleur-texte);
-    line-height: 1.6;                         /* Espacement entre les lignes */
+    line-height: 1.6;
 }
 
-/* ------------------------------------------------
-   4. NAVBAR (Barre de navigation)
-   ------------------------------------------------ */
+/* ================================================
+   NAVBAR
+   ================================================ */
 .navbar {
-    position: fixed;           /* Reste fixe en haut de l'écran */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: var(--hauteur-navbar);
     background: var(--couleur-blanc);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Ombre légère */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     display: flex;
-    align-items: center;       /* Centre verticalement */
-    justify-content: space-between; /* Espace entre logo et menu */
+    align-items: center;
+    justify-content: space-between;
     padding: 0 var(--espacement-grand);
-    z-index: 1000;            /* Au-dessus du reste */
+    z-index: 1000;
 }
 
-/* Logo du site */
 .logo {
     font-size: 1.5rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.2rem;    /* Espacement entre les lettres */
+    letter-spacing: 0.2rem;
     color: var(--couleur-accent);
 }
 
-/* Menu de navigation */
 .nav-menu {
     display: flex;
     align-items: center;
@@ -81,26 +70,25 @@ body {
 }
 
 .nav-menu ul {
-    list-style: none;          /* Enlève les puces */
+    list-style: none;
     display: flex;
     gap: var(--espacement-grand);
 }
 
 .nav-menu a {
-    text-decoration: none;     /* Enlève le soulignement */
+    text-decoration: none;
     color: var(--couleur-texte);
     text-transform: uppercase;
     font-size: 0.9rem;
-    transition: color 0.3s;    /* Animation douce au survol */
+    transition: color 0.3s;
 }
 
 .nav-menu a:hover {
     color: var(--couleur-accent);
 }
 
-/* Bouton hamburger (caché sur desktop) */
 .nav-toggle {
-    display: none;             /* Caché par défaut */
+    display: none;
     background: none;
     border: none;
     cursor: pointer;
@@ -116,9 +104,9 @@ body {
     transition: transform 0.3s;
 }
 
-/* ------------------------------------------------
-   5. BOUTONS
-   ------------------------------------------------ */
+/* ================================================
+   BOUTONS
+   ================================================ */
 .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
@@ -131,51 +119,58 @@ body {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.btn:hover {
-    transform: translateY(-2px);    /* Monte légèrement */
-    box-shadow: 0 5px 15px rgba(160, 200, 120, 0.3);
+/* Bouton PRO */
+.btn-pro {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--couleur-accent);
+    color: var(--couleur-accent);
 }
 
-/* ------------------------------------------------
-   6. SECTION HERO (Page d'accueil avec slideshow)
-   ------------------------------------------------ */
+.btn-pro:hover {
+    background: var(--couleur-accent);
+    color: var(--couleur-blanc);
+}
+
+/* ================================================
+   SECTION HERO
+   ================================================ */
 .section-hero {
     position: relative;
-    height: 100vh;                  /* Prend toute la hauteur de l'écran */
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;               /* Cache ce qui dépasse */
+    overflow: hidden;
+    margin-top: var(--hauteur-navbar);
 }
 
-/* Container du slideshow */
 .slideshow-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;                    /* Derrière le contenu */
+    z-index: 0;
 }
 
-/* Chaque slide du slideshow */
 .slide {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;         /* L'image couvre toute la zone */
-    background-position: center;    /* Centrée */
-    opacity: 0;                     /* Invisible par défaut */
-    transition: opacity 2s;         /* Animation de fondu */
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s;
 }
 
 .slide.active {
-    opacity: 1;                     /* Visible quand active */
+    opacity: 1;
 }
 
-/* Overlay sombre pour améliorer la lisibilité */
 .slide::after {
     content: '';
     position: absolute;
@@ -183,13 +178,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Noir semi-transparent */
+    background: rgba(0, 0, 0, 0.4);
 }
 
-/* Contenu principal du hero */
 .hero-content {
     position: relative;
-    z-index: 1;                     /* Au-dessus du slideshow */
+    z-index: 1;
     text-align: center;
     color: var(--couleur-blanc);
 }
@@ -197,7 +191,7 @@ body {
 .hero-content h1 {
     font-size: 5rem;
     margin-bottom: var(--espacement-moyen);
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.5); /* Ombre pour lisibilité */
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero-content p {
@@ -206,12 +200,11 @@ body {
     text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
-/* Points indicateurs du slideshow */
 .slideshow-dots {
     position: absolute;
     bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);    /* Centre horizontalement */
+    transform: translateX(-50%);
     display: flex;
     gap: 10px;
     z-index: 2;
@@ -220,7 +213,7 @@ body {
 .dot {
     width: 12px;
     height: 12px;
-    border-radius: 50%;             /* Fait un cercle */
+    border-radius: 50%;
     background: rgba(255,255,255,0.5);
     cursor: pointer;
     transition: background 0.3s;
@@ -230,146 +223,336 @@ body {
     background: var(--couleur-accent);
 }
 
-/* ------------------------------------------------
-   7. SECTION À PROPOS
-   ------------------------------------------------ */
-.section-about {
+/* ================================================
+   NOUVELLE SECTION ACCÈS
+   ================================================ */
+.section-acces {
     padding: 80px 20px;
     background: var(--couleur-surface);
 }
 
 .container {
-    max-width: 1200px;              /* Largeur maximale */
-    margin: 0 auto;                 /* Centre le container */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.section-about h2 {
-    font-size: 2.5rem;
+.section-acces h2 {
     text-align: center;
-    margin-bottom: var(--espacement-moyen);
+    font-size: 2.5rem;
     color: var(--couleur-accent);
+    margin-bottom: 1 px;
 }
 
-.section-about > .container > p {
+.subtitle {
     text-align: center;
     font-size: 1.2rem;
-    margin-bottom: var(--espacement-grand);
+    color: var(--couleur-texte);
+    opacity: 0.8;
+    margin-bottom: 3rem;
 }
 
-/* Grille de cartes informatives */
-.info-grid {
+/* Tabs */
+.acces-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 3rem;
+}
+
+.tab-btn {
+    padding: 10px 30px;
+    background: transparent;
+    border: 1px solid var(--couleur-accent);
+    color: var(--couleur-texte);
+    cursor: pointer;
+    border-radius: 25px;
+    transition: all 0.3s;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.tab-btn:hover {
+    background: rgba(160, 200, 120, 0.1);
+}
+
+.tab-btn.active {
+    background: var(--couleur-accent);
+    color: var(--couleur-blanc);
+}
+
+/* Tab Content */
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.acces-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive automatique */
-    gap: var(--espacement-grand);
-    margin-top: var(--espacement-grand);
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+    border-radius: 15px;
+        grid-template-columns: 1fr;
+    align-items: start;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    row-gap: 1.5rem;
 }
 
-.info-card {
-    background: var(--couleur-blanc);
-    padding: var(--espacement-grand);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+/* SVG Container - Taille uniforme */
+.svg-container {
+    width: 100%;
+    max-width: 700px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }
 
-.info-card:hover {
-    transform: translateY(-5px);    /* Monte au survol */
+.svg-container svg {
+    width: 100%;
+    height: 100%;
 }
 
-.info-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: var(--espacement-moyen);
+.acces-info h3 {
+    font-size: 1.5rem;
     color: var(--couleur-accent);
+    margin-bottom: 1rem;
 }
 
-/* ------------------------------------------------
-   8. SECTION STORIES (Galerie interactive)
-   ------------------------------------------------ */
+.acces-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.acces-info li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.acces-info li:last-child {
+    border-bottom: none;
+}
+
+.acces-info p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+/* ================================================
+   SECTION VOYAGE AVEC EFFET PARALLAX
+   ================================================ */
+.section-voyage {
+    position: relative;
+    background: linear-gradient(180deg, var(--couleur-surface) 0%, var(--couleur-fond) 100%);
+}
+
+.voyage-container {
+    display: flex;
+    position: relative;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Partie gauche - Texte */
+.voyage-texte {
+    flex: 1;
+    padding: 0 40px;
+}
+
+.voyage-header {
+    padding: 80px 0 60px;
+    text-align: center;
+}
+
+.voyage-header h2 {
+    font-size: 3rem;
+    color: var(--couleur-accent);
+    margin-bottom: 1rem;
+}
+
+.voyage-header p {
+    font-size: 1.3rem;
+    color: var(--couleur-texte);
+    opacity: 0.8;
+}
+
+.etape-section {
+    min-height: 100vh;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0.3;
+    transition: opacity 0.5s;
+}
+
+.etape-section.active {
+    opacity: 1;
+}
+
+.etape-numero-grand {
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgba(160, 200, 120, 0.2);
+    margin-bottom: 1rem;
+}
+
+.etape-titre {
+    font-size: 2rem;
+    color: var(--couleur-accent);
+    margin-bottom: 1rem;
+}
+
+.etape-distance {
+    font-size: 1.1rem;
+    color: var(--couleur-texte);
+    opacity: 0.7;
+    margin-bottom: 2rem;
+}
+
+.etape-contenu p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+.etape-highlight {
+    background: var(--couleur-blanc);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    border-left: 4px solid var(--couleur-accent);
+}
+
+.etape-highlight h4 {
+    color: var(--couleur-accent);
+    margin-bottom: 1rem;
+}
+
+/* Partie droite - Carte fixe */
+.voyage-carte {
+    position: sticky;
+    top: var(--hauteur-navbar);
+    width: 50%;
+    height: calc(100vh - var(--hauteur-navbar));
+    background: var(--couleur-blanc);
+    border-radius: 20px 0 0 20px;
+    overflow: hidden;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+
+/* ================================================
+   SECTION STORIES
+   ================================================ */
 .section-stories {
     padding: 80px 20px;
-    background: var(--couleur-fond);
+    background: var(--couleur-surface);
 }
 
 .section-stories h2 {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: var(--espacement-grand);
-    color: var(--couleur-texte);
+    color: var(--couleur-accent);
+    margin-bottom: 2rem;
 }
 
-/* Container des bulles */
-.stories-container {
+/* Container principal pour stories */
+.section-stories .container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
-    gap: var(--espacement-grand);
-    flex-wrap: wrap;                /* Retour à la ligne si nécessaire */
-    margin-bottom: var(--espacement-grand);
+    gap: 3rem;
 }
 
-/* Bulles cliquables */
-.story-bubble {
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.story-bubble:hover {
-    transform: scale(1.1);           /* Grossit au survol */
-}
-
-.story-bubble.active img {
-    border-color: var(--couleur-accent);
-    box-shadow: 0 0 20px rgba(160, 200, 120, 0.5);
-}
-
-.story-bubble img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;              /* Image ronde */
-    object-fit: cover;               /* Remplit le cercle */
-    border: 4px solid var(--couleur-surface);
-    transition: all 0.3s;
-}
-
-.story-bubble p {
-    text-align: center;
-    margin-top: var(--espacement-petit);
-    font-weight: 500;
-}
-
-/* Zone d'affichage du contenu */
-.story-display {
-    min-height: 400px;
-    padding: var(--espacement-grand);
-    background: var(--couleur-blanc);
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+/* Container unique pour intro et swiper */
+.stories-content-wrapper {
+    flex: 1;
+    min-height: 500px;
     position: relative;
 }
 
-/* Message d'accueil */
-.welcome-message {
-    text-align: center;
-    padding: var(--espacement-grand);
+/* Texte d'introduction */
+.stories-intro {
+    padding: 2rem;
+    background: var(--couleur-blanc);
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s;
 }
 
-.welcome-message h3 {
-    font-size: 2rem;
-    color: var(--couleur-accent);
-    margin-bottom: var(--espacement-moyen);
-}
-
-.welcome-message p {
-    font-size: 1.1rem;
+.stories-intro p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
     color: var(--couleur-texte);
-    margin-bottom: var(--espacement-moyen);
+}
+
+.stories-intro p:last-child {
+    margin-bottom: 0;
+}
+
+/* Bulles verticales */
+.story-bubbles-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    width: 300px;
+}
+
+.story-bubble {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.story-bubble:hover {
+    background: var(--couleur-blanc);
+    transform: translateX(10px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.story-bubble.active {
+    background: var(--couleur-accent);
+    color: var(--couleur-blanc);
+}
+
+.story-bubble img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--couleur-blanc);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.story-bubble span {
+    font-weight: 500;
+    font-size: 1.1rem;
+    font-style: italic;
 }
 
 /* Container Swiper */
 .swiper-container {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--couleur-blanc);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s;
 }
 
 .swiper {
@@ -448,82 +631,9 @@ body {
     color: var(--couleur-accent);
 }
 
-/* ------------------------------------------------
-   8.5 CARTE INTERACTIVE (Section About)
-   ------------------------------------------------ */
-.map-container {
-    margin: var(--espacement-grand) 0;
-    padding: var(--espacement-grand);
-    background: var(--couleur-blanc);
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-/* SVG de la carte */
-.reunion-map {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-}
-
-/* Légende de la carte */
-.map-legend {
-    text-align: center;
-    margin-top: var(--espacement-grand);
-    padding: var(--espacement-moyen);
-    background: var(--couleur-surface);
-    border-radius: 10px;
-}
-
-.map-legend h3 {
-    color: var(--couleur-accent);
-    margin-bottom: var(--espacement-moyen);
-}
-
-.map-legend p {
-    margin-bottom: var(--espacement-moyen);
-    line-height: 1.6;
-}
-
-/* Bouton d'animation */
-.btn-animate-route {
-    padding: 0.75rem 1.5rem;
-    background: var(--couleur-accent);
-    color: var(--couleur-blanc);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: transform 0.3s;
-}
-
-.btn-animate-route:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(160, 200, 120, 0.3);
-}
-
-/* Animations pour la carte */
-@keyframes dash {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-.route-line {
-    stroke-dasharray: 500;
-    stroke-dashoffset: 500;
-}
-
-.route-line.animated {
-    animation: dash 3s ease-in-out forwards;
-}
-
-/* ------------------------------------------------
-   9. FOOTER (Pied de page)
-   ------------------------------------------------ */
+/* ================================================
+   FOOTER
+   ================================================ */
 .footer {
     background: var(--couleur-texte);
     color: var(--couleur-blanc);
@@ -572,9 +682,9 @@ body {
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ------------------------------------------------
-   10. ANIMATIONS
-   ------------------------------------------------ */
+/* ================================================
+   ANIMATIONS
+   ================================================ */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -586,22 +696,57 @@ body {
     }
 }
 
-/* ------------------------------------------------
-   11. RESPONSIVE (Adaptatif mobile/tablette)
-   ------------------------------------------------ */
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 1024px) {
+    .acces-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .section-stories .container {
+        flex-direction: column;
+    }
+    
+    .story-bubbles-vertical {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    
+    .stories-content-wrapper {
+        min-height: 400px;
+    }
+    
+    .voyage-container {
+        flex-direction: column;
+    }
+    
+    .voyage-carte {
+        position: relative;
+        top: 0;
+        width: 100%;
+        height: 60vh;
+        border-radius: 0;
+    }
+    
+    .etape-section {
+        min-height: auto;
+        padding: 60px 20px;
+    }
+}
 
-/* Tablette et mobile (max 768px) */
 @media (max-width: 768px) {
-    /* Afficher le bouton hamburger */
     .nav-toggle {
         display: block;
     }
     
-    /* Menu navigation en mode mobile */
     .nav-menu {
         position: fixed;
         top: var(--hauteur-navbar);
-        right: -100%;               /* Caché à droite */
+        right: -100%;
         width: 70%;
         height: calc(100vh - var(--hauteur-navbar));
         background: var(--couleur-blanc);
@@ -612,7 +757,7 @@ body {
     }
     
     .nav-menu.active {
-        right: 0;                   /* Visible */
+        right: 0;
     }
     
     .nav-menu ul {
@@ -620,7 +765,6 @@ body {
         width: 100%;
     }
     
-    /* Animation du bouton hamburger */
     .nav-toggle.active .bar:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
@@ -633,7 +777,6 @@ body {
         transform: rotate(-45deg) translate(7px, -6px);
     }
     
-    /* Ajustements du hero */
     .hero-content h1 {
         font-size: 3rem;
     }
@@ -642,20 +785,36 @@ body {
         font-size: 1.2rem;
     }
     
-    /* Ajustements des sections */
-    .section-about h2,
+    .section-acces h2,
+    .section-carte h2,
     .section-stories h2 {
         font-size: 2rem;
     }
     
-    /* Bulles plus petites sur mobile */
+    .acces-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tab-btn {
+        width: 80%;
+        max-width: 300px;
+    }
+    
     .story-bubble img {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .story-bubble span {
+        font-size: 0.9rem;
+    }
+    
+    .swiper {
+        height: 400px;
     }
 }
 
-/* Très petit mobile (max 480px) */
 @media (max-width: 480px) {
     .hero-content h1 {
         font-size: 2.5rem;
@@ -663,10 +822,6 @@ body {
     
     .hero-content p {
         font-size: 1rem;
-    }
-    
-    .info-grid {
-        grid-template-columns: 1fr;  /* Une seule colonne */
     }
     
     .footer-content {
@@ -677,4 +832,55 @@ body {
     .social-links {
         justify-content: center;
     }
+}
+/* --- Mod: ACCESS vertical layout + text under SVG --- */
+.section-acces { 
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+}
+.section-acces .acces-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+}
+.section-acces .svg-container {
+    margin-bottom: 1rem;
+}
+.section-acces .acces-info {
+    width: 100%;
+    max-width: 900px;
+}
+.section-acces .acces-info ul li {
+    border-bottom: none;
+}
+/* Remove any card-like white boxes inside ACCESS */
+.section-acces .swiper-container,
+.section-acces .acces-card,
+.section-acces .acces-box {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* --- Mod: STORIES full-height like previous section --- */
+.section-stories {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Mod: Scroll snap stop on sections --- */
+.section-acces, .section-stories {
+    scroll-snap-align: start;
+    scroll-margin-top: var(--hauteur-navbar);
+}
+
+/* --- Mod: ACCESS spacing after removing box --- */
+.tab-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+#acces .tab-pane {
+    padding: 0 1rem 2rem;
 }
