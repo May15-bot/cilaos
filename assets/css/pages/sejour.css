@@ -1,0 +1,163 @@
+
+/* =====================================================
+   PAGES/SEJOUR.CSS — Styles spécifiques de la page Séjours
+   S'intègre à la nouvelle architecture (main.css -> pages/sejour.css)
+   - Utilise les variables de base.css (pas de redéfinitions inutiles)
+   - Garde la même structure HTML/IDs/classes de sejour.html
+   ===================================================== */
+
+/* Section principale */
+.section-hebergement{
+  padding-top: var(--hauteur-navbar);
+  min-height: 100vh;
+  padding: 3rem 1.5rem;
+  background: var(--couleur-surface);
+}
+
+.hebergement-container{max-width:var(--max-width);margin:0 auto;}
+.hebergement-header{ text-align:center; margin-bottom:2rem; }
+.hebergement-header h2{ color: var(--couleur-accent); font-size: clamp(1.8rem, 4vw, 2.4rem); }
+.hebergement-header p{ opacity:.8; }
+
+/* === Cartes Catégories ==================================================== */
+.hebergement-categories{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:1.25rem;
+}
+
+.category-card{
+  position:relative;
+  height: 360px;
+  border-radius: 18px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  will-change: transform, box-shadow;
+  outline: none;
+  background: var(--couleur-blanc);
+}
+
+.category-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  filter: saturate(1.05);
+}
+
+.category-video{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover; z-index:1;
+}
+
+.category-overlay{
+  position:absolute; inset:0; z-index:2;
+  background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.55) 70%);
+}
+
+.category-content{
+  position:absolute; z-index:3; inset-inline:0; bottom:0;
+  padding:1.25rem 1.5rem; text-align:center; color:var(--couleur-blanc);
+}
+.category-icon{ font-size:2.25rem; margin-bottom:.5rem; }
+.category-content h3{ font-size:1.5rem; line-height:1.2; }
+.category-content p{ opacity:.9; margin:.25rem 0 .5rem; }
+.category-count{
+  display:inline-block; padding:.35rem .75rem; border-radius:999px;
+  background: rgba(255,255,255,.2); backdrop-filter: blur(8px);
+  font-size:.85rem;
+}
+
+/* === Popup Catégorie ====================================================== */
+.category-popup{
+  position:fixed; inset:0;
+  background: rgba(0,0,0,.7);
+  display:none; align-items:center; justify-content:center;
+  z-index: 20000; padding:1rem;
+  backdrop-filter: blur(4px);
+}
+
+.category-popup.open{ display:flex; }
+
+.popup-content{
+  width:min(1200px, 96vw); height:min(84vh, 900px);
+  background: var(--couleur-blanc);
+  border-radius: 18px; overflow:hidden;
+  display:grid; grid-template-columns: 1.2fr 1fr;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  position: relative;
+}
+
+.close-popup{
+  position:absolute; top:1.25rem; right:1.25rem;
+  width:46px; height:46px; border-radius:50%;
+  background: var(--couleur-accent); color:var(--couleur-blanc);
+  border:none; font-size:1.2rem; cursor:pointer;
+  display:grid; place-items:center;
+  transition: transform .25s ease, background .25s ease;
+}
+.close-popup:hover{ transform: rotate(90deg) scale(1.05); background: var(--couleur-route); }
+
+/* Slideshow */
+.popup-slideshow{ position:relative; background: var(--couleur-surface); }
+.slideshow-container{ position:relative; width:100%; height:100%; }
+.slide{ position:absolute; inset:0; display:none; }
+.slide img{ width:100%; height:100%; object-fit:cover; display:block; }
+.slide.active{ display:block; }
+
+.slideshow-prev, .slideshow-next{
+  position:absolute; top:50%; transform: translateY(-50%);
+  background: rgba(0,0,0,.55); color:#fff; border:none;
+  width:42px; height:42px; border-radius:50%;
+  cursor:pointer; font-size:1.1rem;
+}
+.slideshow-prev{ left:10px; } .slideshow-next{ right:10px; }
+.slideshow-prev:hover, .slideshow-next:hover{ background: rgba(0,0,0,.8); }
+
+.slideshow-dots{ position:absolute; left:50%; bottom:10px; transform:translateX(-50%);
+  display:flex; gap:.4rem; }
+.dot{ width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.5); cursor:pointer; }
+.dot.active{ background: var(--couleur-accent); }
+
+/* Liste dans le popup */
+.popup-list{ display:flex; flex-direction:column; min-height:0; }
+.popup-header{ padding:1.25rem 1.25rem .75rem; border-bottom:1px solid #eee; }
+.popup-header h3{ color: var(--couleur-accent); font-size:1.4rem; margin-bottom:.25rem; }
+.popup-header p{ color:#667; }
+
+.hebergements-scroll{ padding:1rem 1.25rem 1.25rem; overflow:auto; }
+
+/* Carte d'hébergement (dans le popup) */
+.hebergement-card{
+  background: var(--couleur-surface); border-radius:12px; padding:1rem; margin-bottom: .85rem;
+  border:1px solid rgba(0,0,0,.06); transition: border-color .2s ease, transform .2s ease;
+}
+.hebergement-card:hover{ border-color: var(--couleur-accent); transform: translateX(4px); }
+.hebergement-card .header{ display:flex; justify-content:space-between; align-items:flex-start; gap:.75rem; }
+.hebergement-card .name{ font-weight:600; }
+.hebergement-card .price{ color: var(--couleur-accent); font-weight:700; }
+.badge-type{
+  display:inline-block; padding:.2rem .6rem; border-radius:999px;
+  background: var(--couleur-accent); color: var(--couleur-blanc); font-size:.75rem;
+  margin-top:.25rem;
+}
+.details{ color:#666; font-size:.92rem; margin:.35rem 0; }
+.features{ display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.25rem; }
+.tag{ padding:.2rem .5rem; background: rgba(160,200,120,.12); color: var(--couleur-accent);
+  border-radius:8px; font-size:.78rem; }
+.rating{ display:flex; align-items:center; gap:.25rem; margin-top:.35rem; }
+.star{ color:#FFD700; }
+
+/* ====== Responsive ======================================================== */
+@media (max-width: 1024px){
+  .hebergement-categories{ grid-template-columns: 1fr; }
+  .category-card{ height: 300px; }
+  .popup-content{ grid-template-columns: 1fr; height:min(92vh, 900px); }
+  .popup-slideshow{ height: 42%; }
+  .popup-list{ height: 58%; }
+}
+
+@media (max-width: 640px){
+  .category-card{ height: 260px; }
+  .close-popup{ width:40px; height:40px; font-size:1rem; }
+}

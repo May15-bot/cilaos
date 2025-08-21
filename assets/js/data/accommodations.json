@@ -1,0 +1,438 @@
+{
+    "hotels": [
+        {
+            "id": 1,
+            "name": "La Villa Kazuera",
+            "type": "hotel",
+            "category": "Hôtel",
+            "price": 120,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.13775,
+                "lon": 55.47200
+            },
+            "rating": 4.8,
+            "features": ["WiFi", "Piscine", "Vue montagne", "Parking", "Restaurant"],
+            "description": "Villa de charme avec vue exceptionnelle sur le cirque",
+            "detailedDescription": "Située sur les hauteurs de Cilaos, La Villa Kazuera offre une vue panoramique exceptionnelle sur le cirque. Ses chambres spacieuses et élégamment décorées allient confort moderne et charme créole.",
+            "images": [
+                "images/hotels/villa-kazuera-1.jpg",
+                "images/hotels/villa-kazuera-2.jpg",
+                "images/hotels/villa-kazuera-3.jpg"
+            ],
+            "contact": {
+                "phone": "+262 262 31 77 77",
+                "email": "contact@villakazuera.re",
+                "website": "www.villakazuera.re"
+            },
+            "amenities": {
+                "breakfast": true,
+                "halfBoard": true,
+                "fullBoard": false,
+                "spa": true,
+                "pool": true,
+                "restaurant": true,
+                "bar": true,
+                "parking": true,
+                "wifi": true,
+                "airConditioning": true,
+                "petsAllowed": false,
+                "handicapAccess": true
+            }
+        },
+        {
+            "id": 2,
+            "name": "Otroiza Hotel",
+            "type": "hotel",
+            "category": "Hôtel",
+            "price": 85,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.137924,
+                "lon": 55.469052
+            },
+            "rating": 4.5,
+            "features": ["WiFi", "Restaurant", "Jardin", "Parking"],
+            "description": "Hôtel au cœur du village, proche de tous commerces",
+            "detailedDescription": "L'Otroiza Hotel vous accueille dans une ambiance chaleureuse et familiale. Idéalement situé au centre de Cilaos, vous serez à quelques pas des commerces, restaurants et départs de randonnées.",
+            "images": [
+                "images/hotels/otroiza-1.jpg",
+                "images/hotels/otroiza-2.jpg"
+            ],
+            "contact": {
+                "phone": "+262 262 31 71 39",
+                "email": "otroiza@orange.fr",
+                "website": "www.otroiza.com"
+            },
+            "amenities": {
+                "breakfast": true,
+                "halfBoard": true,
+                "fullBoard": false,
+                "spa": false,
+                "pool": false,
+                "restaurant": true,
+                "bar": true,
+                "parking": true,
+                "wifi": true,
+                "airConditioning": false,
+                "petsAllowed": true,
+                "handicapAccess": false
+            }
+        },
+        {
+            "id": 3,
+            "name": "Hotel Des Neiges",
+            "type": "hotel",
+            "category": "Hôtel",
+            "price": 95,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.13383,
+                "lon": 55.47475
+            },
+            "rating": 4.6,
+            "features": ["WiFi", "Piscine", "Spa", "Restaurant"],
+            "description": "Hôtel avec deux piscines et vue sur les montagnes",
+            "images": ["images/hotels/des-neiges-1.jpg"],
+            "contact": {
+                "phone": "+262 262 31 72 89",
+                "email": "hoteldesneiges@wanadoo.fr",
+                "website": "www.hoteldesneiges.re"
+            }
+        },
+        {
+            "id": 4,
+            "name": "Le Vieux Cep",
+            "type": "hotel",
+            "category": "Hôtel",
+            "price": 75,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.13612,
+                "lon": 55.47278
+            },
+            "rating": 4.3,
+            "features": ["WiFi", "Restaurant", "Bar"],
+            "description": "Charme créole authentique, cuisine traditionnelle",
+            "images": ["images/hotels/vieux-cep-1.jpg"],
+            "contact": {
+                "phone": "+262 262 31 71 89",
+                "email": "levieuxcep@wanadoo.fr"
+            }
+        },
+        {
+            "id": 5,
+            "name": "Tsilaosa Hôtel",
+            "type": "hotel",
+            "category": "Hôtel",
+            "price": 110,
+            "capacity": 3,
+            "coordinates": {
+                "lat": -21.13612,
+                "lon": 55.46958
+            },
+            "rating": 4.7,
+            "features": ["WiFi", "Jacuzzi", "Vue panoramique"],
+            "description": "Architecture créole, idéal pour les randonneurs",
+            "images": ["images/hotels/tsilaosa-1.jpg"],
+            "contact": {
+                "phone": "+262 262 31 79 39",
+                "email": "tsilaosa@orange.fr"
+            }
+        },
+        {
+            "id": 6,
+            "name": "Hotel Le Cilaos",
+            "type": "hotel",
+            "category": "Hôtel",
+            "price": 90,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.13608,
+                "lon": 55.47967
+            },
+            "rating": 4.4,
+            "features": ["WiFi", "Parking", "Restaurant"],
+            "description": "Situation centrale, accès facile aux sentiers",
+            "images": ["images/hotels/le-cilaos-1.jpg"],
+            "contact": {
+                "phone": "+262 262 31 85 85"
+            }
+        }
+    ],
+    "gites": [
+        {
+            "id": 7,
+            "name": "Gîte le Fouquet",
+            "type": "gite",
+            "category": "Gîte",
+            "price": 65,
+            "capacity": 6,
+            "coordinates": {
+                "lat": -21.1360,
+                "lon": 55.4680
+            },
+            "rating": 4.5,
+            "features": ["WiFi", "Jardin", "Barbecue", "Parking", "Cuisine équipée"],
+            "description": "Gîte familial avec grand jardin, proche centre",
+            "images": ["images/gites/fouquet-1.jpg"],
+            "contact": {
+                "phone": "+262 692 12 34 56"
+            }
+        },
+        {
+            "id": 8,
+            "name": "Gîte du Pas de Bellecombe",
+            "type": "gite",
+            "category": "Gîte",
+            "price": 55,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.1380,
+                "lon": 55.4750
+            },
+            "rating": 4.3,
+            "features": ["Cuisine équipée", "Terrasse", "Vue montagne"],
+            "description": "Gîte de montagne, départ de randonnées",
+            "images": ["images/gites/bellecombe-1.jpg"],
+            "contact": {
+                "phone": "+262 692 98 76 54"
+            }
+        },
+        {
+            "id": 9,
+            "name": "Gîte Le Relais des Cimes",
+            "type": "gite",
+            "category": "Gîte",
+            "price": 70,
+            "capacity": 8,
+            "coordinates": {
+                "lat": -21.1320,
+                "lon": 55.4690
+            },
+            "rating": 4.6,
+            "features": ["WiFi", "Cheminée", "Parking", "Grand séjour"],
+            "description": "Grand gîte pour groupes, ambiance montagne",
+            "images": ["images/gites/relais-cimes-1.jpg"],
+            "contact": {
+                "phone": "+262 262 31 85 85"
+            }
+        },
+        {
+            "id": 10,
+            "name": "Gîte Le Figuier",
+            "type": "gite",
+            "category": "Gîte",
+            "price": 60,
+            "capacity": 5,
+            "coordinates": {
+                "lat": -21.1370,
+                "lon": 55.4760
+            },
+            "rating": 4.4,
+            "features": ["Jardin", "Barbecue", "Parking gratuit"],
+            "description": "Gîte calme avec jardin tropical",
+            "images": ["images/gites/figuier-1.jpg"]
+        },
+        {
+            "id": 11,
+            "name": "Gîte la Cascade",
+            "type": "gite",
+            "category": "Gîte",
+            "price": 75,
+            "capacity": 6,
+            "coordinates": {
+                "lat": -21.1340,
+                "lon": 55.4670
+            },
+            "rating": 4.7,
+            "features": ["WiFi", "Jacuzzi", "Vue cascade"],
+            "description": "Vue exceptionnelle sur la cascade Bras Rouge",
+            "images": ["images/gites/cascade-1.jpg"]
+        },
+        {
+            "id": 12,
+            "name": "Gîte Les Avirons",
+            "type": "gite",
+            "category": "Gîte",
+            "price": 50,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.1385,
+                "lon": 55.4740
+            },
+            "rating": 4.2,
+            "features": ["Cuisine", "Terrasse", "Calme"],
+            "description": "Gîte économique, ambiance familiale",
+            "images": ["images/gites/avirons-1.jpg"]
+        }
+    ],
+    "chambres": [
+        {
+            "id": 13,
+            "name": "Case Nyala",
+            "type": "chambre",
+            "category": "Chambre d'hôtes",
+            "price": 80,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.1310,
+                "lon": 55.4710
+            },
+            "rating": 4.8,
+            "features": ["Petit-déjeuner", "WiFi", "Jardin", "Piscine"],
+            "description": "Chambres d'hôtes de charme, accueil chaleureux",
+            "images": ["images/chambres/case-nyala-1.jpg"],
+            "contact": {
+                "phone": "+262 262 31 92 50",
+                "website": "www.case-nyala.com"
+            }
+        },
+        {
+            "id": 14,
+            "name": "Chambres d'hôtes DORIS",
+            "type": "chambre",
+            "category": "Chambre d'hôtes",
+            "price": 70,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.1365,
+                "lon": 55.4685
+            },
+            "rating": 4.6,
+            "features": ["Petit-déjeuner", "Terrasse", "Vue"],
+            "description": "Vue magnifique, petit-déjeuner généreux",
+            "images": ["images/chambres/doris-1.jpg"]
+        },
+        {
+            "id": 15,
+            "name": "Ti Fleur Aimée",
+            "type": "chambre",
+            "category": "Chambre d'hôtes",
+            "price": 85,
+            "capacity": 3,
+            "coordinates": {
+                "lat": -21.1335,
+                "lon": 55.4705
+            },
+            "rating": 4.7,
+            "features": ["Piscine", "Spa", "Petit-déjeuner"],
+            "description": "Chambres avec piscine chauffée et spa",
+            "images": ["images/chambres/ti-fleur-1.jpg"]
+        },
+        {
+            "id": 16,
+            "name": "Chez Paul et Lydie",
+            "type": "chambre",
+            "category": "Chambre d'hôtes",
+            "price": 65,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.1375,
+                "lon": 55.4730
+            },
+            "rating": 4.5,
+            "features": ["Table d'hôtes", "Jardin", "Parking"],
+            "description": "Table d'hôtes créole, produits du jardin",
+            "images": ["images/chambres/paul-lydie-1.jpg"]
+        }
+    ],
+    "campings": [
+        {
+            "id": 17,
+            "name": "Camping Le Saint François",
+            "type": "camping",
+            "category": "Camping",
+            "price": 25,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.1390,
+                "lon": 55.4770
+            },
+            "rating": 4.1,
+            "features": ["Sanitaires", "Eau chaude", "Électricité"],
+            "description": "Camping familial, emplacements ombragés",
+            "images": ["images/campings/saint-francois-1.jpg"]
+        },
+        {
+            "id": 18,
+            "name": "Camping Les Lataniers",
+            "type": "camping",
+            "category": "Camping",
+            "price": 20,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.1400,
+                "lon": 55.4780
+            },
+            "rating": 4.0,
+            "features": ["Sanitaires", "Barbecue commun"],
+            "description": "Camping nature, proche sentiers de randonnée",
+            "images": ["images/campings/lataniers-1.jpg"]
+        },
+        {
+            "id": 19,
+            "name": "Camping du Grand Bénare",
+            "type": "camping",
+            "category": "Camping",
+            "price": 30,
+            "capacity": 6,
+            "coordinates": {
+                "lat": -21.1380,
+                "lon": 55.4760
+            },
+            "rating": 4.3,
+            "features": ["Bungalows", "Électricité", "WiFi"],
+            "description": "Camping avec option bungalows",
+            "images": ["images/campings/grand-benare-1.jpg"]
+        },
+        {
+            "id": 20,
+            "name": "Camping Les Cimes",
+            "type": "camping",
+            "category": "Camping",
+            "price": 22,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.1395,
+                "lon": 55.4775
+            },
+            "rating": 3.9,
+            "features": ["Sanitaires", "Aire de jeux"],
+            "description": "Idéal pour familles avec enfants",
+            "images": ["images/campings/les-cimes-1.jpg"]
+        },
+        {
+            "id": 21,
+            "name": "Camping Le Bras Sec",
+            "type": "camping",
+            "category": "Camping",
+            "price": 18,
+            "capacity": 2,
+            "coordinates": {
+                "lat": -21.1410,
+                "lon": 55.4790
+            },
+            "rating": 3.8,
+            "features": ["Nature", "Calme"],
+            "description": "Camping sauvage, retour à la nature",
+            "images": ["images/campings/bras-sec-1.jpg"]
+        },
+        {
+            "id": 22,
+            "name": "Camping Le Vieux Cep",
+            "type": "camping",
+            "category": "Camping",
+            "price": 28,
+            "capacity": 4,
+            "coordinates": {
+                "lat": -21.1385,
+                "lon": 55.4765
+            },
+            "rating": 4.2,
+            "features": ["Restaurant", "Épicerie", "WiFi"],
+            "description": "Camping avec services et restaurant",
+            "images": ["images/campings/vieux-cep-camping-1.jpg"]
+        }
+    ]
+}

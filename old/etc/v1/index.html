@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <!-- Cette balise est ESSENTIELLE pour le responsive mobile -->
+    <!-- width=device-width : largeur = largeur de l'écran -->
+    <!-- initial-scale=1.0 : zoom initial à 100% -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Informations pour le référencement (SEO) -->
+    <meta name="description" content="Découvrez Cilaos, cirque naturel au cœur de La Réunion">
+    <title>Cilaos - Au cœur de La Réunion</title>
+    
+    <!-- Lien vers notre fichier CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Police Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ========================================
+         HEADER : Navigation principale 
+         ======================================== -->
+    <header class="navbar">
+        <!-- Logo du site -->
+        <div class="logo">Cilaos</div>
+        
+        <!-- Bouton hamburger pour mobile (3 barres) -->
+        <button class="nav-toggle" aria-label="Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Menu de navigation -->
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#decouvrir">À découvrir</a></li>
+                <li><a href="#sejours">Séjours</a></li>
+                <li><a href="#tourisme">Tourisme</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#" class="btn">PRO</a>
+        </nav>
+    </header>
+
+    <!-- ========================================
+         SECTION HERO : Page d'accueil avec slideshow
+         ======================================== -->
+    <section class="section-hero" id="hero">
+        <!-- Container du slideshow en arrière-plan -->
+        <div class="slideshow-container">
+            <!-- Les slides (images de fond) -->
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=1920')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1920')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1464207687429-7505649dae38?w=1920')"></div>
+        </div>
+        
+        <!-- Contenu principal par-dessus le slideshow -->
+        <div class="hero-content">
+            <h1>Cilaos</h1>
+            <p>Au cœur de La Réunion</p>
+            <a href="#stories" class="btn">Explorer</a>
+        </div>
+        
+        <!-- Indicateurs (points) du slideshow -->
+        <div class="slideshow-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECTION À PROPOS avec CARTE INTERACTIVE
+         ======================================== -->
+    <section class="section-about" id="about">
+        <div class="container">
+            <h2>Un cirque naturel d'exception</h2>
+            <p>Entre modernité, randonnées et traditions créoles</p>
+            
+            <!-- Carte interactive de La Réunion avec le trajet -->
+            <div class="map-container">
+                <!-- Carte SVG de La Réunion simplifiée -->
+                <svg class="reunion-map" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fond de l'île -->
+                    <path class="island-shape" d="M400,100 C550,100 650,200 650,350 C650,450 550,500 400,500 C250,500 150,450 150,350 C150,200 250,100 400,100 Z" 
+                          fill="#E8F5E9" stroke="#4CAF50" stroke-width="2"/>
+                    
+                    <!-- Les 3 cirques -->
+                    <circle cx="400" cy="300" r="30" fill="#81C784" opacity="0.7"/> <!-- Cilaos -->
+                    <circle cx="350" cy="250" r="25" fill="#A5D6A7" opacity="0.7"/> <!-- Salazie -->
+                    <circle cx="450" cy="250" r="25" fill="#A5D6A7" opacity="0.7"/> <!-- Mafate -->
+                    
+                    <!-- Aéroport Roland Garros -->
+                    <g class="airport-marker">
+                        <circle cx="550" cy="180" r="8" fill="#2196F3"/>
+                        <text x="560" y="170" font-size="12" fill="#1976D2">✈️ Aéroport</text>
+                    </g>
+                    
+                    <!-- Cilaos -->
+                    <g class="cilaos-marker">
+                        <circle cx="400" cy="300" r="8" fill="#FF5722"/>
+                        <text x="380" y="330" font-size="14" font-weight="bold" fill="#D84315">📍 Cilaos</text>
+                    </g>
+                    
+                    <!-- Route animée de l'aéroport à Cilaos -->
+                    <path id="route-path" class="route-line"
+                          d="M 550,180 Q 500,200 480,230 T 450,280 Q 425,290 400,300"
+                          fill="none" 
+                          stroke="#FF9800" 
+                          stroke-width="3"
+                          stroke-dasharray="5,5"
+                          opacity="0"/>
+                    
+                    <!-- Voiture animée qui suit le chemin -->
+                    <g id="car-icon" opacity="0">
+                        <text font-size="20">🚗</text>
+                    </g>
+                    
+                    <!-- Informations sur le trajet -->
+                    <g class="route-info" opacity="0">
+                        <rect x="250" y="400" width="300" height="60" rx="5" fill="white" stroke="#FF9800" stroke-width="2"/>
+                        <text x="400" y="425" text-anchor="middle" font-size="14" fill="#333">
+                            <tspan x="400" dy="0">Distance : 37 km</tspan>
+                            <tspan x="400" dy="20">Durée : 1h15 (400 virages !)</tspan>
+                        </text>
+                    </g>
+                </svg>
+                
+                <!-- Légende de la carte -->
+                <div class="map-legend">
+                    <h3>🗺️ Comment venir à Cilaos ?</h3>
+                    <p>Depuis l'aéroport Roland Garros, empruntez la mythique route aux 400 virages ! 
+                       Un voyage spectaculaire de 37 km à travers les paysages époustouflants de La Réunion.</p>
+                    <button class="btn-animate-route" onclick="animateRoute()">Voir le trajet animé</button>
+                </div>
+            </div>
+            
+            <!-- Grille de cartes informatives -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🏔️ Randonnées</h3>
+                    <p>Le Piton des Neiges culmine à 3070m, point le plus haut de l'océan Indien</p>
+                </div>
+                <div class="info-card">
+                    <h3>♨️ Thermes</h3>
+                    <p>Sources thermales bienfaisantes exploitées depuis 1896</p>
+                </div>
+                <div class="info-card">
+                    <h3>🍲 Gastronomie</h3>
+                    <p>Lentilles IGP et saveurs créoles authentiques</p>
+                </div>
+                <div class="info-card">
+                    <h3>🎨 Culture</h3>
+                    <p>Broderie de Cilaos inscrite au patrimoine culturel</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECTION GALERIE / STORIES avec SWIPER
+         ======================================== -->
+    <section class="section-stories" id="stories">
+        <div class="container">
+            <h2>Découvrez nos histoires</h2>
+            
+            <!-- Container des bulles cliquables -->
+            <div class="stories-container">
+                <!-- Chaque bulle représente une catégorie -->
+                <button class="story-bubble" data-story="culture">
+                    <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=300" alt="Culture">
+                    <p>Culture créole</p>
+                </button>
+                
+                <button class="story-bubble" data-story="randonnees">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=300" alt="Randonnées">
+                    <p>Randonnées</p>
+                </button>
+                
+                <button class="story-bubble" data-story="gastronomie">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300" alt="Gastronomie">
+                    <p>Gastronomie</p>
+                </button>
+                
+                <button class="story-bubble" data-story="thermes">
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300" alt="Thermes">
+                    <p>Thermes</p>
+                </button>
+            </div>
+            
+            <!-- Zone où s'affiche le contenu sélectionné -->
+            <div class="story-display" id="storyDisplay">
+                <!-- Message d'accueil par défaut -->
+                <div class="welcome-message">
+                    <h3>Bienvenue à Cilaos</h3>
+                    <p>Nichée au cœur de l'île de La Réunion, Cilaos est un cirque naturel d'une beauté à couper le souffle.</p>
+                    <p>🌟 Cliquez sur une bulle ci-dessus pour découvrir une histoire...</p>
+                </div>
+                
+                <!-- Container Swiper (caché par défaut) -->
+                <div class="swiper-container" id="storySwiper" style="display: none;">
+                    <!-- Bouton de fermeture -->
+                    <button class="close-story" onclick="closeStory()">✕ Fermer</button>
+                    
+                    <!-- Swiper wrapper -->
+                    <div class="swiper">
+                        <div class="swiper-wrapper" id="swiperWrapper">
+                            <!-- Les slides seront ajoutées dynamiquement ici -->
+                        </div>
+                        <!-- Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Navigation -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER : Pied de page
+         ======================================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Colonne 1 : Coordonnées -->
+            <div class="footer-column">
+                <h3>Office de Tourisme</h3>
+                <p>2 Rue des Écoles<br>
+                97413 Cilaos, La Réunion</p>
+            </div>
+            
+            <!-- Colonne 2 : Contact -->
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p>📞 +262 262 31 70 30<br>
+                ✉️ info@ot-cilaos.re</p>
+            </div>
+            
+            <!-- Colonne 3 : Horaires -->
+            <div class="footer-column">
+                <h3>Horaires</h3>
+                <p>Lun-Sam : 9h-12h / 13h30-17h<br>
+                Dimanche : 9h-12h</p>
+            </div>
+            
+            <!-- Colonne 4 : Réseaux sociaux -->
+            <div class="footer-column">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">YouTube</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Office de Tourisme de Cilaos</p>
+        </div>
+    </footer>
+
+    <!-- Script JavaScript à la fin pour performance -->
+    <!-- Swiper JS pour les stories -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- GSAP pour les animations de la carte -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Notre script principal -->
+    <script src="script.js"></script>
+</body>
+</html>
