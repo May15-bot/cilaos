@@ -1,5 +1,11 @@
-{
-    "hotels": [
+// ================================================
+// assets/js/data/data.js
+// Module de données centralisées pour tout le site
+// ================================================
+
+// Données des hébergements
+const hebergements = {
+    hotels: [
         {
             "id": 1,
             "name": "La Villa Kazuera",
@@ -435,4 +441,293 @@
             "images": ["images/campings/vieux-cep-camping-1.jpg"]
         }
     ]
-}
+};
+
+
+  // Images pour les slideshows par catégorie
+        const categoryImages = {
+            hotel: [
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
+                'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
+                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800'
+            ],
+            gite: [
+                'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800',
+                'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800',
+                'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800',
+                'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800'
+            ],
+            camping: [
+                'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800',
+                'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800',
+                'https://images.unsplash.com/photo-1537905569824-f89f14cceb68?w=800',
+                'https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?w=800'
+            ]
+        };
+
+
+
+
+// Données des restaurants
+const restaurants = [
+    {
+        "id": 1,
+        "name": "Le Vieux Cep",
+        "type": "Cuisine traditionnelle",
+        "cuisine": "Créole",
+        "price": "€€€",
+        "priceRange": {
+            "min": 25,
+            "max": 40
+        },
+        "coordinates": {
+            "lat": -21.13612,
+            "lon": 55.47278
+        },
+        "rating": 4.6,
+        "reviews": 234,
+        "emoji": "🍷",
+        "specialites": ["Carry de porc", "Cuisine créole", "Vins locaux", "Lentilles de Cilaos"],
+        "description": "Restaurant emblématique de Cilaos, le Vieux Cep vous propose une cuisine créole authentique dans un cadre traditionnel.",
+        "detailedDescription": "Installé depuis 1970, Le Vieux Cep est une institution à Cilaos. Notre chef perpétue les traditions culinaires créoles tout en y apportant sa touche personnelle. Cave à vins exceptionnelle avec une sélection de vins de Cilaos.",
+        "images": [
+            "images/restaurants/vieux-cep-1.jpg",
+            "images/restaurants/vieux-cep-2.jpg"
+        ],
+        "openingHours": {
+            "monday": "12:00-14:00, 19:00-21:30",
+            "tuesday": "12:00-14:00, 19:00-21:30",
+            "wednesday": "Fermé",
+            "thursday": "12:00-14:00, 19:00-21:30",
+            "friday": "12:00-14:00, 19:00-21:30",
+            "saturday": "12:00-14:00, 19:00-22:00",
+            "sunday": "12:00-14:30"
+        },
+        "contact": {
+            "phone": "+262 262 31 71 89",
+            "email": "levieuxcep@wanadoo.fr",
+            "website": "www.levieuxcep.re"
+        },
+        "features": {
+            "terrace": true,
+            "parking": true,
+            "wifi": true,
+            "creditCard": true,
+            "reservation": true,
+            "takeaway": false,
+            "delivery": false,
+            "wheelchairAccess": true,
+            "kidsMenu": true,
+            "vegetarianOptions": true,
+            "veganOptions": false
+        }
+    },
+    {
+        "id": 2,
+        "name": "Le Grilladin",
+        "type": "Grillades & BBQ",
+        "cuisine": "Grillades",
+        "price": "€€",
+        "priceRange": {
+            "min": 15,
+            "max": 25
+        },
+        "coordinates": {
+            "lat": -21.1370,
+            "lon": 55.4720
+        },
+        "rating": 4.3,
+        "reviews": 156,
+        "emoji": "🔥",
+        "specialites": ["Grillades au feu de bois", "Côte de bœuf", "Saucisses fumées"],
+        "description": "Spécialiste des grillades au feu de bois, Le Grilladin vous offre une expérience unique avec ses viandes fumées.",
+        "images": ["images/restaurants/grilladin-1.jpg"],
+        "openingHours": {
+            "monday": "12:00-14:30, 19:00-22:00",
+            "tuesday": "12:00-14:30, 19:00-22:00",
+            "wednesday": "12:00-14:30, 19:00-22:00",
+            "thursday": "12:00-14:30, 19:00-22:00",
+            "friday": "12:00-14:30, 19:00-22:30",
+            "saturday": "12:00-14:30, 19:00-22:30",
+            "sunday": "12:00-15:00"
+        },
+        "contact": {
+            "phone": "+262 262 31 85 42"
+        }
+    },
+    {
+        "id": 3,
+        "name": "La Table de Tatie Jeanne",
+        "type": "Cuisine familiale",
+        "cuisine": "Créole familiale",
+        "price": "€€",
+        "priceRange": {
+            "min": 12,
+            "max": 22
+        },
+        "coordinates": {
+            "lat": -21.1340,
+            "lon": 55.4695
+        },
+        "rating": 4.8,
+        "reviews": 312,
+        "emoji": "👵",
+        "specialites": ["Rougail saucisse", "Cari légumes", "Gâteau patate douce"],
+        "description": "Chez Tatie Jeanne, c'est comme à la maison ! Cuisine familiale généreuse, recettes de grand-mère.",
+        "images": ["images/restaurants/tatie-jeanne-1.jpg"],
+        "contact": {
+            "phone": "+262 692 45 67 89"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Le Bistrot Cilaos",
+        "type": "Bistrot moderne",
+        "cuisine": "Fusion",
+        "price": "€€€",
+        "priceRange": {
+            "min": 20,
+            "max": 35
+        },
+        "coordinates": {
+            "lat": -21.1355,
+            "lon": 55.4715
+        },
+        "rating": 4.4,
+        "reviews": 189,
+        "emoji": "🍽️",
+        "specialites": ["Cuisine fusion", "Tartare de thon", "Cocktails créoles"],
+        "description": "Bistrot moderne alliant tradition créole et techniques culinaires contemporaines.",
+        "images": ["images/restaurants/bistrot-cilaos-1.jpg"],
+        "contact": {
+            "phone": "+262 262 31 79 55"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Le Relais des Cimes",
+        "type": "Restaurant d'altitude",
+        "cuisine": "Gastronomique",
+        "price": "€€€€",
+        "priceRange": {
+            "min": 35,
+            "max": 60
+        },
+        "coordinates": {
+            "lat": -21.1320,
+            "lon": 55.4690
+        },
+        "rating": 4.7,
+        "reviews": 267,
+        "emoji": "🏔️",
+        "specialites": ["Lentilles de Cilaos", "Cerf aux épices", "Fromage de chèvre"],
+        "description": "Restaurant gastronomique perché dans les hauteurs, offrant une vue exceptionnelle.",
+        "images": ["images/restaurants/relais-cimes-1.jpg"],
+        "contact": {
+            "phone": "+262 262 31 85 85",
+            "website": "www.relais-des-cimes.re"
+        }
+    },
+    {
+        "id": 6,
+        "name": "Chez Loulou",
+        "type": "Snack créole",
+        "cuisine": "Snack",
+        "price": "€",
+        "priceRange": {
+            "min": 5,
+            "max": 12
+        },
+        "coordinates": {
+            "lat": -21.1375,
+            "lon": 55.4730
+        },
+        "rating": 4.2,
+        "reviews": 423,
+        "emoji": "🥪",
+        "specialites": ["Samoussas", "Bouchons", "Bonbons piment"],
+        "description": "Le snack incontournable de Cilaos ! Chez Loulou, tous les en-cas créoles.",
+        "images": ["images/restaurants/chez-loulou-1.jpg"],
+        "contact": {
+            "phone": "+262 692 12 34 56"
+        }
+    },
+    {
+        "id": 7,
+        "name": "L'Affût",
+        "type": "Restaurant de chasse",
+        "cuisine": "Gibier",
+        "price": "€€€",
+        "priceRange": {
+            "min": 22,
+            "max": 38
+        },
+        "coordinates": {
+            "lat": -21.1310,
+            "lon": 55.4750
+        },
+        "rating": 4.5,
+        "reviews": 198,
+        "emoji": "🦌",
+        "specialites": ["Civet de cerf", "Cabri massalé", "Charcuterie locale"],
+        "description": "Spécialiste du gibier et des viandes de caractère. Cuisine rustique et authentique.",
+        "images": ["images/restaurants/affut-1.jpg"],
+        "contact": {
+            "phone": "+262 262 31 88 77"
+        }
+    },
+    {
+        "id": 8,
+        "name": "La Cascade",
+        "type": "Restaurant panoramique",
+        "cuisine": "Créole moderne",
+        "price": "€€€",
+        "priceRange": {
+            "min": 18,
+            "max": 32
+        },
+        "coordinates": {
+            "lat": -21.1340,
+            "lon": 55.4670
+        },
+        "rating": 4.6,
+        "reviews": 245,
+        "emoji": "🌊",
+        "specialites": ["Poisson grillé", "Salade de lentilles", "Rhum arrangé"],
+        "description": "Restaurant avec vue imprenable sur la cascade Bras Rouge. Cuisine légère et fraîche.",
+        "images": ["images/restaurants/cascade-1.jpg"],
+        "contact": {
+            "phone": "+262 262 31 91 23"
+        }
+    },
+    {
+        "id": 9,
+        "name": "Juste",
+        "type": "Cuisine végétarienne",
+        "cuisine": "Végétarienne",
+        "price": "€€",
+        "priceRange": {
+            "min": 14,
+            "max": 24
+        },
+        "coordinates": {
+            "lat": -21.1360,
+            "lon": 55.4680
+        },
+        "rating": 4.4,
+        "reviews": 167,
+        "emoji": "🌱",
+        "specialites": ["Curry de légumes", "Graines créoles", "Jus de fruits frais"],
+        "description": "Premier restaurant végétarien de Cilaos, cuisine saine et colorée.",
+        "images": ["images/restaurants/juste-1.jpg"],
+        "contact": {
+            "phone": "+262 692 98 76 54",
+            "website": "www.juste-cilaos.re"
+        }
+    }
+];
+;
+
+// Export pour utilisation dans les modules
+export { hebergements, categoryImages, restaurants };

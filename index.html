@@ -17,6 +17,7 @@
     
     <!-- CSS organisé -->
     <link rel="stylesheet" href="./assets/css/main.css">
+   
 </head>
 <body>
     <!-- HEADER : Navigation principale -->
@@ -35,12 +36,43 @@
                 <li><a href="#accueil">À découvrir</a></li>
                 <li><a href="./sejour.html">Séjours</a></li>
                 <li><a href="./tourisme.html">Tourisme</a></li>
-                <li><a href="">Info pratiques</a></li>
+                <li><a href="./pratique.html">Info pratiques</a></li>
                 <li><a href="">Contact</a></li>
             </ul>
             <a href="#" class="btn btn-pro">PRO</a>
         </nav>
     </header>
+
+
+    <!-- Login Modal -->
+<div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+  <div class="login-card" role="document">
+    <button class="close-x" id="loginClose" aria-label="Fermer">×</button>
+    <div class="login-header">
+      <h3 class="login-title" id="loginTitle">Espace Pro</h3>
+      <p class="login-sub">Connectez-vous pour accéder à l'espace professionnel.</p>
+      <div class="hr"></div>
+    </div>
+    <form class="login-body" id="loginForm" onsubmit="return false;">
+      <div class="form-row">
+        <label class="label" for="email">Adresse e-mail</label>
+        <input class="input" type="email" id="email" name="email" placeholder="prenom.nom@email.com" required>
+      </div>
+      <div class="form-row">
+        <label class="label" for="password">Mot de passe</label>
+        <input class="input" type="password" id="password" name="password" placeholder="••••••••" required>
+      </div>
+      <div class="row-split">
+        <label class="checkbox"><input type="checkbox" id="remember"> Se souvenir de moi</label>
+        <a class="link" href="#" id="forgotLink">Mot de passe oublié ?</a>
+      </div>
+      <button class="btn-primary" id="submitLogin">Se connecter</button>
+    </form>
+  </div>
+</div>
+
+
 
     <!-- SECTION HERO : Page d'accueil avec vidéo -->
     <section class="section-hero section-snap" id="accueil">

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tourisme à Cilaos, La Réunion">
-    <title>Tourisme</title>
+    <meta name="description" content="Information pratiques sur Cilaos et la Réunion">
+    <title>Info. Pratiques</title>
     
-
+    <!-- Leaflet pour la carte -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
@@ -15,8 +17,7 @@
 
 
 </head>
-<body class="page-tourisme">
-
+<body> 
     <!-- HEADER : Navigation principale -->
     <header class="navbar">
         <div class="logo">
@@ -32,16 +33,15 @@
             <ul>
                 <li><a href="./index.html">À découvrir</a></li>
                 <li><a href="./sejour.html">Séjours</a></li>
-                <li><a href="#tourisme">Tourisme</a></li>
-                <li><a href="./pratique.html">Info pratiques</a></li>
+                <li><a href="./tourisme.html">Tourisme</a></li>
+                <li><a href="#info-pratique">Info pratiques</a></li>
                 <li><a href="">Contact</a></li>
             </ul>
             <a href="#" class="btn btn-pro">PRO</a>
         </nav>
     </header>
  <script src="/assets/js/login.js"></script>
-
-    <!-- Login Modal -->
+        <!-- Login Modal -->
 <div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
 <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
   <div class="login-card" role="document">
@@ -69,101 +69,123 @@
   </div>
 </div>
 
+<!-- Section Transports -->
+<section id="transports" class="transport-cards">
+  <h2 class="tc-title">Moyens de transport</h2>
 
-
-
-<!-- SECTION HERO : Page d'accueil avec vidéo -->
- 
-    <!-- Section vidéo -->
-    <section class="section-tourisme-video"  id="acceuil">
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-            <source src="./assets/videos/sample.webm" type="video/webm">
-            <source src="./assets/videos/sample.webm" type="video/mp4">
-        </video>
-    </section>
-    <!-- Section Randonnée -->
-    <section class="section-randonnees" id="randonnees">
-     
-
-<div class="container center podium">
-  <div class="card card--left">
-    <h2>Card Left</h2>
-    <hr />
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…</p>
-    <button>Next</button>
-  </div>
-
-  <div class="card card--center">
-    <h2>Card Center</h2>
-    <hr />
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip…</p>
-    <button>Next</button>
-  </div>
-
-  <div class="card card--right">
-    <h2>Card Right</h2>
-    <hr />
-    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore…</p>
-    <button>Next</button>
-  </div>
-</div>
-
-
-    </section>
-    
-     <!-- Section ??? -->
-    <section class="section-???" id="???">
-     
-    </section>
-
-
-    <!-- Section agenda -->
-   <section class="section-agenda" id="agenda">
-  <div class="container tickets">
-    <div class="card card1">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>South</h3>
-        <p>a lonely trip.</p>
-        <button class="cta" type="button">Explorer</button>
+  <ul class="tc-list">
+    <!-- BUS -->
+    <li class="tc-card" style="background-image:url('bus.jpg')">
+      <div class="tc-hero">
+        <div class="tc-hero-content">
+          <button class="tc-btn" type="button" aria-label="Voir les infos Bus">Réserver</button>
+        </div>
       </div>
-    </div>
 
-    <div class="card card2">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>Vauxhall</h3>
-        <p>a lonely trip.</p>
-        <button class="cta" type="button">Explorer</button>
-      </div>
-    </div>
+      <div class="tc-info">
+        <h3 class="tc-info-title">Taxis et navette</h3>
+        <p class="tc-info-sub">Rapide & économique en ville</p>
 
-    <div class="card card3">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>Skye</h3>
-        <p>wild horizons.</p>
-        <button class="cta" type="button">Explorer</button>
-      </div>
-    </div>
+        <div class="tc-meta">
+          <svg class="tc-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z"/></svg>
+          <span>À partir de 2 €*</span>
+        </div>
 
-    <div class="card card4">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>Sahara</h3>
-        <p>winds & dunes.</p>
-        <button class="cta" type="button">Explorer</button>
+        <div class="tc-more">
+          <div class="tc-box tc-box-info">
+            <svg class="tc-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/></svg>
+            <p>Lignes locales & noctilien</p>
+          </div>
+          <div class="tc-box">
+            <svg class="tc-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg>
+            <p>Toute l’année</p>
+          </div>
+        </div>
+
+        <p class="tc-disclaimer">*Exemple de tarif — remplace par le tien.</p>
       </div>
-    </div>
-  </div>
+    </li>
+    <!-- VELO -->
+    <li class="tc-card" style="background-image:url('velo.jpg')">
+      <div class="tc-hero"><div class="tc-hero-content"><button class="tc-btn" type="button">Réserver</button></div></div>
+      <div class="tc-info">
+        <h3 class="tc-info-title">Vélo</h3>
+        <p class="tc-info-sub">Écologique & flexible</p>
+        <div class="tc-meta"><svg class="tc-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z"/></svg><span>Stations en libre-service</span></div>
+        <div class="tc-more">
+          <div class="tc-box tc-box-info"><svg class="tc-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/></svg><p>Pistes cyclables</p></div>
+          <div class="tc-box"><svg class="tc-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg><p>24h/24</p></div>
+        </div>
+      </div>
+    </li>
+
+    <!-- COVOITURAGE -->
+    <li class="tc-card" style="background-image:url('covoiturage.jpg')">
+      <div class="tc-hero"><div class="tc-hero-content"><button class="tc-btn" type="button">Réserver</button></div></div>
+      <div class="tc-info">
+        <h3 class="tc-info-title">Covoiturage</h3>
+        <p class="tc-info-sub">Convivial & moins cher</p>
+        <div class="tc-meta"><svg class="tc-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z"/></svg><span>Partage des frais</span></div>
+        <div class="tc-more">
+          <div class="tc-box tc-box-info"><svg class="tc-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/></svg><p>Trajets domicile-travail</p></div>
+          <div class="tc-box"><svg class="tc-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg><p>Sur réservation</p></div>
+        </div>
+      </div>
+    </li>
+  </ul>
 </section>
 
 
-    <!-- Section territoire -->
-    <section class="section-territoire" id="territoire">
-        <img src="./assets/svg/seaLevel.svg" alt="territoire">
-    </section>
-    
+<section id="cobra-card">
+  <div class="card">
+    <input id="rad1" name="rad" type="radio" checked />
+    <div for="rad1">
+      <h1>1</h1>
+      <div class="btn"></div>
+    </div>
+
+    <input id="rad2" name="rad" type="radio" />
+    <div for="rad2">
+      <h1>2</h1>
+      <div class="btn"></div>
+    </div>
+
+    <input id="rad3" name="rad" type="radio" />
+    <div for="rad3">
+      <h1>3</h1>
+      <div class="btn"></div>
+    </div>
+
+    <input type="checkbox" />
+    <a>Read More</a>
+
+    <p>
+      Phasellus nec sem in justo pellentesque facilisis. In hac habitasse platea
+      dictumst. Praesent metus tellus, elementum eu, semper a, adipiscing nec,
+      purus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper
+      libero, sit amet adipiscing sem neque sed ipsum. Donec pede justo,
+      fringilla vel, aliquet nec, vulputate eget, arcu.
+    </p>
+
+    <div class="shapes"></div>
+
+ 
+    <div class="photo">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="blob">
+      <div class="glob"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Fonts Google -->
+<link href="https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Raleway:wght@100;900&display=swap" rel="stylesheet"/>
+
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
@@ -223,7 +245,6 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="./assets/js/tourisme.js"></script>
+    <script src="./assets/js/pratique.js"></script>
 </body>
 </html>
-

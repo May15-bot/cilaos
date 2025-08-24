@@ -1,0 +1,502 @@
+/* ====== Transports Cards (pur HTML+CSS) ====== */
+  #transports { --blue:#0a4870; --blue2:#e3ebf1; --grey:#7d7d7d; --grey2:#f0f0f0; --orange:#ec992c; }
+  #transports { font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans","Helvetica Neue",Arial,sans-serif; padding: 10px 0 30px; }
+  #transports .tc-title { margin: 10px 20px; color: var(--blue); font-weight: 600; }
+
+  #transports .tc-list { display:flex; flex-wrap:wrap; gap:20px; list-style:none; padding:0 10px; margin:0; justify-content:center; }
+
+  #transports .tc-card {
+    position: relative; width:300px; display:flex; flex-direction:column;
+    border-radius:12px; overflow:hidden; margin-bottom:10px;
+    background-position:center; background-size:cover; text-align:center; color:var(--blue);
+    transition: transform .3s ease, box-shadow .3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+  #transports .tc-card::before{
+    content:""; position:absolute; inset:0; background:rgba(10,72,112,0); transition:background .3s ease;
+  }
+
+  /* Bandeau image + bouton */
+  #transports .tc-hero { height:200px; }
+  #transports .tc-hero-content{
+    position:relative; height:100%; display:flex; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(-200px); transition:transform .3s ease, opacity .3s ease;
+  }
+  #transports .tc-btn{
+    cursor:pointer; border:3px solid #fff; background:transparent; color:#fff;
+    text-transform:uppercase; font-weight:700; font-size:1rem; padding:10px 16px; border-radius:8px; transition:all .25s ease;
+  }
+  #transports .tc-btn:hover{ background:#fff; color:var(--blue); border-width:0; }
+
+  /* Bloc infos */
+  #transports .tc-info{
+    flex:1 0 auto; padding:20px; background:var(--grey2);
+    transform:translateY(206px); transition:transform .3s ease;
+  }
+  #transports .tc-info-title{
+    position:relative; padding-bottom:10px; margin:0 0 10px; font-weight:800; font-size:1.15rem;
+  }
+  #transports .tc-info-title::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; margin:auto; width:50px; height:3px; background:var(--blue);
+  }
+  #transports .tc-info-sub{ margin:0; color:#244b66; }
+  #transports .tc-meta{ display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px; font-weight:600; }
+  #transports .tc-ico{ width:24px; height:24px; flex:none }
+  #transports .tc-more{ opacity:0; transition:opacity .3s ease; }
+  #transports .tc-more .tc-box{
+    background:#fff; border-radius:10px; padding:14px; margin-top:18px; font-weight:700; font-size:.92rem; color:#123;
+    display:flex; flex-direction:column; align-items:center; gap:6px; flex:1 0 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  }
+  #transports .tc-more .tc-box-info{ color: var(--orange); }
+  #transports .tc-more .tc-box p{ margin:0; }
+  #transports .tc-more .tc-box .tc-ico{ margin-bottom:4px; }
+  #transports .tc-more .tc-box + .tc-box{ margin-left:10px; }
+  #transports .tc-more .tc-box{ display:inline-flex; min-width:calc(50% - 5px); }
+  #transports .tc-more{ display:flex; flex-wrap:wrap; justify-content:space-between; }
+
+  #transports .tc-disclaimer{ margin-top:16px; font-size:.82rem; color:var(--grey); }
+
+  /* État "ouvert" au survol */
+  #transports .tc-card:hover::before{ background:rgba(10,72,112,.6); }
+  #transports .tc-card:hover .tc-hero-content{ opacity:1; transform:translateY(0); }
+  #transports .tc-card:hover .tc-info{ transform:translateY(0); }
+  #transports .tc-card:hover .tc-more{ opacity:1; }
+
+  /* Mobile : cartes ouvertes par défaut */
+  @media (max-width: 768px){
+    #transports .tc-card::before{ background:rgba(10,72,112,.6); }
+    #transports .tc-hero-content{ opacity:1; transform:translateY(0); }
+    #transports .tc-info{ transform:translateY(0); }
+    #transports .tc-more{ opacity:1; }
+  }
+
+
+
+
+
+
+#cobra-card{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+   padding:60px 20px;
+  font-family:'Raleway Dots', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+ 
+}
+
+/* --- Radios “onglets” en bas de la carte --- */
+#cobra-card input[type="radio"]{
+  position:absolute;
+  z-index:999;
+  left:0;
+  bottom:0;
+  width:33.33%;
+  opacity:0;
+  overflow:hidden;
+  height:30px;
+}
+
+/* Hover sur une zone-onglet => feedback sur le bouton */
+#cobra-card input[type="radio"]:hover + div .btn{
+  background:#B9ACCA;
+}
+#cobra-card input[type="radio"]:hover + div .btn:after{
+  color:#fff;
+}
+
+/* 2e onglet */
+#cobra-card input[type="radio"]:nth-of-type(2){
+  left:33.33%;
+}
+#cobra-card input[type="radio"]:nth-of-type(2) + div .btn{
+  left:33.33%;
+}
+#cobra-card input[type="radio"]:nth-of-type(2) + div .btn:after{
+  content:'2';
+}
+
+/* 3e onglet */
+#cobra-card input[type="radio"]:nth-of-type(3){
+  left:66.66%;
+}
+#cobra-card input[type="radio"]:nth-of-type(3) + div .btn{
+  left:66.66%;
+}
+#cobra-card input[type="radio"]:nth-of-type(3) + div .btn:after{
+  content:'3';
+}
+
+/* Onglet actif */
+#cobra-card input[type="radio"]:checked + div .btn{
+  box-shadow:0 0 0 2px #6D44B5;
+  z-index:10;
+  padding:5px 0;
+}
+#cobra-card input[type="radio"]:checked + div .btn:before{
+  left:-25%;
+}
+#cobra-card input[type="radio"]:checked + div .btn:after{
+  color:#fff;
+}
+
+/* Le “bouton” d’onglet (barre du bas) */
+#cobra-card input[type="radio"] + div .btn{
+  position:absolute;
+  width:33%;
+  bottom:0;
+  left:0;
+  height:45px;
+  box-shadow:0 0 0 2px #B9ACCA;
+  overflow:hidden;
+  z-index:9;
+  cursor:pointer;
+  transition:all 300ms cubic-bezier(0.175,0.885,0.32,1.275);
+}
+#cobra-card input[type="radio"] + div .btn:after{
+  content:'1';
+  position:absolute;
+  font-weight:900;
+  font-size:43px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) translateY(-2.5px);
+  line-height:0;
+  color:#B9ACCA;
+}
+#cobra-card input[type="radio"] + div .btn:before{
+  content:'';
+  position:absolute;
+  width:150%;
+  height:100%;
+  top:0;
+  background:#6D44B5;
+  left:-150%;
+  transition:all 300ms cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+/* --- Carte --- */
+.card{
+  width:800px;
+  min-width:800px;
+  height:650px;
+  position:relative;
+  max-width:100%;
+  background:#fff;
+}
+.card *{
+  transition:all 300ms cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+/* Gros numéro et bouton */
+.card h1,
+.card a{
+  position:absolute;
+  right:30px;
+  z-index:9;
+  color:#fff;
+  font-size:200px;
+  font-weight:100;
+  margin:0;
+  top:0;
+  line-height:0.75;
+  transform:scale(0) rotateX(180deg);
+  opacity:0;
+}
+
+/* Texte */
+.card p{
+  position:absolute;
+  z-index:999;
+  width:75%;
+  font-size:30px;
+  font-weight:100;
+  font-family:"Raleway", sans-serif;
+  line-height:26px;
+  left:12.5%;
+  color:#fff;
+  display:inline-block;
+  -webkit-clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  transition:none;
+}
+
+/* Lien Read More (bouton) */
+.card a{
+  color:#6D44B5;
+  font-size:15px;
+  bottom:100px;
+  top:auto;
+  width:50%;
+  display:block;
+  text-align:center;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  font-weight:900;
+  padding:10px 5px;
+  border:2px solid;
+  cursor:pointer;
+  left:-50px;
+  opacity:1;
+  transform:none;
+  height:35px;
+  font-family:"Raleway", sans-serif;
+}
+.card a:before{
+  content:'BACK';
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(0);
+  font-size:23px;
+  opacity:0;
+}
+
+/* Checkbox qui déclenche l’ouverture */
+.card input[type="checkbox"]{
+  z-index:999;
+  position:absolute;
+  bottom:100px;
+  width:50%;
+  left:-70px;
+  height:70px;
+  opacity:0;
+}
+.card input[type="checkbox"]:hover ~ a{
+  background:#fba0cc;
+  color:#fff;
+  border-color:#fba0cc;
+}
+.card input[type="checkbox"]:checked ~ p{
+  transition:all 300ms cubic-bezier(0.175,0.885,0.32,1.175);
+  transition-delay:0.2s;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+.card input[type="checkbox"]:checked ~ a{
+  z-index:100;
+  color:#fff;
+  font-size:0;
+}
+.card input[type="checkbox"]:checked ~ a:before{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+.card input[type="checkbox"]:checked ~ .blob{
+  z-index:99;
+  transition:all 500ms cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.card input[type="checkbox"]:checked ~ .blob:before,
+.card input[type="checkbox"]:checked ~ .blob:after{
+  transform:scale(0);
+}
+.card input[type="checkbox"]:checked ~ .blob .glob{
+  transition:all 400ms cubic-bezier(0.175,0.885,0.32,1);
+  min-width:110%;
+  min-height:110%;
+  border-radius:0;
+  top:-5%;
+  right:-5%;
+}
+
+/* Empilement pour chaque radio */
+.card input[type="radio"] + div{
+  overflow:hidden;
+  position:absolute;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+}
+.card input[type="radio"]:checked + div h1{
+  transform:scale(1) rotate(0deg);
+  opacity:1;
+}
+
+/* Thème 2 actif */
+.card input[type="radio"]:nth-of-type(2):checked + div ~ .blob .glob{
+  width:70%;
+  height:75%;
+  background:#FE8D58;
+}
+.card input[type="radio"]:nth-of-type(2):checked + div ~ .blob:before{
+  top:40%;
+  background:#FE8D58;
+}
+.card input[type="radio"]:nth-of-type(2):checked + div ~ .blob:after{
+  background:#FE8D58;
+}
+
+/* Thème 3 actif */
+.card input[type="radio"]:nth-of-type(3):checked + div ~ .blob .glob{
+  width:70%;
+  height:55%;
+  background:#F45746;
+}
+.card input[type="radio"]:nth-of-type(3):checked + div ~ .blob:before{
+  top:20%;
+  background:#F45746;
+  left:40%;
+}
+.card input[type="radio"]:nth-of-type(3):checked + div ~ .blob:after{
+  background:#F45746;
+  left:70%;
+}
+
+/* Photo qui “retourne” selon l’onglet */
+.card input[type="radio"]:nth-of-type(1):checked + div ~ .photo div:nth-of-type(1){
+  transform:rotateX(0deg);
+}
+.card input[type="radio"]:nth-of-type(2):checked + div ~ .photo div:nth-of-type(2){
+  transform:rotateX(0deg);
+}
+.card input[type="radio"]:nth-of-type(3):checked + div ~ .photo div:nth-of-type(3){
+  transform:rotateX(0deg);
+}
+
+/* Shapes déplacement selon l’onglet */
+.card input[type="radio"]:nth-of-type(2):checked + div ~ .shapes{
+  top:35%;
+  left:65%;
+  width:90px;
+}
+.card input[type="radio"]:nth-of-type(2):checked + div ~ .shapes:before{
+  left:120px;
+  top:170px;
+  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 50%);
+  clip-path: polygon(0 0, 0% 100%, 100% 50%);
+}
+.card input[type="radio"]:nth-of-type(3):checked + div ~ .shapes{
+  top:55%;
+  left:55%;
+  width:140px;
+}
+.card input[type="radio"]:nth-of-type(3):checked + div ~ .shapes:before{
+  left:140px;
+  top:-40px;
+  -webkit-clip-path: polygon(100% 0, 0 0, 100% 100%);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* Ombre globale */
+.card:before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:transparent;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,0.5);
+  z-index:200;
+}
+
+
+
+
+/* Pastilles “photo” à gauche */
+.card .photo{
+  position:absolute;
+  width:50%;
+  height:100%;
+  z-index:0;
+  overflow:hidden;
+  perspective:300px;
+}
+.card .photo div{
+  position:absolute;
+  width:75%;
+  height:50%;
+  transform:rotateX(-180deg);
+  top:-12.5%;
+  margin-left:-12.5%;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  border-radius:100%;
+  box-shadow:inset 0 0 0 5px #fff, 0 0 0 5px #fba0cc, 0 0 0 10px #fff;
+}
+.card .photo div:before{
+  content:'';
+  font-size:75px;
+  position:absolute;
+  left:50%;
+  top:50%;
+  margin:20px 0 0 5px;
+  transform:translate(-50%,-50%);
+  filter:saturate(0) brightness(20);
+  opacity:0.25;
+}
+.card .photo div:first-of-type{
+  background:#fba0cc;
+}
+.card .photo div:nth-of-type(2){
+  background:#F45746;
+  box-shadow:inset 0 0 0 5px #fff, 0 0 0 5px #F45746, 0 0 0 10px #fff;
+}
+.card .photo div:nth-of-type(3){
+  background:#B9ACCA;
+  box-shadow:inset 0 0 0 5px #fff, 0 0 0 5px #B9ACCA, 0 0 0 10px #fff;
+}
+
+/* Barrette + triangle décoratifs */
+.card .shapes{
+  position:absolute;
+  left:45%;
+  top:20%;
+  background:#FE8D58;
+  width:60px;
+  height:4px;
+  z-index:2;
+  box-shadow:0 8px 0 0 #FE8D58, 0 16px 0 0 #FE8D58, 0 24px 0 0 #FE8D58, 0 32px 0 0 #FE8D58;
+  mix-blend-mode:screen;
+}
+.card .shapes:before{
+  content:'';
+  position:absolute;
+  width:40px;
+  height:40px;
+  background:linear-gradient(to bottom, #FE8D58, #F45746);
+  -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  left:175px;
+  top:160px;
+  transition:all 300ms cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+/* Blob + gouttes */
+.card .blob{
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  filter:url(#goo);
+}
+.card .blob .glob{
+  position:absolute;
+  width:60%;
+  height:75%;
+  background:#6D44B5;
+  border-radius:100%;
+  top:-25%;
+  right:-25%;
+}
+.card .blob:before,
+.card .blob:after{
+  content:'';
+  position:absolute;
+  width:50%;
+  height:60%;
+  background:#6D44B5;
+  border-radius:100%;
+  right:0;
+  top:20px;
+  transition:all 300ms cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.card .blob:after{
+  right:-15%;
+  top:20%;
+  width:40%;
+  height:60%;
+}
