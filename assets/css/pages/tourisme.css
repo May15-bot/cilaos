@@ -45,7 +45,8 @@
 /* === Card : style commun ============================================== */
 .page-tourisme .podium .card{
   background-color: black;
-  width: 240px;
+  width: var(--podium-card-w);   /* remplace 240px par ceci */
+  flex: 0 0 var(--podium-card-w);
   min-height: 604.5px;                /* 250 * 1.618 */
   margin: 0;                          /* pas d'espace extérieur */
   padding: 20px;
@@ -165,7 +166,7 @@
 
 /* === PATCH : ombres exactes (même taille) + en dernier plan ============ */
 /* Pile locale ; variable d’extension vers la carte centrale */
-.podium { position: relative; isolation: isolate; --shadow-extend: 20px; }
+.podium { position: relative; isolation: isolate; --shadow-extend: 20px; --podium-card-w: 120px;   }
 
 /* Cartes au-dessus de leurs ombres */
 .podium .card{
