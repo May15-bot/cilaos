@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements - Admin Cilaos</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #A0C878;
+            --primary-dark: #7FA85C;
+            --secondary: #FF8A50;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --white: #ffffff;
+            --sidebar-width: 280px;
+            --navbar-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-admin {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: rgba(160,200,120,0.2);
+            color: var(--primary);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            height: var(--navbar-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .page-content {
+            padding: 2rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Calendar View */
+        .calendar-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .calendar-btn {
+            padding: 0.5rem 1rem;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Simple Events List */
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .event-date-box {
+            min-width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .event-day {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .event-month {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .event-description {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .event-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            background: #f3f4f6;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.625rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .event-card {
+                flex-direction: column;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-admin">C</div>
+            <div class="sidebar-title">Cilaos Admin</div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="./admin-dashboard.html" class="nav-link">
+                    <span>📊</span>
+                    <span>Tableau de bord</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-hebergements.html" class="nav-link">
+                    <span>🏨</span>
+                    <span>Hébergements</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-restauration.html" class="nav-link">
+                    <span>🍴</span>
+                    <span>Restaurants</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-activites.html" class="nav-link">
+                    <span>🥾</span>
+                    <span>Activités</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-actualites.html" class="nav-link">
+                    <span>📰</span>
+                    <span>Actualités</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <span>📅</span>
+                    <span>Événements</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <span>👥</span>
+                    <span>Utilisateurs</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer;" onclick="toggleSidebar()">☰</button>
+            
+            <div style="flex: 1;"></div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button style="width: 40px; height: 40px; border-radius: 10px; background: #f3f4f6; border: none; cursor: pointer;">🔔</button>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #A0C878, #7FA85C); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">AD</div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Content Header -->
+            <div class="content-header">
+                <div>
+                    <h1 class="page-title">Gestion des Événements</h1>
+                </div>
+                <button class="btn btn-primary" onclick="openModal()">
+                    <span>+</span>
+                    Nouvel événement
+                </button>
+            </div>
+
+            <!-- Calendar -->
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h2 class="calendar-title">Janvier 2025</h2>
+                    <div class="calendar-nav">
+                        <button class="calendar-btn">⬅ Précédent</button>
+                        <button class="calendar-btn">Aujourd'hui</button>
+                        <button class="calendar-btn">Suivant ➡</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div class="events-list">
+                <!-- Event 1 -->
+                <div class="event-card">
+                    <div class="event-date-box">
+                        <div class="event-day">15</div>
+                        <div class="event-month">JAN</div>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">Festival Sakifo 2025</h3>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <span>🕒</span>
+                                <span>14h00 - 23h00</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>📍</span>
+                                <span>Place de l'Église</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>👥</span>
+                                <span>5000 participants</span>
+                            </div>
+                        </div>
+                        <p class="event-description">Le plus grand festival de musique de l'océan Indien avec des artistes locaux et internationaux.</p>
+                    </div>
+                    <div class="event-actions">
+                        <button class="action-btn">✏️</button>
+                        <button class="action-btn">🗑️</button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="event-card">
+                    <div class="event-date-box">
+                        <div class="event-day">22</div>
+                        <div class="event-month">JAN</div>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">Marché Artisanal</h3>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <span>🕒</span>
+                                <span>08h00 - 17h00</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>📍</span>
+                                <span>Centre-ville</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>👥</span>
+                                <span>200 exposants</span>
+                            </div>
+                        </div>
+                        <p class="event-description">Découvrez l'artisanat local : broderie, vannerie, produits du terroir.</p>
+                    </div>
+                    <div class="event-actions">
+                        <button class="action-btn">✏️</button>
+                        <button class="action-btn">🗑️</button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="event-card">
+                    <div class="event-date-box">
+                        <div class="event-day">28</div>
+                        <div class="event-month">JAN</div>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">Trail de Cilaos</h3>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <span>🕒</span>
+                                <span>06h00 - 18h00</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>📍</span>
+                                <span>Départ Mairie</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>👥</span>
+                                <span>800 coureurs</span>
+                            </div>
+                        </div>
+                        <p class="event-description">Course de trail de 42km à travers les sentiers mythiques du cirque.</p>
+                    </div>
+                    <div class="event-actions">
+                        <button class="action-btn">✏️</button>
+                        <button class="action-btn">🗑️</button>
+                    </div>
+                </div>
+
+                <!-- Event 4 -->
+                <div class="event-card">
+                    <div class="event-date-box" style="background: var(--secondary);">
+                        <div class="event-day">5</div>
+                        <div class="event-month">FÉV</div>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">Fête des Lentilles</h3>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <span>🕒</span>
+                                <span>10h00 - 20h00</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>📍</span>
+                                <span>Jardin public</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <span>👥</span>
+                                <span>3000 visiteurs</span>
+                            </div>
+                        </div>
+                        <p class="event-description">Célébration de la lentille de Cilaos IGP avec dégustations et animations.</p>
+                    </div>
+                    <div class="event-actions">
+                        <button class="action-btn">✏️</button>
+                        <button class="action-btn">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nouvel événement</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Nom de l'événement *</label>
+                    <input type="text" class="form-input" placeholder="Ex: Festival Sakifo">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Date *</label>
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Heure</label>
+                        <input type="time" class="form-input">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Lieu *</label>
+                    <input type="text" class="form-input" placeholder="Ex: Place de l'Église">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Nombre de participants attendus</label>
+                    <input type="number" class="form-input" placeholder="500">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Description de l'événement..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" onclick="closeModal()">Annuler</button>
+                <button class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Modal
+        function openModal() {
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').classList.remove('active');
+        }
+
+        // Actions
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const action = this.textContent;
+                const card = this.closest('.event-card');
+                const title = card.querySelector('.event-title').textContent;
+                
+                if (action === '✏️') {
+                    openModal();
+                } else if (action === '🗑️') {
+                    if (confirm('Supprimer ' + title + ' ?')) {
+                        card.remove();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

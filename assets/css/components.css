@@ -1,0 +1,256 @@
+/* Composants réutilisables */
+
+/* --- Login Modal Styles --- */
+:root {
+  --modal-bg: rgba(0,0,0,.55);
+  --card-bg: #0e0f14;
+  --card-accent: #1b1f2a;
+  --txt: #e8e9ee;
+  --muted: #a9afc3;
+  --brand: #FF1744;
+  --brand-2: #ff6a88;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+body.no-scroll { overflow: hidden; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: var(--modal-bg);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+}
+
+.modal-overlay.active { display: block; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.modal.active { display: grid; }
+
+.login-card {
+  width: min(420px, 94vw);
+  border-radius: var(--radius);
+  background: radial-gradient(1200px 600px at -5% -10%, rgba(255, 23, 68, 0.08), transparent 40%),
+              radial-gradient(900px 600px at 110% 120%, rgba(255, 106, 136, 0.08), transparent 35%),
+              var(--card-bg);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-header {
+  padding: 28px 28px 8px;
+}
+
+.login-title {
+  font-family: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--txt);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: .2px;
+  margin: 0 0 6px;
+}
+
+.login-sub {
+  color: var(--muted);
+  font-size: .92rem;
+  margin: 0 0 10px;
+}
+
+.login-body {
+  padding: 12px 28px 28px;
+}
+
+.form-row { display: grid; gap: 8px; margin: 16px 0; }
+
+.label {
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.input {
+  background: var(--card-accent);
+  color: var(--txt);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  font-size: 0.98rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.input:focus {
+  border-color: rgba(255, 23, 68, .55);
+  box-shadow: 0 0 0 4px rgba(255, 23, 68, .12);
+}
+
+.row-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 18px;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: .9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand);
+}
+
+.link {
+  color: var(--brand-2);
+  text-decoration: none;
+  font-size: .9rem;
+}
+
+.link:hover { text-decoration: underline; }
+
+.btn-primary {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: white;
+  padding: 12px 16px;
+  font-weight: 700;
+  letter-spacing: .25px;
+  cursor: pointer;
+  transition: transform .08s ease, filter .2s ease;
+}
+
+.btn-primary:active { transform: translateY(1px); }
+
+.btn-ghost {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.12);
+  color: var(--txt);
+  padding: 11px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.login-footer {
+  padding: 0 28px 24px;
+  color: var(--muted);
+  font-size: .9rem;
+  display: grid;
+  gap: 10px;
+}
+
+.close-x {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  color: #c9cfdf;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px 10px;
+  line-height: 1;
+}
+.close-x:hover { color: white; }
+
+.hr {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  margin: 8px 0 0;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--hauteur-navbar);
+    background: var(--couleur-blanc);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--espacement-grand);
+    z-index: 10000;
+}
+
+/* Boutons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--couleur-accent);
+    color: var(--couleur-blanc);
+    text-decoration: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(160, 200, 120, 0.3);
+}
+
+.btn-pro {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--couleur-accent);
+    color: var(--couleur-accent);
+}
+
+/* Footer */
+.footer {
+    background: var(--couleur-texte);
+    color: var(--couleur-blanc);
+    padding: var(--espacement-grand);
+    margin-top: var(--espacement-grand);
+}
+
+.footer-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--espacement-grand);
+}
+
+/* Cards hébergement */
+.accommodation-card {
+    background: var(--couleur-blanc);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.accommodation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+

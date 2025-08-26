@@ -1,0 +1,451 @@
+.section-tourisme-video {
+    position: relative;
+    min-height: 20vh;
+    max-height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+/* === Base (identique esprit à votre CSS) =============================== */
+*{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-tourisme .podium{
+  width: 80%;
+  min-height: 70vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center{
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+/* === Podium: alignement bottom + pas d'espace ========================= */
+.podium{
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;      /* aligne les bas */
+  gap: 0;                             /* aucun espace entre cartes */
+  padding: 40px 0;                    /* juste un peu d’air vertical */
+}
+
+/* === Card : style commun ============================================== */
+.page-tourisme .podium .card{
+  background-color: black;
+  width: var(--podium-card-w);   /* remplace 240px par ceci */
+  flex: 0 0 var(--podium-card-w);
+  min-height: 604.5px;                /* 250 * 1.618 */
+  margin: 0;                          /* pas d'espace extérieur */
+  padding: 20px;
+  border-radius: 10px;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+
+  /* timing commun */
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+  -webkit-transition-timing-function: cubic-bezier(0.795,0,0.165,1);
+       -o-transition-timing-function: cubic-bezier(0.795,0,0.165,1);
+          transition-timing-function: cubic-bezier(0.795,0,0.165,1);
+}
+
+/* Typo interne */
+.page-tourisme .podium .card h1,
+.page-tourisme .podium .card h2,
+.page-tourisme .podium .card h3,
+.page-tourisme .podium .card h4,
+.page-tourisme .podium .card h5{
+  margin: 0;
+  padding: 0 0 15px 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 30px;
+  color: #282828;
+}
+
+.page-tourisme .podium .card hr{
+  display: block;
+  height: 3px;
+  border: none;
+  background-color: salmon; /* #FA8072 */
+  margin: 0;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-transition-timing-function: cubic-bezier(0.795,0,0.165,1);
+       -o-transition-timing-function: cubic-bezier(0.795,0,0.165,1);
+          transition-timing-function: cubic-bezier(0.795,0,0.165,1);
+}
+
+.page-tourisme .podium .card p{
+  margin: 15px 0 0 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 100;
+  letter-spacing: -0.25px;
+  line-height: 1.25;
+  font-size: 16px;
+  word-break: break-all;
+  word-wrap: pre-wrap;
+  color: #282828;
+  -webkit-animation-name: p-show;
+          animation-name: p-show;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+}
+
+.page-tourisme .podium .card button{
+  border: none;
+  background-color: salmon;
+  width: 50%;
+  margin: 10px auto 0;
+  padding: 10px 30px;
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-transform: uppercase;
+}
+
+/* === Variantes “podium” =============================================== */
+/* Couleur d’ombre éclaircie: lighten(salmon,5%) ≈ #FB968B */
+ /* G = gauche, C = centre, D = droite */
+
+/* Hauteurs décalées pour l’effet podium (toutes alignées en bas) */
+.page-tourisme .podium  .card--left   { min-height: 430px; border-radius: 10px 0 0 10px;}
+.page-tourisme .podium  .card--center { min-height: 490px; border-radius: 10px 10px 0 0;}
+.page-tourisme .podium  .card--right  { min-height: 390px; border-radius: 0 10px 10px 0;}
+
+/* Ombres orientées + animations correspondantes (gardées mais neutralisées plus bas) */
+.card--left{
+  -webkit-box-shadow: -20px -20px 0 0 #FB968B;
+          box-shadow: -20px -20px 0 0 #FB968B;
+  -webkit-animation-name: shadow-show-left;
+          animation-name: shadow-show-left;
+}
+.card--center{
+  -webkit-box-shadow: 0 -20px 0 0 #FB968B;
+          box-shadow: 0 -20px 0 0 #FB968B;
+  -webkit-animation-name: shadow-show-center;
+          animation-name: shadow-show-center;
+}
+.card--right{
+  -webkit-box-shadow: 20px -20px 0 0 #FB968B;
+          box-shadow: 20px -20px 0 0 #FB968B;
+  -webkit-animation-name: shadow-show-right;
+          animation-name: shadow-show-right;
+}
+
+/* Lignes animées avec direction cohérente */
+.card--left hr{
+  -webkit-animation-name: line-show-left;
+          animation-name: line-show-left;
+}
+.card--center hr{
+  -webkit-animation-name: line-show-center;
+          animation-name: line-show-center;
+}
+.card--right hr{
+  -webkit-animation-name: line-show-right;
+          animation-name: line-show-right;
+}
+
+/* === PATCH : ombres exactes (même taille) + en dernier plan ============ */
+/* Pile locale ; variable d’extension vers la carte centrale */
+.podium { position: relative; isolation: isolate; --shadow-extend: 20px; --podium-card-w: 120px;   }
+
+/* Cartes au-dessus de leurs ombres */
+.podium .card{
+  position: relative;
+  z-index: 0;     /* fond noir + contenu > ombres */
+  overflow: visible;
+}
+
+/* On remplace les box-shadow directs par ceux du ::after (même taille/valeurs) */
+.podium .card--left,
+.podium .card--center,
+.podium .card--right{
+  box-shadow: none !important;
+}
+
+/* Base des ::after : pas de fond, on ne dessine que l’ombre */
+.podium .card::after{
+  content: "";
+  position: absolute;
+  top: 0; height: 100%;
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;                     /* derrière la carte */
+  animation-duration: 0.9s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.795,0,0.165,1);
+  will-change: transform, opacity;
+}
+
+/* GAUCHE : on garde EXACTEMENT -20px -20px 0 0 ; on étend la zone vers la droite */
+.podium .card--left::after{
+  left: 0;
+  width: calc(100% + var(--shadow-extend)); /* étend sous la carte centrale */
+  border-radius: 10px 0 0 10px;
+  box-shadow: -20px -20px 0 0 #FB968B;      /* même taille/orientation qu’avant */
+  animation-name: shadow-move-left;
+}
+
+/* CENTRE : idem, aucune extension latérale */
+.podium .card--center::after{
+  left: 0; width: 100%; 
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -20px 0 0 #FB968B;          /* même taille/orientation qu’avant */
+  animation-name: shadow-move-center;
+}
+
+/* DROITE : on garde EXACTEMENT 20px -20px 0 0 ; on étend la zone vers la gauche */
+.podium .card--right::after{
+  right: 0;
+  width: calc(100% + var(--shadow-extend));
+  border-radius: 0 10px 10px 0;
+  box-shadow: 20px -20px 0 0 #FB968B;       /* même taille/orientation qu’avant */
+  animation-name: shadow-move-right;
+}
+
+/* Animations = déplacement (pas de changement de taille) */
+@keyframes shadow-move-left{
+  0%   { transform: translate(12px, -12px); opacity: 0; }
+  100% { transform: translate(0, 0);        opacity: 1; }
+}
+@keyframes shadow-move-center{
+  0%   { transform: translateY(-12px); opacity: 0; }
+  100% { transform: translateY(0);     opacity: 1; }
+}
+@keyframes shadow-move-right{
+  0%   { transform: translate(-12px, -12px); opacity: 0; }
+  100% { transform: translate(0, 0);         opacity: 1; }
+}
+
+/* === Keyframes (tes anciens restent, utiles si tu en as besoin ailleurs) */
+@-webkit-keyframes p-show { from{color:#ffffff;} to{color:#282828;} }
+@keyframes p-show         { from{color:#ffffff;} to{color:#282828;} }
+
+@-webkit-keyframes shadow-show-left {
+  from { -webkit-box-shadow: 0 0 0 0 #e0e0e0; box-shadow: 0 0 0 0 #e0e0e0; }
+  to   { -webkit-box-shadow: -20px -20px 0 0 #FB968B; box-shadow: -20px -20px 0 0 #FB968B; }
+}
+@keyframes shadow-show-left {
+  from { -webkit-box-shadow: 0 0 0 0 #e0e0e0; box-shadow: 0 0 0 0 #e0e0e0; }
+  to   { -webkit-box-shadow: -20px -20px 0 0 #FB968B; box-shadow: -20px -20px 0 0 #FB968B; }
+}
+
+@-webkit-keyframes shadow-show-center {
+  from { -webkit-box-shadow: 0 0 0 0 #e0e0e0; box-shadow: 0 0 0 0 #e0e0e0; }
+  to   { -webkit-box-shadow: 0 -20px 0 0 #FB968B; box-shadow: 0 -20px 0 0 #FB968B; }
+}
+@keyframes shadow-show-center {
+  from { -webkit-box-shadow: 0 0 0 0 #e0e0e0; box-shadow: 0 0 0 0 #e0e0e0; }
+  to   { -webkit-box-shadow: 0 -20px 0 0 #FB968B; box-shadow: 0 -20px 0 0 #FB968B; }
+}
+
+@-webkit-keyframes shadow-show-right {
+  from { -webkit-box-shadow: 0 0 0 0 #e0e0e0; box-shadow: 0 0 0 0 #e0e0e0; }
+  to   { -webkit-box-shadow: 20px -20px 0 0 #FB968B; box-shadow: 20px -20px 0 0 #FB968B; }
+}
+@keyframes shadow-show-right {
+  from { -webkit-box-shadow: 0 0 0 0 #e0e0e0; box-shadow: 0 0 0 0 #e0e0e0; }
+  to   { -webkit-box-shadow: 20px -20px 0 0 #FB968B; box-shadow: 20px -20px 0 0 #FB968B; }
+}
+
+/* Lignes (révélation directionnelle) */
+@-webkit-keyframes line-show-left   { from { margin-left: 100px; } to { margin-left: 0; } }
+@keyframes         line-show-left   { from { margin-left: 100px; } to { margin-left: 0; } }
+
+@-webkit-keyframes line-show-center { from { margin: 0 100px; } to { margin: 0; } }
+@keyframes         line-show-center { from { margin: 0 100px; } to { margin: 0; } }
+
+@-webkit-keyframes line-show-right  { from { margin-right: 100px; } to { margin-right: 0; } }
+@keyframes         line-show-right  { from { margin-right: 100px; } to { margin-right: 0; } }
+
+
+
+
+
+
+/*  ------------------------------------------------------------ */
+/* ===================== TICKETS — SCOPÉ SUR .container.tickets ===================== */
+/* Active-le avec: <div class="container tickets"> ... </div> */
+
+.container.tickets{
+  /* on force la grille seulement dans ce contexte */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 24px;
+  height: auto;       /* on ne force pas 100% ici */
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+/* ---- Carte (reprend ton style .card, mais seulement dans .tickets) --- */
+.container.tickets .card{
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #fff;
+  overflow: hidden;
+  margin: 0;          /* l’espace vient du gap */
+}
+
+/* pastilles haut/bas */
+.container.tickets .card:before{
+  content: "";
+  z-index: 99;
+  position: absolute;
+  top: -10px;
+  left: 32px;
+  width: 16px; height: 16px; border-radius: 16px;
+  background-color: #E6E5E1; /* $bg-color */
+}
+.container.tickets .card:after{
+  content: "";
+  z-index: 99;
+  position: absolute;
+  bottom: -10px;
+  left: 32px;
+  width: 16px; height: 16px; border-radius: 16px;
+  background-color: #E6E5E1;
+}
+
+/* filet de points à gauche */
+.container.tickets .card ul{
+  z-index: 99;
+  position: absolute;
+  left: 39px; top: 5px;
+  list-style-type: none;
+}
+.container.tickets .card ul li{
+  width: 2px; height: 2px; border-radius: 2px;
+  margin: 6px 0;
+  background-color: #E6E5E1;
+}
+
+/* titre géant en bas à droite */
+.container.tickets .card h2{
+  z-index: 99;
+  font-family: "Poppins", sans-serif;
+  position: absolute;
+  bottom: 0; right: 130px;
+  font-size: 60px; font-weight: 700;
+  color: #fff;
+  pointer-events: none;
+}
+
+/* flèche */
+.container.tickets .card .fa-arrow-right{
+  z-index: 100;
+  position: absolute;
+  right: 75px; bottom: 25px;
+  font-size: 40px; cursor: pointer;
+  opacity: 0; transform: scale(0.1);
+  transition: all .2s ease;
+}
+
+/* petit texte vertical */
+.container.tickets .card p{
+  z-index: 99;
+  position: absolute;
+  top: 20px; right: 70px;
+  color: #333; opacity: .7;
+  font-size: 12px; letter-spacing: 1px;
+  writing-mode: vertical-lr;
+  transition: all .2s ease;
+}
+
+/* image */
+.container.tickets .card .pic{
+  z-index: 100;
+  width: 100%;              /* prend toute la carte en mode tickets */
+  height: 100%;
+  background-image: url("https://images.unsplash.com/photo-1525543907410-b2562b6796d6?ixlib=rb-0.3.5&s=9ff8e5e718a6a40cbd0e1471235912f4&auto=format&fit=crop&w=3452&q=80");
+  background-size: cover;   /* évite l’étirement; si tu veux, remets 100% 100% */
+  background-position: center;
+  filter: grayscale(100%);
+  transition: filter .2s ease;
+}
+
+/* réseau */
+.container.tickets .card .social{
+  position: absolute;
+  left: 60px; top: 0;
+  display: flex; justify-content: space-around; align-items: center;
+  width: 180px; height: 64px; border-radius: 80px;
+}
+.container.tickets .card .social i{
+  opacity: 0; transform: scale(0.1); transition: all .2s ease;
+}
+.container.tickets .card .social i:nth-of-type(1){ transition-delay:.4s; }
+.container.tickets .card .social i:nth-of-type(2){ transition-delay:.3s; }
+.container.tickets .card .social i:nth-of-type(3){ transition-delay:.2s; }
+.container.tickets .card .social i:nth-of-type(4){ transition-delay:.1s; }
+
+/* bouton rond */
+.container.tickets .card button{
+  position: absolute;
+  right: 14px; bottom: 14px;
+  width: 30px; height: 30px;
+  background-color: #DA4D1D; /* $orange */
+  border: none; border-radius: 30px;
+  cursor: pointer; outline: none;
+  transition: all .3s ease;
+  mix-blend-mode: hard-light;
+}
+.container.tickets .card button i{ font-size: 3rem; }
+
+/* états hover */
+.container.tickets .card:hover .social i,
+.container.tickets .card:hover .fa-arrow-right{
+  opacity: 1; transform: scale(1);
+}
+.container.tickets .card:hover button{ transform: scale(16.5); }
+.container.tickets .card:hover p{ color: #fff; }
+.container.tickets .card:hover .pic{ filter: grayscale(0); }
+
+/* variante card2 (image + couleur bouton) */
+.container.tickets .card.card2 .pic{
+  background-image: url("https://images.unsplash.com/photo-1528785198459-ec50485704c7?ixlib=rb-0.3.5&s=3a2fc3039516555bbb2e9cd2967bd321&auto=format&fit=crop&w=1537&q=80");
+}
+.container.tickets .card.card2 button{ background-color: #2b26c3; } /* $blue */
+
+/* (Optionnel) cartes 3 et 4 pour compléter le set */
+.container.tickets .card.card3 .pic{
+  background-image: url("https://images.unsplash.com/photo-1500530855697-b593e...?q=80&w=1600&auto=format&fit=crop");
+}
+.container.tickets .card.card4 .pic{
+  background-image: url("https://images.unsplash.com/photo-1491553895911-0055e...?q=80&w=1600&auto=format&fit=crop");
+}
+
+/* focus accessibles (uniquement ici) */
+.container.tickets .card .fa-arrow-right:focus-visible,
+.container.tickets .card button:focus-visible{
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ------------------------- Responsive ------------------------- */
+@media (max-width: 1200px){
+  .container.tickets{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+}
+@media (max-width: 640px){
+  .container.tickets{ grid-template-columns: 1fr; }
+}

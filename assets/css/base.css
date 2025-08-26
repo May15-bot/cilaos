@@ -1,0 +1,52 @@
+/* Variables CSS et styles de base */
+:root {
+    /* Couleurs principales */
+    --couleur-fond: #FFFDF6;
+    --couleur-surface: #FAF6E9;
+    --couleur-accent: #A0C878;
+    --couleur-texte: #384924;
+    --couleur-blanc: #FFFFFF;
+    --couleur-route: #D21F3C;
+    --couleur-hibiscus: #FF1744;
+    --couleur-orange: #FF8A50;
+    
+    /* Espacements */
+    --espacement-petit: 0.5rem;
+    --espacement-moyen: 1rem;
+    --espacement-grand: 2rem;
+    --hauteur-navbar: 70px;
+    
+    /* Largeur maximale */
+    --max-width: 1400px;
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: var(--hauteur-navbar);
+    min-height: 100%;
+}
+
+body {
+    font-family: "Space Grotesk", sans-serif;
+    background: var(--couleur-fond);
+    color: var(--couleur-texte);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Container global */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}

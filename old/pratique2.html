@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Information pratiques sur Cilaos et la Réunion">
+    <title>Info. Pratiques</title>
+    
+    <!-- Leaflet pour la carte -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Raleway:wght@100;900&display=swap" rel="stylesheet"/>
+    
+    <!-- CSS organisé -->
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="./assets/css/pages/pratique2.css">
+</head>
+<body>
+    <!-- HEADER : Navigation principale -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="./assets/images/cilaos_logo_transparent.png" alt="logo" width="130" height="75">
+        </div>
+        <button class="nav-toggle" aria-label="Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./index.html">À découvrir</a></li>
+                <li><a href="./sejour.html">Séjours</a></li>
+                <li><a href="./tourisme.html">Tourisme</a></li>
+                <li><a href="#info-pratique">Info pratiques</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+            <a href="#" class="btn btn-pro">PRO</a>
+        </nav>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
+    <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+        <div class="login-card" role="document">
+            <button class="close-x" id="loginClose" aria-label="Fermer">×</button>
+            <div class="login-header">
+                <h3 class="login-title" id="loginTitle">Espace Pro</h3>
+                <p class="login-sub">Connectez-vous pour accéder à l'espace professionnel.</p>
+                <div class="hr"></div>
+            </div>
+            <form class="login-body" id="loginForm" onsubmit="return false;">
+                <div class="form-row">
+                    <label class="label" for="email">Adresse e-mail</label>
+                    <input class="input" type="email" id="email" name="email" placeholder="prenom.nom@email.com" required>
+                </div>
+                <div class="form-row">
+                    <label class="label" for="password">Mot de passe</label>
+                    <input class="input" type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <div class="row-split">
+                    <label class="checkbox"><input type="checkbox" id="remember"> Se souvenir de moi</label>
+                    <a class="link" href="#" id="forgotLink">Mot de passe oublié ?</a>
+                </div>
+                <button class="btn-primary" id="submitLogin">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Section Transports avec le style original -->
+    <section id="transports" class="transports-compact" aria-labelledby="transports-title">
+        <h2 id="transports-title">Moyens de transport</h2>
+
+        <!-- 3) Bus local (Alternéo) -->
+        <article class="tc-mini" aria-labelledby="tc-bus-title">
+            <header class="tc-mini__head">
+                <div class="tc-mini__icon" aria-hidden="true">🚌</div>
+                <div>
+                    <h3 id="tc-bus-title">Bus locaux</h3>
+                    <p class="tc-mini__tag">Ligne 60 – depuis Gare de Saint-Louis</p>
+                </div>
+            </header>
+
+            <div class="tc-mini__short">
+                <p>Horaires et arrêts sur Alternéo. Ligne 60 au départ de la gare routière de Saint-Louis assure la liaison directe vers Cilaos avec plusieurs arrêts desservis tout au long du parcours. 
+    C’est une solution pratique et économique, idéale pour voyager sans stress et profiter tranquillement du trajet en montagne. 
+    </p>
+    <p></p><a href="#" class="btn-link" aria-label="Voir les horaires Alternéo">Voir les horaires</a></p>
+            </div>
+
+            <details class="tc-mini__more">
+                <summary>Plus d'infos</summary>
+                <div class="tips-box">
+                    <h4>📍 Informations pratiques</h4>
+                    <ul>
+                        <li>Départ depuis la gare routière de Saint-Louis</li>
+                        <li>Consultez les horaires sur le site Alternéo</li>
+                        <li>Tarif économique pour les trajets réguliers</li>
+                        <li>Prévoyez de la marge : affluence les week-ends et jours fériés</li>
+                        <li>Achetez le ticket à bord ou via application quand disponible</li>
+                    </ul>
+                </div>
+            </details>
+        </article>
+        <!-- 1) Taxis & navettes -->
+        <article class="tc-mini" aria-labelledby="tc-taxis-title">
+            <header class="tc-mini__head">
+                <div class="tc-mini__icon" aria-hidden="true">🚖</div>
+                <div>
+                    <h3 id="tc-taxis-title">Taxis & navettes</h3>
+                    <p class="tc-mini__tag">Réservez pour vos randonnées</p>
+                </div>
+            </header>
+
+            <div class="tc-mini__short">
+                  <p>
+    <strong>Taxi Figuin</strong> – <a href="tel:+262692659658" class="phone">0692 65 96 58</a>, 
+    <strong>Taxi Proxi</strong> – <a href="https://taxiproxi.fr" target="_blank" rel="noopener" class="phone">taxiproxi.fr</a>, 
+    <strong>VTC OT</strong> – <a href="tel:+262692143588" class="phone">0692 14 35 88</a> (24/7). 
+    Ces services permettent de réserver facilement un trajet personnalisé pour vos randonnées, vos excursions ou vos transferts quotidiens. 
+    Disponibles à la demande, ils offrent confort et flexibilité pour rejoindre rapidement les sentiers ou le centre-ville.
+  </p>
+            </div>
+
+            <details class="tc-mini__more">
+                <summary>Plus d'infos</summary>
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Entreprise / Chauffeur</th>
+                            <th>Contact</th>
+                            <th>Informations supplémentaires</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Taxi Figuin</strong></td>
+                            <td><a href="tel:+262692659658" class="phone-link">0692 65 96 58</a></td>
+                            <td>Service de taxi local à Cilaos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Taxi Proxi</strong></td>
+                            <td><a href="https://taxiproxi.fr" target="_blank" class="phone-link">taxiproxi.fr</a></td>
+                            <td>Réservation en ligne avec confirmation par SMS et e-mail</td>
+                        </tr>
+                        <tr>
+                            <td><strong>VTC OT</strong></td>
+                            <td><a href="tel:+262692143588" class="phone-link">0692 14 35 88</a></td>
+                            <td>Chauffeur privé haut de gamme, disponible 24h/24 et 7j/7</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="tips-box">
+                    <h4>💡 Conseils pratiques</h4>
+                    <ul>
+                        <li>Réservez à l'avance pour les départs de randonnées matinaux</li>
+                        <li>Demandez un devis avant le départ pour éviter les surprises</li>
+                        <li>Possibilité de navettes pour groupes sur demande</li>
+                    </ul>
+                </div>
+            </details>
+        </article>
+
+        <!-- 2) Location de voitures -->
+        <article class="tc-mini" aria-labelledby="tc-cars-title">
+            <header class="tc-mini__head">
+                <div class="tc-mini__icon" aria-hidden="true">🚗</div>
+                <div>
+                    <h3 id="tc-cars-title">Location de voitures</h3>
+                    <p class="tc-mini__tag">Conseil : véhicule compact pour routes étroites</p>
+                </div>
+            </header>
+
+            <div class="tc-mini__short">
+                  <p>
+    <strong>ADA Réunion</strong> – Cilaos, <strong>MultiAuto</strong> – Cilaos, 
+    <strong>ITC Tropicar</strong> – Saint-Gilles-les-Bains, 
+    <strong>Jumbo Car</strong> – Saint-Gilles-les-Bains • 
+    <a href="tel:+262262288585" class="phone">0262 28 85 85</a>. 
+    Louer un véhicule est une solution pratique pour explorer librement Cilaos et ses environs en toute autonomie et confort. 
+    Privilégiez un modèle compact pour circuler plus facilement sur les routes étroites et sinueuses de montagne.
+  </p>
+            </div>
+
+            <details class="tc-mini__more">
+                <summary>Plus d'infos</summary>
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Agence</th>
+                            <th>Localisation</th>
+                            <th>Contact</th>
+                            <th>Services proposés</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ADA Réunion</strong></td>
+                            <td>Cilaos</td>
+                            <td>Sur place</td>
+                            <td>Location de voitures et minibus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MultiAuto</strong></td>
+                            <td>Cilaos</td>
+                            <td>Sur place</td>
+                            <td>Location de voitures</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ITC Tropicar</strong></td>
+                            <td>Saint-Gilles-les-Bains</td>
+                            <td>Sur place</td>
+                            <td>Location de voitures</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Jumbo Car</strong></td>
+                            <td>Saint-Gilles-les-Bains</td>
+                            <td><a href="tel:+262262288585" class="phone-link">0262 28 85 85</a></td>
+                            <td>Location de voitures</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="tips-box">
+                    <h4>💡 Conseils pour la location</h4>
+                    <ul>
+                        <li>Privilégiez un véhicule compact pour les routes étroites</li>
+                        <li>Options fréquentes : assurance tous risques, kilométrage illimité, siège enfant</li>
+                        <li>Réservez tôt en haute saison (vacances scolaires / week-ends)</li>
+                    </ul>
+                </div>
+            </details>
+        </article>
+
+
+        <!-- 4) Circulation & parking -->
+        <article class="tc-mini" aria-labelledby="tc-drive-title">
+            <header class="tc-mini__head">
+                <div class="tc-mini__icon" aria-hidden="true">🅿️</div>
+                <div>
+                    <h3 id="tc-drive-title">Circulation & parking</h3>
+                    <p class="tc-mini__tag">Centre-ville & périodes touristiques</p>
+                </div>
+            </header>
+
+            <div class="tc-mini__short">
+                <ul class="tc-list">
+                    <li>Parkings publics disponibles à proximité du centre-ville, accessibles à pied depuis les principaux quartiers. </li>
+                    <li>En haute saison, l'affluence est importante : il est conseillé d'arriver tôt afin de garantir une place et d'éviter les difficultés de stationnement. </li>
+                    <li> Routes étroites, virages serrés et météo changeante exigent une conduite prudente et une bonne anticipation de vos trajets.</li>
+                </ul>
+            </div>
+
+            <details class="tc-mini__more">
+                <summary>Plus d'infos</summary>
+                <div class="tips-box">
+                    <h4>🚗 Recommandations importantes</h4>
+                    <ul>
+                        <li>Parkings publics disponibles près du centre-ville</li>
+                        <li>Arrivez tôt en période touristique pour trouver une place</li>
+                        <li>Prudence sur les routes étroites avec virages serrés</li>
+                        <li>Attention aux changements météo soudains en montagne</li>
+                        <li>Vitesse réduite recommandée sur l'ensemble du cirque</li>
+                    </ul>
+                </div>
+            </details>
+        </article>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Mairie de Cilaos</h3>
+                <p>66 Rue du Père Boiteau<br>97413 Cilaos, La Réunion</p>
+                <p>📞 +262 262 31 77 39</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Office de Tourisme</h3>
+                <p>2 Rue des Écoles<br>97413 Cilaos, La Réunion</p>
+                <p>📞 +262 262 31 70 30<br>✉️ info@ot-cilaos.re</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Horaires d'ouverture</h3>
+                <p><strong>Office de Tourisme :</strong><br>
+                Lun-Sam : 9h-12h / 13h30-17h<br>
+                Dimanche : 9h-12h</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/OfficeTourismeCilaos" aria-label="Facebook" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/CilaosTourisme" aria-label="X (Twitter)" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4l11.733 16h4.267l-11.733-16zM20 4L8.267 20h-4.267l11.733-16z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/cilaos.tourisme" aria-label="Instagram" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/c/CilaosTourisme" aria-label="YouTube" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#FF1744"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Office de Tourisme de Cilaos - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./assets/js/pratique2.js"></script>
+</body>
+</html>

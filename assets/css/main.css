@@ -1,0 +1,17 @@
+
+/* Point d'entrée CSS - Importe tous les modules dans l'ordre */
+
+/* 1. Base - Variables et reset */
+@import url('./base.css');
+
+/* 2. Layout - Structure et grilles */
+@import url('./layout.css');
+
+/* 3. Components - Composants réutilisables */
+@import url('./components.css');
+
+/* 4. Pages spécifiques */
+@import url('./pages/home.css');
+@import url('./pages/sejour.css');
+@import url('./pages/tourisme.css');
+@import url('./pages/pratique.css');

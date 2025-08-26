@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez Cilaos, cirque naturel au cœur de La Réunion">
+    <title>Cilaos - Au cœur de La Réunion</title>
+    
+    <!-- Leaflet pour la carte -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Notre CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER : Navigation principale -->
+    <header class="navbar">
+        
+        <div class="logo">
+            <img src="./images/cilaos_logo_transparent.png" alt="logo" width="130" height="75">
+        </div>
+        <button class="nav-toggle" aria-label="Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#accueil">À découvrir</a></li>
+                <li><a href="">Séjours</a></li>
+                <li><a href="">Tourisme</a></li>
+                <li><a href="">Info pratiques</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+            <a href="#" class="btn btn-pro">PRO</a>
+        </nav>
+    </header>
+
+    <!-- SECTION HERO : Page d'accueil avec vidéo -->
+    <section class="section-hero section-snap" id="accueil">
+        <!-- Vidéo en arrière-plan -->
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+            <source src="./sample.webm" type="video/webm">
+            <source src="sample.webm" type="video/mp4">
+        </video>
+        
+        <!-- Overlay sombre pour améliorer la lisibilité -->
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h1>Cilaos</h1>
+            <p>Au cœur de La Réunion</p>
+            <a href="#acces" class="btn">Explorer</a>
+        </div>
+    </section>
+
+    <!-- SECTION ACCÈS : Moyens d'accès à La Réunion -->
+    <section class="section-acces section-snap" id="acces">
+        <div class="container">
+            <h2>Comment venir à La Réunion</h2>
+            <p class="subtitle">Votre voyage vers l'île intense</p>
+            
+            <!-- Tabs discrets -->
+            <div class="acces-tabs">
+                <button class="tab-btn active" data-tab="monde">Depuis le Monde</button>
+                <button class="tab-btn" data-tab="ocean-indien">Océan Indien</button>
+                <button class="tab-btn" data-tab="iles-vanille">Îles Vanille</button>
+            </div>
+            
+            <!-- Contenu des tabs -->
+            <div class="tab-content">
+                <!-- Tab Monde -->
+                <div class="tab-pane active" id="monde">
+                    <div class="acces-grid">
+                        <div class="svg-container">
+                            <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="800" height="400" fill="#f0f8ff"/>
+                                <text x="400" y="200" text-anchor="middle" font-size="24" fill="#A0C878">Carte du monde - Connexions internationales</text>
+                            </svg>
+                        </div>
+                        <div class="acces-info">
+                            <h3>Connexions internationales</h3>
+                            <ul>
+                                <li><strong>Paris</strong> - 11h de vol direct</li>
+                                <li><strong>Lyon, Marseille</strong> - Vols directs en saison</li>
+                                <li><strong>Bangkok</strong> - Via Maurice</li>
+                                <li><strong>Dubaï</strong> - Via Maurice</li>
+                                <li><strong>Johannesburg</strong> - Vols directs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Océan Indien -->
+                <div class="tab-pane" id="ocean-indien">
+                    <div class="acces-grid">
+                        <div class="svg-container">
+                            <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="800" height="400" fill="#f0f8ff"/>
+                                <text x="400" y="200" text-anchor="middle" font-size="24" fill="#A0C878">Océan Indien - Liaisons régionales</text>
+                            </svg>
+                        </div>
+                        <div class="acces-info">
+                            <h3>Liaisons régionales</h3>
+                            <ul>
+                                <li><strong>Maurice</strong> - 45 min de vol</li>
+                                <li><strong>Madagascar</strong> - 1h30 de vol</li>
+                                <li><strong>Mayotte</strong> - 2h30 de vol</li>
+                                <li><strong>Seychelles</strong> - 2h30 de vol</li>
+                                <li><strong>Comores</strong> - 3h de vol</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Îles Vanille -->
+                <div class="tab-pane" id="iles-vanille">
+                    <div class="acces-grid">
+                        <div class="svg-container">
+                            <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="800" height="400" fill="#f0f8ff"/>
+                                <text x="400" y="200" text-anchor="middle" font-size="24" fill="#A0C878">Circuit des Îles Vanille</text>
+                            </svg>
+                        </div>
+                        <div class="acces-info">
+                            <h3>Circuit des Îles Vanille</h3>
+                            <ul>
+                                <li><strong>La Réunion</strong> - L'île intense</li>
+                                <li><strong>Maurice</strong> - Plages paradisiaques</li>
+                                <li><strong>Madagascar</strong> - Biodiversité unique</li>
+                                <li><strong>Seychelles</strong> - Archipel préservé</li>
+                                <li><strong>Mayotte</strong> - Le lagon aux tortues</li>
+                                <li><strong>Comores</strong> - L'archipel aux parfums</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION CARTE avec effet parallax interne -->
+    <section class="section-voyage section-snap" id="carte">
+        <div class="voyage-wrapper">
+            <!-- Container scrollable pour le texte -->
+            <div class="voyage-texte-container">
+                <div class="voyage-header">
+                    <h2>Le voyage vers Cilaos</h2>
+                    <p>37 kilomètres, 421 virages, une aventure inoubliable</p>
+                </div>
+
+                <div class="voyage-texte">
+                    <!-- Étape 1 -->
+                    <div class="etape-section" data-segment="1">
+                        <div class="etape-numero-grand">01</div>
+                        <h3 class="etape-titre">De l'aéroport au Port</h3>
+                        <p class="etape-distance">📍 12 km • 15 minutes</p>
+                        
+                        <div class="etape-contenu">
+                            <p>Votre aventure commence dès l'aéroport Roland Garros. La route longe la côte sauvage du nord, où les vagues de l'océan Indien viennent se fracasser contre les falaises basaltiques.</p>
+                            
+                            <div class="etape-highlight">
+                                <h4>Richesses du littoral nord</h4>
+                                <p>Entre champs de canne à sucre et ravines spectaculaires, découvrez <strong>La Possession</strong> et ses cascades secrètes. Le Port, ancien village de pêcheurs, garde l'âme authentique de La Réunion.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Étape 2 -->
+                    <div class="etape-section" data-segment="2">
+                        <div class="etape-numero-grand">02</div>
+                        <h3 class="etape-titre">Du Port à Saint-Leu</h3>
+                        <p class="etape-distance">📍 15 km • 20 minutes</p>
+                        
+                        <div class="etape-contenu">
+                            <p>La route épouse la côte ouest, offrant des panoramas époustouflants. Saint-Paul, ancienne capitale, dévoile son marché coloré et ses plages de sable noir.</p>
+                            
+                            <div class="etape-highlight">
+                                <h4>Anecdotes du littoral ouest</h4>
+                                <p>À Saint-Leu, les <strong>baleines à bosse</strong> viennent mettre bas de juin à octobre. Le spot de surf mythique de la Gauche de Saint-Leu attire les champions du monde. Le <strong>Souffleur</strong> projette des gerbes d'eau à 10 mètres de hauteur !</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Étape 3 -->
+                    <div class="etape-section" data-segment="3">
+                        <div class="etape-numero-grand">03</div>
+                        <h3 class="etape-titre">De Saint-Leu à Saint-Louis</h3>
+                        <p class="etape-distance">📍 18 km • 25 minutes</p>
+                        
+                        <div class="etape-contenu">
+                            <p>La route s'élève progressivement. Étang-Salé révèle ses plages de sable noir volcanique. Saint-Louis, porte d'entrée de Cilaos, marque le début de l'aventure vers les hauts.</p>
+                            
+                            <div class="etape-highlight">
+                                <h4>Les merveilles de Cilaos vous attendent</h4>
+                                <p><strong>1.</strong> Piton des Neiges - Toit de l'océan Indien (3070m)</p>
+                                <p><strong>2.</strong> Roche Merveilleuse - Belvédère panoramique</p>
+                                <p><strong>3.</strong> Col du Taïbit - Passage vers Mafate</p>
+                                <p><strong>4.</strong> Cascade Bras Rouge - Chute de 300m</p>
+                                <p><strong>5.</strong> Thermes - Eaux bienfaisantes depuis 1896</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Étape 4 -->
+                    <div class="etape-section" data-segment="4">
+                        <div class="etape-numero-grand">04</div>
+                        <h3 class="etape-titre">Saint-Louis à l'Office de Tourisme</h3>
+                        <p class="etape-distance">📍 7 km • 30 minutes • 421 virages !</p>
+                        
+                        <div class="etape-contenu">
+                            <p>La mythique RN5 et ses 421 virages ! Une route vertigineuse taillée dans la roche, montant de 400 à 1200 mètres d'altitude en seulement 7 kilomètres.</p>
+                            
+                            <div class="etape-highlight">
+                                <h4>📍 Bienvenue à Cilaos !</h4>
+                                <p>L'<strong>Office de Tourisme</strong> vous accueille au cœur du village. Notre équipe passionnée vous guidera vers les trésors cachés du cirque : sentiers secrets, tables d'hôtes authentiques, artisans locaux...</p>
+                                <p>Votre aventure ne fait que commencer !</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte fixe -->
+            <div class="voyage-carte">
+                <div id="map"></div>
+                
+                <!-- Info box sur la carte -->
+                <div class="map-info-box">
+                    <h4 id="map-info-title"> Trajet vers Cilaos</h4>
+                    <div class="map-info-text" id="map-info-text">
+                        37 kilomètres de route spectaculaire
+                    </div>
+                </div>
+                
+                <!-- Légende des POI (cachée par défaut) -->
+                <div class="poi-legend" id="poiLegend">
+                    <h5>Points d'intérêt</h5>
+                    <div class="poi-item">
+                        <span class="poi-number">1</span>
+                        <span>Piton des Neiges</span>
+                    </div>
+                    <div class="poi-item">
+                        <span class="poi-number">2</span>
+                        <span>Roche Merveilleuse</span>
+                    </div>
+                    <div class="poi-item">
+                        <span class="poi-number">3</span>
+                        <span>Col du Taïbit</span>
+                    </div>
+                    <div class="poi-item">
+                        <span class="poi-number">4</span>
+                        <span>Cascade Bras Rouge</span>
+                    </div>
+                    <div class="poi-item">
+                        <span class="poi-number">5</span>
+                        <span>Thermes de Cilaos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION STORIES avec Swiper -->
+    <section class="section-stories section-snap" id="stories">
+        <div class="container">
+            <h2>Découvrez Cilaos</h2>
+            <div class="stories-main-container">
+                <!-- Container principal pour le contenu -->
+                <div class="stories-content-wrapper">
+                    <!-- Texte d'introduction (visible par défaut) -->
+                    <div class="stories-intro active" id="storiesIntro">
+                        <p>Cilaos est avant tout un petit village vivant et agréable. Vous retrouverez dans la rue principale de nombreuses petites boutiques de souvenirs, de spécialités locales, tout comme de multiples restaurants et terrasses.</p>
+                        <p>Il est particulièrement agréable de s'y balader en fin de journée, flânant entre les ruelles.</p>
+                        <p>Tout ce qui sera à voir dans le village se situe autour de ces axes principaux. Vous pourrez trouver l'église du cirque, le marché dominical et quelques belles hôtels créoles au détour des ruelles adjacentes.</p>
+                    </div>
+                    
+                    <!-- Container Swiper (caché par défaut) -->
+                    <div class="story-swiper-container" id="storySwiper" style="display: none;">
+                        <button class="close-story" onclick="closeStory()">✕</button>
+                        
+                        <div class="swiper story-swiper">
+                            <div class="swiper-wrapper" id="swiperWrapper">
+                                <!-- Les slides seront ajoutées dynamiquement -->
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bulles des stories (vertical) -->
+                <div class="story-bubbles-vertical">
+                    <div class="story-bubble" data-story="actualites">
+                        <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=150" alt="Actualités">
+                        <span>Actualités</span>
+                    </div>
+                    <div class="story-bubble" data-story="randonnees">
+                        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=150" alt="Randonnées">
+                        <span>Gravir Cilaos</span>
+                    </div>
+                    <div class="story-bubble" data-story="saveurs">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=150" alt="Saveurs locales">
+                        <span>Manger à Cilaos</span>
+                    </div>
+                    <div class="story-bubble" data-story="office">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=150" alt="Notre office">
+                        <span>Notre office</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="section-snap">
+    <div>
+        <img src="./svg//seaLevel.svg" alt="sea level">
+    </div>
+</section>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Mairie en premier -->
+            <div class="footer-column">
+                <h3>Mairie de Cilaos</h3>
+                <p>66 Rue du Père Boiteau<br>97413 Cilaos, La Réunion</p>
+                <p>📞 +262 262 31 77 39</p>
+            </div>
+            
+            <!-- Office de tourisme en second -->
+            <div class="footer-column">
+                <h3>Office de Tourisme</h3>
+                <p>2 Rue des Écoles<br>97413 Cilaos, La Réunion</p>
+                <p>📞 +262 262 31 70 30<br>✉️ info@ot-cilaos.re</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Horaires d'ouverture</h3>
+                <p><strong>Office de Tourisme :</strong><br>
+                Lun-Sam : 9h-12h / 13h30-17h<br>
+                Dimanche : 9h-12h</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/OfficeTourismeCilaos" aria-label="Facebook" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <!-- X/Twitter -->
+                    <a href="https://twitter.com/CilaosTourisme" aria-label="X (Twitter)" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4l11.733 16h4.267l-11.733-16zM20 4L8.267 20h-4.267l11.733-16z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/cilaos.tourisme" aria-label="Instagram" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/c/CilaosTourisme" aria-label="YouTube" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#FF1744"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Office de Tourisme de Cilaos - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
