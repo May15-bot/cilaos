@@ -33,27 +33,32 @@ Site web moderne pour l'Office de Tourisme de Cilaos, La Réunion. Architecture 
 ```
 cilaos-tourisme/
 │
+├── 📁 dashboard/
 ├── 📁 assets/
 │   ├── 📁 css/
 │   │   ├── base.css          # Variables, reset, typographie
-│   │   ├── layout.css         # Grilles et structures
+│   │   ├── layout.css        # Grilles et structures
 │   │   ├── components.css    # Composants réutilisables
-│   │   ├── 📁 pages/         # Styles spécifiques par page
-│   │   └── main.css          # Import principal
+│   │   ├── main.css          # Import principal
+│   │   └── 📁 pages/         # Styles spécifiques par page
 │   │
 │   ├── 📁 js/
-│   │   ├── 📁 modules/       # Modules JavaScript
 │   │   ├── 📁 data/          # Données centralisées
-│   │   ├── config.js         # Configuration
-│   │   └── main.js           # Point d'entrée
+│   │   ├── login.js          # login dashboard
+│   │   ├── app.js            # js index.html
+│   │   ├── pratique.js       # js pratique.html
+│   │   ├── sejour.js         # js sejour.html
+│   │   └── tourisme.js       # js tourisme.html
 │   │
+│   ├── 📁 svg/               # Images vectoriels
 │   ├── 📁 images/            # Images optimisées
 │   └── 📁 videos/            # Vidéos (WebM + MP4)
 │
 ├── index.html                # Page d'accueil
-├── sejour.html              # Page hébergements
-├── tourisme.html            # Page tourisme/restaurants
-└── README.md                # Documentation
+├── sejour.html               # Page hébergements
+├── tourisme.html             # Page tourisme/restaurants
+├── pratique.html             # Info pratique
+└── README.md                 # Documentation
 ```
 
 ---
