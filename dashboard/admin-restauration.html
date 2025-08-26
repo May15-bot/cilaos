@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants - Admin Cilaos</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #A0C878;
+            --primary-dark: #7FA85C;
+            --secondary: #FF8A50;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --white: #ffffff;
+            --sidebar-width: 280px;
+            --navbar-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-admin {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: rgba(160,200,120,0.2);
+            color: var(--primary);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary);
+        }
+
+        .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            height: var(--navbar-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .page-content {
+            padding: 2rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(160,200,120,0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+
+        /* Restaurant Grid */
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .restaurant-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .restaurant-header {
+            height: 180px;
+            background: linear-gradient(135deg, var(--secondary), #FF6B35);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .restaurant-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.375rem 0.75rem;
+            background: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .price-range {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            padding: 0.375rem 0.75rem;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .restaurant-body {
+            padding: 1.5rem;
+        }
+
+        .restaurant-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .restaurant-type {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .specialty-tag {
+            padding: 0.25rem 0.5rem;
+            background: rgba(255,138,80,0.1);
+            color: var(--secondary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .restaurant-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .restaurant-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: #f9fafb;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.open {
+            background: var(--success);
+        }
+
+        .status-dot.closed {
+            background: var(--danger);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+            border-color: var(--primary);
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .filter-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            background: #f3f4f6;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 0.625rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(160,200,120,0.1);
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Opening Hours Grid */
+        .hours-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .hours-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .day-label {
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .time-input {
+            padding: 0.375rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .restaurants-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-admin">C</div>
+            <div class="sidebar-title">Cilaos Admin</div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="./admin-dashboard.html" class="nav-link">
+                    <span>📊</span>
+                    <span>Tableau de bord</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="admin-hebergements.html" class="nav-link">
+                    <span>🏨</span>
+                    <span>Hébergements</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <span>🍴</span>
+                    <span>Restaurants</span>
+                    <span class="badge">9</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="admin-activites.html" class="nav-link">
+                    <span>🥾</span>
+                    <span>Activités</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-actualites.html" class="nav-link">
+                    <span>📰</span>
+                    <span>Actualités</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-evenements.html" class="nav-link">
+                    <span>📅</span>
+                    <span>Événements</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <span>👥</span>
+                    <span>Utilisateurs</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer;" onclick="toggleSidebar()">☰</button>
+            
+            <div style="flex: 1;"></div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button style="width: 40px; height: 40px; border-radius: 10px; background: #f3f4f6; border: none; cursor: pointer;">🔔</button>
+                <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-radius: 10px; cursor: pointer;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #A0C878, #7FA85C); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">AD</div>
+                    <div>
+                        <div style="font-weight: 600;">Admin</div>
+                        <div style="font-size: 0.75rem; color: #6b7280;">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Content Header -->
+            <div class="content-header">
+                <div>
+                    <h1 class="page-title">Gestion des Restaurants</h1>
+                    <div class="breadcrumb">
+                        <a href="#">Accueil</a>
+                        <span>/</span>
+                        <span>Restaurants</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline">
+                        <span>⬇</span>
+                        Exporter
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <span>+</span>
+                        Nouveau restaurant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Rechercher</label>
+                        <input type="text" class="filter-input" placeholder="Nom du restaurant...">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Type de cuisine</label>
+                        <select class="filter-input">
+                            <option>Tous</option>
+                            <option>Cuisine traditionnelle</option>
+                            <option>Grillades & BBQ</option>
+                            <option>Cuisine familiale</option>
+                            <option>Bistrot moderne</option>
+                            <option>Snack créole</option>
+                            <option>Végétarien</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Gamme de prix</label>
+                        <select class="filter-input">
+                            <option>Tous</option>
+                            <option>€ (Économique)</option>
+                            <option>€€ (Moyen)</option>
+                            <option>€€€ (Haut de gamme)</option>
+                            <option>€€€€ (Luxe)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Statut</label>
+                        <select class="filter-input">
+                            <option>Tous</option>
+                            <option>Ouvert</option>
+                            <option>Fermé</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restaurants Grid -->
+            <div class="restaurants-grid">
+                <!-- Restaurant 1 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-header">
+                        <span>🍷</span>
+                        <span class="restaurant-badge">Traditionnel</span>
+                        <span class="price-range">€€€</span>
+                    </div>
+                    <div class="restaurant-body">
+                        <h3 class="restaurant-name">Le Vieux Cep</h3>
+                        <p class="restaurant-type">Cuisine traditionnelle créole</p>
+                        <div class="specialties">
+                            <span class="specialty-tag">Carry de porc</span>
+                            <span class="specialty-tag">Cuisine créole</span>
+                            <span class="specialty-tag">Vins locaux</span>
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span>📍</span>
+                                <span>Centre-ville</span>
+                            </div>
+                            <div class="info-item">
+                                <span>👥</span>
+                                <span>50 couverts</span>
+                            </div>
+                            <div class="info-item">
+                                <span>📞</span>
+                                <span>0262 31 71 89</span>
+                            </div>
+                            <div class="info-item">
+                                <span>⭐</span>
+                                <span>4.6/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="restaurant-footer">
+                        <div class="status-indicator">
+                            <span class="status-dot open"></span>
+                            <span>Ouvert</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn">👁️</button>
+                            <button class="action-btn">✏️</button>
+                            <button class="action-btn">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restaurant 2 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-header">
+                        <span>🔥</span>
+                        <span class="restaurant-badge">Grillades</span>
+                        <span class="price-range">€€</span>
+                    </div>
+                    <div class="restaurant-body">
+                        <h3 class="restaurant-name">Le Grilladin</h3>
+                        <p class="restaurant-type">Grillades & BBQ</p>
+                        <div class="specialties">
+                            <span class="specialty-tag">Grillades au feu de bois</span>
+                            <span class="specialty-tag">Côte de bœuf</span>
+                            <span class="specialty-tag">Saucisses</span>
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span>📍</span>
+                                <span>Route du Bras Sec</span>
+                            </div>
+                            <div class="info-item">
+                                <span>👥</span>
+                                <span>40 couverts</span>
+                            </div>
+                            <div class="info-item">
+                                <span>📞</span>
+                                <span>0262 31 85 42</span>
+                            </div>
+                            <div class="info-item">
+                                <span>⭐</span>
+                                <span>4.3/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="restaurant-footer">
+                        <div class="status-indicator">
+                            <span class="status-dot open"></span>
+                            <span>Ouvert</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn">👁️</button>
+                            <button class="action-btn">✏️</button>
+                            <button class="action-btn">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restaurant 3 -->
+                <div class="restaurant-card">
+                    <div class="restaurant-header">
+                        <span>👵</span>
+                        <span class="restaurant-badge">Familial</span>
+                        <span class="price-range">€€</span>
+                    </div>
+                    <div class="restaurant-body">
+                        <h3 class="restaurant-name">La Table de Tatie Jeanne</h3>
+                        <p class="restaurant-type">Cuisine familiale</p>
+                        <div class="specialties">
+                            <span class="specialty-tag">Rougail saucisse</span>
+                            <span class="specialty-tag">Cari légumes</span>
+                            <span class="specialty-tag">Gâteau patate</span>
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span>📍</span>
+                                <span>Rue des Trois Mares</span>
+                            </div>
+                            <div class="info-item">
+                                <span>👥</span>
+                                <span>30 couverts</span>
+                            </div>
+                            <div class="info-item">
+                                <span>📞</span>
+                                <span>0692 45 67 89</span>
+                            </div>
+                            <div class="info-item">
+                                <span>⭐</span>
+                                <span>4.8/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="restaurant-footer">
+                        <div class="status-indicator">
+                            <span class="status-dot open"></span>
+                            <span>Ouvert</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn">👁️</button>
+                            <button class="action-btn">✏️</button>
+                            <button class="action-btn">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plus de restaurants... -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="restaurantModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Ajouter un restaurant</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Nom du restaurant *</label>
+                        <input type="text" class="form-input" placeholder="Ex: Le Vieux Cep">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Type de cuisine *</label>
+                        <select class="form-select">
+                            <option>Sélectionner un type</option>
+                            <option>Cuisine traditionnelle</option>
+                            <option>Grillades & BBQ</option>
+                            <option>Cuisine familiale</option>
+                            <option>Bistrot moderne</option>
+                            <option>Restaurant d'altitude</option>
+                            <option>Snack créole</option>
+                            <option>Restaurant de chasse</option>
+                            <option>Cuisine végétarienne</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gamme de prix *</label>
+                        <select class="form-select">
+                            <option>€ (Économique)</option>
+                            <option>€€ (Moyen)</option>
+                            <option>€€€ (Haut de gamme)</option>
+                            <option>€€€€ (Luxe)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nombre de couverts</label>
+                        <input type="number" class="form-input" placeholder="50">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" class="form-input" placeholder="0262 31 71 89">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="contact@restaurant.re">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Adresse</label>
+                        <input type="text" class="form-input" placeholder="Centre-ville, Cilaos">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Spécialités (séparées par des virgules)</label>
+                        <input type="text" class="form-input" placeholder="Carry de porc, Rougail saucisse, Grillades">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" placeholder="Description du restaurant..."></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Horaires d'ouverture</label>
+                        <div class="hours-grid">
+                            <div class="hours-row">
+                                <span class="day-label">Lundi</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="22:00">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day-label">Mardi</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="22:00">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day-label">Mercredi</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="22:00">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day-label">Jeudi</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="22:00">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day-label">Vendredi</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="23:00">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day-label">Samedi</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="23:00">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day-label">Dimanche</span>
+                                <input type="time" class="time-input" value="12:00">
+                                <input type="time" class="time-input" value="15:00">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+                <button class="btn btn-primary" onclick="saveRestaurant()">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Modal functions
+        function openModal() {
+            const modal = document.getElementById('restaurantModal');
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('restaurantModal');
+            modal.classList.remove('active');
+        }
+
+        // Save restaurant
+        function saveRestaurant() {
+            // Collect form data
+            const formData = {
+                name: document.querySelector('.form-input').value,
+                type: document.querySelector('.form-select').value,
+                // ... collect all form data
+            };
+            
+            console.log('Saving restaurant:', formData);
+            // Here would be the API call to save
+            closeModal();
+        }
+
+        // Click outside modal to close
+        window.onclick = function(event) {
+            const modal = document.getElementById('restaurantModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Action buttons
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const action = this.textContent;
+                const card = this.closest('.restaurant-card');
+                const name = card.querySelector('.restaurant-name').textContent;
+                
+                switch(action) {
+                    case '👁️':
+                        console.log('View:', name);
+                        break;
+                    case '✏️':
+                        openModal();
+                        document.querySelector('.modal-title').textContent = 'Modifier ' + name;
+                        break;
+                    case '🗑️':
+                        if (confirm('Êtes-vous sûr de vouloir supprimer ' + name + ' ?')) {
+                            card.style.animation = 'fadeOut 0.3s';
+                            setTimeout(() => card.remove(), 300);
+                        }
+                        break;
+                }
+            });
+        });
+
+        // Filter functionality
+        document.querySelector('.filter-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.restaurant-card').forEach(card => {
+                const name = card.querySelector('.restaurant-name').textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

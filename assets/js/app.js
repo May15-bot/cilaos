@@ -497,17 +497,17 @@ function initStoriesFixed() {
             title: 'Actualités',
             slides: [
                 {
-                    image: './images/local1.png',
+                    image: '../images/local1.png',
                     title: 'Festival Sakifo 2025',
                     description: 'Le plus grand festival de musique de l\'océan Indien revient à Cilaos.'
                 },
                 {
-                    image: './images/local2.png',
+                    image: '../images/local2.png',
                     title: 'Marché forain du dimanche',
                     description: 'Chaque dimanche, le marché s\'anime avec les produits locaux.'
                 },
                 {
-                    image: './images/local3.png',
+                    image: '../images/local3.png',
                     title: 'Fête des Lentilles',
                     description: 'Célébration annuelle de la lentille de Cilaos.'
                 }
@@ -517,17 +517,17 @@ function initStoriesFixed() {
             title: 'Gravir Cilaos - Randonnées',
             slides: [
                 {
-                    image: './images/rando1.png',
+                    image: '../images/rando1.png',
                     title: 'Piton des Neiges',
                     description: 'Le plus haut sommet de l\'océan Indien (3070m).'
                 },
                 {
-                    image: './images/rando2.png',
+                    image: '../images/rando2.png',
                     title: 'Col du Taïbit',
                     description: 'Passage historique entre Cilaos et Mafate.'
                 },
                 {
-                    image: './images/rando3.png',
+                    image: '../images/rando3.png',
                     title: 'Roche Merveilleuse',
                     description: 'Vue panoramique exceptionnelle sur tout le cirque.'
                 }
@@ -537,17 +537,17 @@ function initStoriesFixed() {
             title: 'Saveurs locales',
             slides: [
                 {
-                    image: './images/gastronomie1.png',
+                    image: '../images/gastronomie1.png',
                     title: 'Lentilles de Cilaos IGP',
                     description: 'Cultivées en terrasses depuis des générations.'
                 },
                 {
-                    image: './images/gastronomie2.png',
+                    image: '../images/gastronomie2.png',
                     title: 'Carry créole traditionnel',
                     description: 'Découvrez les saveurs authentiques créoles.'
                 },
                 {
-                    image: './images/gastronomie3.png',
+                    image: '../images/gastronomie3.png',
                     title: 'Vin de Cilaos',
                     description: 'Le seul vignoble tropical d\'altitude de France.'
                 }
@@ -557,12 +557,12 @@ function initStoriesFixed() {
             title: 'Notre office',
             slides: [
                 {
-                    image: '/images/officedetourisme.png',
+                    image: '../images/officedetourisme.png',
                     title: 'Accueil personnalisé',
                     description: 'Notre équipe vous accueille 7j/7.'
                 },
                 {
-                    image: '/images/officedetourisme2.png',
+                    image: '../images/officedetourisme2.png',
                     title: 'Services et réservations',
                     description: 'Hébergements, activités, guides de montagne.'
                 }

@@ -1,4 +1,3 @@
-
 (function() {
   const btnPro = document.querySelector('.btn-pro');
   const modal = document.getElementById('loginModal');

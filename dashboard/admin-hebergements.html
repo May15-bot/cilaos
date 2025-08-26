@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hébergements - Admin Cilaos</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #A0C878;
+            --primary-dark: #7FA85C;
+            --secondary: #FF8A50;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --white: #ffffff;
+            --sidebar-width: 280px;
+            --navbar-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        /* Réutilisation des styles du dashboard */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-admin {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: rgba(160,200,120,0.2);
+            color: var(--primary);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary);
+        }
+
+        .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            height: var(--navbar-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .page-content {
+            padding: 2rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(160,200,120,0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+
+        .btn-outline:hover {
+            background: #f3f4f6;
+        }
+
+        /* Filters Bar */
+        .filters-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .filter-input,
+        .filter-select {
+            padding: 0.625rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(160,200,120,0.1);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 0.375rem 0.75rem;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mini-stat {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mini-stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .mini-stat-icon.primary {
+            background: rgba(160,200,120,0.1);
+            color: var(--primary);
+        }
+
+        .mini-stat-icon.secondary {
+            background: rgba(255,138,80,0.1);
+            color: var(--secondary);
+        }
+
+        .mini-stat-icon.success {
+            background: rgba(16,185,129,0.1);
+            color: var(--success);
+        }
+
+        .mini-stat-icon.info {
+            background: rgba(59,130,246,0.1);
+            color: var(--info);
+        }
+
+        .mini-stat-content {
+            flex: 1;
+        }
+
+        .mini-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .mini-stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        /* Data Grid */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            background: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .item-badge.hotel {
+            color: var(--primary);
+        }
+
+        .item-badge.gite {
+            color: var(--secondary);
+        }
+
+        .item-badge.camping {
+            color: var(--info);
+        }
+
+        .item-badge.chambre {
+            color: var(--warning);
+        }
+
+        .item-content {
+            padding: 1.25rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .item-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .item-price {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .item-location {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .item-features {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .feature-chip {
+            padding: 0.25rem 0.5rem;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .item-status {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.active {
+            background: var(--success);
+        }
+
+        .status-dot.inactive {
+            background: #6b7280;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+            border-color: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            background: #f3f4f6;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #e5e7eb;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 0.625rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(160,200,120,0.1);
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .image-upload {
+            border: 2px dashed #e5e7eb;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload:hover {
+            border-color: var(--primary);
+            background: rgba(160,200,120,0.05);
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 36px;
+            text-align: center;
+        }
+
+        .page-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-row {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-admin">C</div>
+            <div class="sidebar-title">Cilaos Admin</div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="./admin-dashboard.html" class="nav-link">
+                    <span>📊</span>
+                    <span>Tableau de bord</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <span>🏨</span>
+                    <span>Hébergements</span>
+                    <span class="badge">42</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-restauration.html" class="nav-link">
+                    <span>🍴</span>
+                    <span>Restaurants</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-activites.html" class="nav-link">
+                    <span>🥾</span>
+                    <span>Activités</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-actualites.html" class="nav-link">
+                    <span>📰</span>
+                    <span>Actualités</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="./admin-evenements.html" class="nav-link">
+                    <span>📅</span>
+                    <span>Événements</span>
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <span>👥</span>
+                    <span>Utilisateurs</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <button class="mobile-menu-toggle" onclick="toggleSidebar()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">☰</button>
+            
+            <div style="flex: 1;"></div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button style="width: 40px; height: 40px; border-radius: 10px; background: #f3f4f6; border: none; cursor: pointer;">🔔</button>
+                <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-radius: 10px; cursor: pointer;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #A0C878, #7FA85C); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">AD</div>
+                    <div>
+                        <div style="font-weight: 600;">Admin</div>
+                        <div style="font-size: 0.75rem; color: #6b7280;">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Content Header -->
+            <div class="content-header">
+                <div>
+                    <h1 class="page-title">Gestion des Hébergements</h1>
+                    <div class="breadcrumb">
+                        <a href="#">Accueil</a>
+                        <span>/</span>
+                        <span>Hébergements</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline">
+                        <span>⬇</span>
+                        Exporter
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <span>+</span>
+                        Ajouter un hébergement
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="mini-stat">
+                    <div class="mini-stat-icon primary">🏨</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-value">6</div>
+                        <div class="mini-stat-label">Hôtels</div>
+                    </div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon secondary">🏡</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-value">20</div>
+                        <div class="mini-stat-label">Gîtes</div>
+                    </div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon success">🛏️</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-value">10</div>
+                        <div class="mini-stat-label">Chambres d'hôtes</div>
+                    </div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon info">⛺</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-value">6</div>
+                        <div class="mini-stat-label">Campings</div>
+                    </div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon success">✅</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-value">76%</div>
+                        <div class="mini-stat-label">Taux d'occupation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Rechercher</label>
+                        <input type="text" class="filter-input" placeholder="Nom, lieu...">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Type</label>
+                        <select class="filter-select">
+                            <option>Tous les types</option>
+                            <option>Hôtels</option>
+                            <option>Gîtes</option>
+                            <option>Chambres d'hôtes</option>
+                            <option>Campings</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Statut</label>
+                        <select class="filter-select">
+                            <option>Tous</option>
+                            <option>Actif</option>
+                            <option>Inactif</option>
+                            <option>En maintenance</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Prix</label>
+                        <select class="filter-select">
+                            <option>Tous les prix</option>
+                            <option>€ (0-50€)</option>
+                            <option>€€ (50-100€)</option>
+                            <option>€€€ (100-150€)</option>
+                            <option>€€€€ (150€+)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-tags" style="margin-top: 1rem;">
+                    <span class="filter-tag active">Tous</span>
+                    <span class="filter-tag">WiFi</span>
+                    <span class="filter-tag">Piscine</span>
+                    <span class="filter-tag">Parking</span>
+                    <span class="filter-tag">Restaurant</span>
+                    <span class="filter-tag">Spa</span>
+                    <span class="filter-tag">Animaux acceptés</span>
+                </div>
+            </div>
+
+            <!-- Data Grid -->
+            <div class="data-grid">
+                <!-- Item 1 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <span class="item-badge hotel">Hôtel</span>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-title">La Villa Kazuera</h3>
+                            <span class="item-price">120€</span>
+                        </div>
+                        <div class="item-location">
+                            <span>📍</span>
+                            <span>Centre-ville, Cilaos</span>
+                        </div>
+                        <div class="item-features">
+                            <span class="feature-chip">WiFi</span>
+                            <span class="feature-chip">Piscine</span>
+                            <span class="feature-chip">Vue montagne</span>
+                            <span class="feature-chip">4 pers.</span>
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-status">
+                                <span class="status-dot active"></span>
+                                <span>Actif</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="action-btn">👁️</button>
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <span class="item-badge gite">Gîte</span>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-title">Gîte Le Fouquet</h3>
+                            <span class="item-price">65€</span>
+                        </div>
+                        <div class="item-location">
+                            <span>📍</span>
+                            <span>Bras Sec, Cilaos</span>
+                        </div>
+                        <div class="item-features">
+                            <span class="feature-chip">WiFi</span>
+                            <span class="feature-chip">Jardin</span>
+                            <span class="feature-chip">Barbecue</span>
+                            <span class="feature-chip">6 pers.</span>
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-status">
+                                <span class="status-dot active"></span>
+                                <span>Actif</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="action-btn">👁️</button>
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>

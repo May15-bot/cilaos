@@ -141,10 +141,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--couleur-blanc);
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    
 }
 
 .svg-container svg {
@@ -330,8 +329,8 @@
 }
 
 .story-bubble img {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--couleur-blanc);
