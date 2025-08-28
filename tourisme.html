@@ -4,16 +4,333 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tourisme à Cilaos, La Réunion">
-    <title>Tourisme</title>
+    <title>Tourisme - Cilaos</title>
     
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     
     <!-- CSS organisé -->
     <link rel="stylesheet" href="./assets/css/main.css">
-
-
+    
+    <style>
+        /* Styles spécifiques corrigés pour la page tourisme */
+        .page-tourisme {
+            background: var(--couleur-fond);
+        }
+        
+        /* Section Hero Video */
+        .section-tourisme-video {
+            position: relative;
+            height: 40vh;
+            overflow: hidden;
+            margin-top: var(--hauteur-navbar);
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Section Randonnées avec Podium */
+        .section-randonnees {
+            min-height: 100vh;
+            background: var(--couleur-surface);
+            padding: 4rem 2rem;
+        }
+        
+        .randonnees-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .randonnees-header h2 {
+            font-size: 2.5rem;
+            color: var(--couleur-accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Section Activités */
+        .section-activites {
+            padding: 4rem 2rem;
+            background: white;
+        }
+        
+        .activites-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .activites-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .activites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .activite-card {
+            background: var(--couleur-surface);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .activite-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .activite-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Section Agenda Améliorée */
+        .section-agenda {
+            background: linear-gradient(135deg, #E6E5E1 0%, #D3D3D5 100%);
+            padding: 4rem 2rem;
+            min-height: 100vh;
+        }
+        
+        .agenda-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .agenda-info {
+            padding: 2rem;
+        }
+        
+        .agenda-info h2 {
+            font-size: 2.5rem;
+            color: var(--couleur-accent);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .agenda-info p {
+            color: var(--couleur-texte);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Container tickets amélioré */
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            width: 100%;
+        }
+        
+        /* Card ticket style amélioré */
+        .ticket-card {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background-color: #fff;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        /* Pastilles tickets */
+        .ticket-card:before,
+        .ticket-card:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #E6E5E1;
+            border-radius: 50%;
+            z-index: 99;
+        }
+        
+        .ticket-card:before {
+            top: -10px;
+            left: 40px;
+        }
+        
+        .ticket-card:after {
+            bottom: -10px;
+            left: 40px;
+        }
+        
+        /* Perforation */
+        .ticket-card .perforation {
+            position: absolute;
+            left: 47px;
+            top: 20px;
+            height: calc(100% - 40px);
+            width: 2px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #E6E5E1 0px,
+                #E6E5E1 3px,
+                transparent 3px,
+                transparent 8px
+            );
+            z-index: 98;
+        }
+        
+        /* Image de fond */
+        .ticket-image {
+            position: absolute;
+            top: 0;
+            left: 60px;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+        
+        .ticket-card:hover .ticket-image {
+            filter: grayscale(0);
+        }
+        
+        /* Contenu du ticket */
+        .ticket-content {
+            position: absolute;
+            bottom: 0;
+            left: 60px;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .ticket-date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ticket-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ticket-description {
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .ticket-card:hover .ticket-description {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+        
+        /* Bouton CTA */
+        .ticket-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--couleur-accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .ticket-btn:hover {
+            transform: scale(1.1);
+            background: var(--couleur-hibiscus);
+        }
+        
+        /* Section Territoire */
+        .section-territoire {
+            padding: 4rem 2rem;
+            background: white;
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .agenda-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .tickets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .randonnees-header h2,
+            .agenda-info h2 {
+                font-size: 1.8rem;
+            }
+            
+            .podium {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .podium .card {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
 </head>
 <body class="page-tourisme">
 
@@ -39,127 +356,188 @@
             <a href="#" class="btn btn-pro">PRO</a>
         </nav>
     </header>
- <script src="/assets/js/login.js"></script>
 
     <!-- Login Modal -->
-<div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
-<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
-  <div class="login-card" role="document">
-    <button class="close-x" id="loginClose" aria-label="Fermer">×</button>
-    <div class="login-header">
-      <h3 class="login-title" id="loginTitle">Espace Pro</h3>
-      <p class="login-sub">Connectez-vous pour accéder à l'espace professionnel.</p>
-      <div class="hr"></div>
+    <div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
+    <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+        <div class="login-card" role="document">
+            <button class="close-x" id="loginClose" aria-label="Fermer">×</button>
+            <div class="login-header">
+                <h3 class="login-title" id="loginTitle">Espace Pro</h3>
+                <p class="login-sub">Connectez-vous pour accéder à l'espace professionnel.</p>
+                <div class="hr"></div>
+            </div>
+            <form class="login-body" id="loginForm" onsubmit="return false;">
+                <div class="form-row">
+                    <label class="label" for="email">Adresse e-mail</label>
+                    <input class="input" type="email" id="email" name="email" placeholder="prenom.nom@email.com" required>
+                </div>
+                <div class="form-row">
+                    <label class="label" for="password">Mot de passe</label>
+                    <input class="input" type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <div class="row-split">
+                    <label class="checkbox"><input type="checkbox" id="remember"> Se souvenir de moi</label>
+                    <a class="link" href="#" id="forgotLink">Mot de passe oublié ?</a>
+                </div>
+                <button class="btn-primary" id="submitLogin">Se connecter</button>
+            </form>
+        </div>
     </div>
-    <form class="login-body" id="loginForm" onsubmit="return false;">
-      <div class="form-row">
-        <label class="label" for="email">Adresse e-mail</label>
-        <input class="input" type="email" id="email" name="email" placeholder="prenom.nom@email.com" required>
-      </div>
-      <div class="form-row">
-        <label class="label" for="password">Mot de passe</label>
-        <input class="input" type="password" id="password" name="password" placeholder="••••••••" required>
-      </div>
-      <div class="row-split">
-        <label class="checkbox"><input type="checkbox" id="remember"> Se souvenir de moi</label>
-        <a class="link" href="#" id="forgotLink">Mot de passe oublié ?</a>
-      </div>
-      <button class="btn-primary" id="submitLogin">Se connecter</button>
-    </form>
-  </div>
-</div>
 
-
-<!-- SECTION HERO : Page d'accueil avec vidéo -->
- 
-    <!-- Section vidéo -->
-    <section class="section-tourisme-video"  id="acceuil">
+    <!-- Section Hero avec vidéo -->
+    <section class="section-tourisme-video" id="accueil">
         <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-            <source src="./assets/videos/sample.webm" type="video/webm">
-            <source src="./assets/videos/sample.webm" type="video/mp4">
+            <source src="./assets/videos/lever.webm" type="video/webm">
         </video>
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1>Tourisme à Cilaos</h1>
+                <p>Découvrez les merveilles du cirque</p>
+            </div>
+        </div>
     </section>
-    <!-- Section Randonnée -->
+
+    <!-- Section Randonnées avec Podium -->
     <section class="section-randonnees" id="randonnees">
-     
-
-<div class="container center podium">
-  <div class="card card--left">
-    <h2>Card Left</h2>
-    <hr />
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…</p>
-    <button>Next</button>
-  </div>
-
-  <div class="card card--center">
-    <h2>Card Center</h2>
-    <hr />
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip…</p>
-    <button>Next</button>
-  </div>
-
-  <div class="card card--right">
-    <h2>Card Right</h2>
-    <hr />
-    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore…</p>
-    <button>Next</button>
-  </div>
-</div>
-
-
+        <div class="container">
+            <div class="randonnees-header">
+                <h2>Nos Plus Belles Randonnées</h2>
+                <p>Explorez les sentiers mythiques de Cilaos</p>
+            </div>
+            
+        
+        </div>
     </section>
     
-     <!-- Section ??? -->
-    <section class="section-???" id="???">
-     
+    <!-- Section Activités -->
+    <section class="section-activites" id="activites">
+        <div class="activites-container">
+            <div class="activites-header">
+                <h2>Activités à Cilaos</h2>
+                <p>Au-delà des randonnées, découvrez nos activités uniques</p>
+            </div>
+            
+            <div class="activites-grid">
+                <div class="activite-card">
+                    <div class="activite-icon">🧗</div>
+                    <h3>Escalade</h3>
+                    <p>Sites d'escalade pour tous niveaux avec vue sur le cirque</p>
+                </div>
+                
+                <div class="activite-card">
+                    <div class="activite-icon">🚴</div>
+                    <h3>VTT</h3>
+                    <p>Parcours de descente et sentiers techniques en montagne</p>
+                </div>
+                
+                <div class="activite-card">
+                    <div class="activite-icon">🏊</div>
+                    <h3>Canyoning</h3>
+                    <p>Descente de rivières et cascades dans un cadre préservé</p>
+                </div>
+                
+                <div class="activite-card">
+                    <div class="activite-icon">🪂</div>
+                    <h3>Parapente</h3>
+                    <p>Survol du cirque en tandem avec des professionnels</p>
+                </div>
+                
+                <div class="activite-card">
+                    <div class="activite-icon">💆</div>
+                    <h3>Thermes</h3>
+                    <p>Détente et bien-être aux eaux thermales de Cilaos</p>
+                </div>
+                
+                <div class="activite-card">
+                    <div class="activite-icon">🍷</div>
+                    <h3>Œnotourisme</h3>
+                    <p>Visite du chai et dégustation du vin de Cilaos</p>
+                </div>
+             <div class="activite-card">
+                    <div class="activite-icon">🌲</div>
+                    <h3>Accrobranche</h3>
+                    <p>Aventure en hauteur entre les arbres, tyroliennes et ponts suspendus</p>
+                </div>
+
+                <div class="activite-card">
+                    <div class="activite-icon">🚤</div>
+                    <h3>Pédalo</h3>
+                    <p>Balade tranquille sur le lac au coeur du cirque</p>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- Section Agenda Améliorée -->
+    <section class="section-agenda" id="agenda">
+        <div class="agenda-container">
+            <!-- Partie gauche avec titre et description -->
+            <div class="agenda-info">
+                <h2>Agenda</h2>
+                <p>Cilaos vibre toute l'année au rythme des événements culturels et festifs. Des festivals de musique aux compétitions sportives, en passant par les marchés artisanaux et les célébrations traditionnelles, le cirque offre une programmation riche et variée qui ravit habitants et visiteurs.</p>
+                <p style="margin-top: 1rem; font-weight: 600;">Ne manquez aucun événement lors de votre séjour !</p>
+            </div>
+            
+            <!-- Grille de tickets -->
+            <div class="tickets-grid">
+                <!-- Ticket 1 -->
+                <div class="ticket-card">
+                    <div class="perforation"></div>
+                    <div class="ticket-image" style="background-image: linear-gradient(135deg, #FF8A50, #FF6B35);"></div>
+                    <div class="ticket-content">
+                        <div class="ticket-date">15 Janvier 2025</div>
+                        <h3 class="ticket-title">Festival Sakifo</h3>
+                        <p class="ticket-description">Le plus grand festival de musique de l'océan Indien</p>
+                    </div>
+                    <button class="ticket-btn">→</button>
+                </div>
+                
+                <!-- Ticket 2 -->
+                <div class="ticket-card">
+                    <div class="perforation"></div>
+                    <div class="ticket-image" style="background-image: linear-gradient(135deg, #A0C878, #7FA85C);"></div>
+                    <div class="ticket-content">
+                        <div class="ticket-date">28 Janvier 2025</div>
+                        <h3 class="ticket-title">Trail de Cilaos</h3>
+                        <p class="ticket-description">42km à travers les sentiers mythiques du cirque</p>
+                    </div>
+                    <button class="ticket-btn">→</button>
+                </div>
+                
+                <!-- Ticket 3 -->
+                <div class="ticket-card">
+                    <div class="perforation"></div>
+                    <div class="ticket-image" style="background-image: linear-gradient(135deg, #FF1744, #D21F3C);"></div>
+                    <div class="ticket-content">
+                        <div class="ticket-date">5 Février 2025</div>
+                        <h3 class="ticket-title">Fête des Lentilles</h3>
+                        <p class="ticket-description">Célébration de notre produit emblématique IGP</p>
+                    </div>
+                    <button class="ticket-btn">→</button>
+                </div>
+                
+                <!-- Ticket 4 -->
+                <div class="ticket-card">
+                    <div class="perforation"></div>
+                    <div class="ticket-image" style="background-image: linear-gradient(135deg, #3b82f6, #2563eb);"></div>
+                    <div class="ticket-content">
+                        <div class="ticket-date">Tous les dimanches</div>
+                        <h3 class="ticket-title">Marché Forain</h3>
+                        <p class="ticket-description">Produits locaux, artisanat et saveurs créoles</p>
+                    </div>
+                    <button class="ticket-btn">→</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Section agenda -->
-   <section class="section-agenda" id="agenda">
-  <div class="container tickets">
-    <div class="card card1">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>South</h3>
-        <p>a lonely trip.</p>
-        <button class="cta" type="button">Explorer</button>
-      </div>
-    </div>
-
-    <div class="card card2">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>Vauxhall</h3>
-        <p>a lonely trip.</p>
-        <button class="cta" type="button">Explorer</button>
-      </div>
-    </div>
-
-    <div class="card card3">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>Skye</h3>
-        <p>wild horizons.</p>
-        <button class="cta" type="button">Explorer</button>
-      </div>
-    </div>
-
-    <div class="card card4">
-      <div class="pic"></div>
-      <div class="info">
-        <h3>Sahara</h3>
-        <p>winds & dunes.</p>
-        <button class="cta" type="button">Explorer</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-    <!-- Section territoire -->
+    <!-- Section Territoire -->
     <section class="section-territoire" id="territoire">
-        <img src="./assets/svg/seaLevel.svg" alt="territoire">
+        <div class="container">
+            <h2>Notre Territoire</h2>
+            <img src="./assets/svg/seaLevel.svg" alt="territoire" style="max-width: 100%; height: auto;">
+        </div>
     </section>
     
     <!-- FOOTER -->
@@ -187,24 +565,24 @@
             <div class="footer-column">
                 <h3>Suivez-nous</h3>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/OfficeTourismeCilaos" aria-label="Facebook" class="social-icon">
+                    <a href="#" aria-label="Facebook" class="social-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
-                    <a href="https://twitter.com/CilaosTourisme" aria-label="X (Twitter)" class="social-icon">
+                    <a href="#" aria-label="X (Twitter)" class="social-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 4l11.733 16h4.267l-11.733-16zM20 4L8.267 20h-4.267l11.733-16z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/cilaos.tourisme" aria-label="Instagram" class="social-icon">
+                    <a href="#" aria-label="Instagram" class="social-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
-                    <a href="https://www.youtube.com/c/CilaosTourisme" aria-label="YouTube" class="social-icon">
+                    <a href="#" aria-label="YouTube" class="social-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#FF1744"/>
@@ -220,8 +598,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./assets/js/tourisme.js"></script>
+    <script src="./assets/js/login.js"></script>
+    <script src="./assets/js/data-module.js"></script>
 </body>
 </html>
-
