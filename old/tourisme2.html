@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tourisme à Cilaos, La Réunion">
+    <title>Tourisme</title>
+    
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS organisé -->
+    <link rel="stylesheet" href="./assets/css/main.css">
+
+
+</head>
+<body class="page-tourisme">
+
+    <!-- HEADER : Navigation principale -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="./assets/images/cilaos_logo_transparent.png" alt="logo" width="130" height="75">
+        </div>
+        <button class="nav-toggle" aria-label="Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./index.html">À découvrir</a></li>
+                <li><a href="./sejour.html">Séjours</a></li>
+                <li><a href="#tourisme">Tourisme</a></li>
+                <li><a href="./pratique.html">Info pratiques</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+            <a href="#" class="btn btn-pro">PRO</a>
+        </nav>
+    </header>
+ <script src="/assets/js/login.js"></script>
+
+    <!-- Login Modal -->
+<div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+  <div class="login-card" role="document">
+    <button class="close-x" id="loginClose" aria-label="Fermer">×</button>
+    <div class="login-header">
+      <h3 class="login-title" id="loginTitle">Espace Pro</h3>
+      <p class="login-sub">Connectez-vous pour accéder à l'espace professionnel.</p>
+      <div class="hr"></div>
+    </div>
+    <form class="login-body" id="loginForm" onsubmit="return false;">
+      <div class="form-row">
+        <label class="label" for="email">Adresse e-mail</label>
+        <input class="input" type="email" id="email" name="email" placeholder="prenom.nom@email.com" required>
+      </div>
+      <div class="form-row">
+        <label class="label" for="password">Mot de passe</label>
+        <input class="input" type="password" id="password" name="password" placeholder="••••••••" required>
+      </div>
+      <div class="row-split">
+        <label class="checkbox"><input type="checkbox" id="remember"> Se souvenir de moi</label>
+        <a class="link" href="#" id="forgotLink">Mot de passe oublié ?</a>
+      </div>
+      <button class="btn-primary" id="submitLogin">Se connecter</button>
+    </form>
+  </div>
+</div>
+
+
+<!-- SECTION HERO : Page d'accueil avec vidéo -->
+ 
+    <!-- Section vidéo -->
+    <section class="section-tourisme-video"  id="acceuil">
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+            <source src="./assets/videos/sample.webm" type="video/webm">
+            <source src="./assets/videos/sample.webm" type="video/mp4">
+        </video>
+    </section>
+    <!-- Section Randonnée -->
+    <section class="section-randonnees" id="randonnees">
+     
+
+<div class="container center podium">
+  <div class="card card--left">
+    <h2>Card Left</h2>
+    <hr />
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…</p>
+    <button>Next</button>
+  </div>
+
+  <div class="card card--center">
+    <h2>Card Center</h2>
+    <hr />
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip…</p>
+    <button>Next</button>
+  </div>
+
+  <div class="card card--right">
+    <h2>Card Right</h2>
+    <hr />
+    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore…</p>
+    <button>Next</button>
+  </div>
+</div>
+
+
+    </section>
+    
+     <!-- Section ??? -->
+    <section class="section-???" id="???">
+     
+    </section>
+
+
+    <!-- Section agenda -->
+   <section class="section-agenda" id="agenda">
+  <div class="container tickets">
+    <div class="card card1">
+      <div class="pic"></div>
+      <div class="info">
+        <h3>South</h3>
+        <p>a lonely trip.</p>
+        <button class="cta" type="button">Explorer</button>
+      </div>
+    </div>
+
+    <div class="card card2">
+      <div class="pic"></div>
+      <div class="info">
+        <h3>Vauxhall</h3>
+        <p>a lonely trip.</p>
+        <button class="cta" type="button">Explorer</button>
+      </div>
+    </div>
+
+    <div class="card card3">
+      <div class="pic"></div>
+      <div class="info">
+        <h3>Skye</h3>
+        <p>wild horizons.</p>
+        <button class="cta" type="button">Explorer</button>
+      </div>
+    </div>
+
+    <div class="card card4">
+      <div class="pic"></div>
+      <div class="info">
+        <h3>Sahara</h3>
+        <p>winds & dunes.</p>
+        <button class="cta" type="button">Explorer</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Section territoire -->
+    <section class="section-territoire" id="territoire">
+        <img src="./assets/svg/seaLevel.svg" alt="territoire">
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Mairie de Cilaos</h3>
+                <p>66 Rue du Père Boiteau<br>97413 Cilaos, La Réunion</p>
+                <p>📞 +262 262 31 77 39</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Office de Tourisme</h3>
+                <p>2 Rue des Écoles<br>97413 Cilaos, La Réunion</p>
+                <p>📞 +262 262 31 70 30<br>✉️ info@ot-cilaos.re</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Horaires d'ouverture</h3>
+                <p><strong>Office de Tourisme :</strong><br>
+                Lun-Sam : 9h-12h / 13h30-17h<br>
+                Dimanche : 9h-12h</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/OfficeTourismeCilaos" aria-label="Facebook" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/CilaosTourisme" aria-label="X (Twitter)" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4l11.733 16h4.267l-11.733-16zM20 4L8.267 20h-4.267l11.733-16z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/cilaos.tourisme" aria-label="Instagram" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/c/CilaosTourisme" aria-label="YouTube" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" stroke="#FF1744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#FF1744"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Office de Tourisme de Cilaos - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./assets/js/tourisme.js"></script>
+</body>
+</html>
+
