@@ -1,10 +1,6 @@
 
 /* Styles spécifiques à la page d'accueil */
 
-
-
-
-
 /* Hero Section */
 .section-hero {
     position: relative;
@@ -477,4 +473,428 @@
 .section-stories {
   scroll-snap-align: none !important;
   scroll-snap-stop: normal !important;
+}
+
+
+
+/* ================================================
+   RESPONSIVE - Masquer Carte et SVG sur Mobile
+   Approche progressive et intelligente
+   ================================================ */
+
+/* ================================================
+   SECTION ACCÈS - Adaptation mobile intelligente
+   ================================================ */
+
+.section-acces {
+    min-height: 100vh;
+    background: var(--couleur-surface);
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+    padding-top: calc(var(--hauteur-navbar) + 40px);
+}
+
+/* Grille par défaut (desktop) : SVG 2/3 + texte 1/3 */
+.acces-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+/* Container SVG - par défaut visible */
+.svg-container {
+    width: 100%;
+    height: clamp(300px, 40vh, 500px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.svg-container svg,
+.svg-container img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* ================================================
+   SECTION VOYAGE - Adaptation de la carte
+   ================================================ */
+
+.voyage-wrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - var(--hauteur-navbar));
+}
+
+.voyage-texte-container {
+    width: 50%;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--hauteur-navbar));
+    scroll-snap-type: y proximity;
+    padding: 40px;
+}
+
+.voyage-carte {
+    position: sticky;
+    top: var(--hauteur-navbar);
+    width: 50%;
+    height: calc(100vh - var(--hauteur-navbar));
+    background: var(--couleur-blanc);
+}
+
+/* Carte Leaflet */
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Info box et légende sur la carte */
+.map-info-box,
+.poi-legend {
+    position: absolute;
+    background: rgba(255,255,255,0.95);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
+}
+
+.map-info-box {
+    top: 40px;
+    left: 50px;
+    max-width: 300px;
+}
+
+.poi-legend {
+    bottom: 20px;
+    right: 20px;
+    max-width: 250px;
+    display: none;
+}
+
+/* ================================================
+   RESPONSIVE MOBILE - Stratégie d'adaptation
+   ================================================ */
+
+/* Tablette - Première adaptation */
+@media (max-width: 1024px) {
+    
+    /* Section voyage passe en colonne */
+    .voyage-wrapper {
+        flex-direction: column;
+    }
+    
+    .voyage-texte-container,
+    .voyage-carte {
+        width: 100%;
+    }
+    
+    /* Carte devient relative avec hauteur fixe */
+    .voyage-carte {
+        position: relative;
+        height: 400px;
+    }
+    
+    /* Info box s'adapte */
+    .map-info-box {
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+    
+    .poi-legend {
+        bottom: 10px;
+        right: 10px;
+        max-width: 200px;
+    }
+}
+
+/* Mobile - Adaptation complète */
+@media (max-width: 900px) {
+    
+    /* SECTION ACCÈS - Mode texte uniquement */
+    .acces-grid {
+        grid-template-columns: 1fr; /* Une seule colonne */
+        gap: 2rem;
+        text-align: center; /* Centrer le contenu */
+    }
+    
+    /* MASQUER les SVG sur mobile */
+    .svg-container {
+        display: none !important;
+        /* Complètement masqué pour économiser bande passante et espace */
+    }
+    
+    /* Info texte prend toute la largeur */
+    .acces-info {
+        padding: 1.5rem;
+        background: var(--couleur-blanc);
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .acces-info h3 {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        margin-bottom: 1.5rem;
+    }
+    
+    /* SECTION VOYAGE - Prioriser le contenu texte */
+    .voyage-wrapper {
+        flex-direction: column;
+    }
+    
+    .voyage-texte-container {
+        width: 100%;
+        max-height: none; /* Pas de limite de hauteur sur mobile */
+        overflow-y: visible;
+        padding: 20px;
+        order: 1; /* Texte en premier */
+    }
+    
+    /* MASQUER la carte sur mobile */
+    .voyage-carte {
+        display: none !important;
+        /* La carte devient inutilisable sur mobile - on la masque */
+    }
+    
+    /* Alternative : Message informatif */
+    .voyage-carte-mobile-message {
+        display: block;
+        padding: 2rem;
+        background: var(--couleur-blanc);
+        border-radius: 15px;
+        margin: 1rem 0;
+        text-align: center;
+        border-left: 4px solid var(--couleur-accent);
+    }
+    
+    .voyage-carte-mobile-message h4 {
+        color: var(--couleur-accent);
+        margin-bottom: 1rem;
+    }
+    
+    .voyage-carte-mobile-message p {
+        color: var(--couleur-texte);
+        opacity: 0.8;
+    }
+}
+
+/* Très petit mobile - Optimisations supplémentaires */
+@media (max-width: 480px) {
+    
+    /* Section accès plus compacte */
+    .section-acces {
+        padding: 20px 15px;
+        min-height: auto; /* Hauteur flexible */
+    }
+    
+    /* Tabs plus petits */
+    .acces-tabs {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .tab-btn {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+    }
+    
+    /* Contenu voyage plus compact */
+    .voyage-texte-container {
+        padding: 15px;
+    }
+    
+    .etape-section {
+        padding: 20px 0;
+        min-height: auto;
+    }
+    
+    .etape-numero-grand {
+        font-size: 2rem;
+    }
+    
+    .etape-titre {
+        font-size: 1.3rem;
+    }
+}
+
+/* ================================================
+   STRATÉGIE D'AFFICHAGE PROGRESSIF
+   ================================================ */
+
+/* Message de remplacement pour les éléments masqués */
+.mobile-replacement-message {
+    display: none;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--couleur-surface), var(--couleur-blanc));
+    border-radius: 12px;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+@media (max-width: 900px) {
+    .mobile-replacement-message {
+        display: block;
+    }
+}
+
+/* Performance - Ne charger les cartes que sur desktop */
+@media (max-width: 900px) {
+    .leaflet-container,
+    .leaflet-map-pane,
+    .leaflet-tile-pane {
+        display: none !important;
+    }
+}
+
+
+
+/* ================================================
+   SCROLL SNAP CORRIGÉ - Solution intelligente
+   ================================================ */
+
+/* Container principal avec scroll snap */
+html {
+    scroll-behavior: smooth;
+    /* IMPORTANT : On retire scroll-snap-type du html pour le contrôler manuellement */
+    /* scroll-snap-type: y mandatory; -- RETIRÉ */
+    scroll-padding-top: var(--hauteur-navbar);
+    min-height: 100%;
+}
+
+/* Body avec scroll-snap seulement sur desktop */
+@media (min-width: 901px) {
+    body {
+        scroll-snap-type: y proximity; /* proximity au lieu de mandatory = plus souple */
+    }
+}
+
+/* Sections avec snap - mais contrôlé intelligemment */
+.section-snap {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal; /* normal au lieu de always */
+    min-height: 100vh;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section hero - snap normal */
+.section-hero {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    /* Garder le snap car c'est la première section */
+}
+
+/* Section accès - snap normal */
+.section-acces {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    /* Garder le snap pour une bonne navigation */
+}
+
+/* Section voyage/carte - snap normal */
+.section-voyage {
+    scroll-snap-align: start;
+    min-height: calc(100vh - var(--hauteur-navbar));
+    /* Garder le snap car c'est une section importante */
+}
+
+/* SOLUTION : Section stories - PAS de snap ! */
+.section-stories {
+    /* On retire complètement le scroll-snap pour cette section */
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+    min-height: 100vh;
+    /* Cette section devient "fluide" dans le scroll */
+}
+
+/* Zone de transition pour sortir du snap */
+.snap-breaker {
+    height: 200px; /* Zone suffisante pour "casser" l'effet snap */
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+    /* Cette zone permet une transition naturelle vers le footer */
+}
+
+/* Footer - jamais de snap */
+.footer {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+    /* Le footer doit toujours être accessible naturellement */
+}
+
+/* ================================================
+   SOLUTION MOBILE - Désactiver le snap complètement
+   ================================================ */
+@media (max-width: 900px) {
+    
+    /* Désactiver totalement le scroll snap sur mobile */
+    body {
+        scroll-snap-type: none !important;
+    }
+    
+    /* Toutes les sections perdent leur snap sur mobile */
+    .section-snap,
+    .section-hero,
+    .section-acces,
+    .section-voyage,
+    .section-stories {
+        scroll-snap-align: none !important;
+        scroll-snap-stop: normal !important;
+        /* Navigation libre sur mobile */
+    }
+    
+    /* Sections plus courtes sur mobile */
+    .section-hero,
+    .section-acces,
+    .section-stories {
+        min-height: auto; /* Hauteur automatique sur mobile */
+        padding: 2rem 0; /* Plus d'espace pour respirer */
+    }
+    
+    /* Section voyage reste spéciale */
+    .section-voyage {
+        min-height: auto;
+    }
+}
+
+/* ================================================
+   AMÉLIORATION : Scroll naturel entre sections
+   ================================================ */
+
+/* Transition douce entre sections */
+.section-snap + .section-snap {
+    margin-top: -1px; /* Éviter les gaps entre sections */
+}
+
+/* Solution JavaScript pour un contrôle plus fin */
+@media (min-width: 901px) {
+    .scroll-container {
+        scroll-snap-type: y proximity;
+        /* Proximity = plus flexible que mandatory */
+    }
+}
+
+/* Accessibilité - respecter les préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+    }
+    
+    .section-snap {
+        scroll-snap-align: none;
+    }
 }

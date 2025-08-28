@@ -62,3 +62,96 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
+
+// ================================================
+// MENU HAMBURGER - Version corrigée et améliorée
+// ================================================
+
+function initNavMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const body = document.body;
+    
+    // Vérifier que les éléments existent
+    if (!navToggle || !navMenu) {
+        console.warn('Elements du menu mobile non trouvés');
+        return;
+    }
+    
+    // Toggle du menu principal
+    navToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Toggle des classes actives
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Gérer le scroll du body
+        if (navMenu.classList.contains('active')) {
+            body.classList.add('menu-open');
+        } else {
+            body.classList.remove('menu-open');
+        }
+        
+        // Accessibilité
+        const isOpen = navMenu.classList.contains('active');
+        navToggle.setAttribute('aria-expanded', isOpen);
+        navMenu.setAttribute('aria-hidden', !isOpen);
+    });
+    
+    // Fermer le menu quand on clique sur un lien
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            // Délai pour permettre la navigation avant fermeture
+            setTimeout(() => {
+                closeMenu();
+            }, 100);
+        });
+    });
+    
+    // Fermer le menu quand on clique en dehors
+    document.addEventListener('click', function(e) {
+        const isClickInsideNav = navMenu.contains(e.target);
+        const isClickOnToggle = navToggle.contains(e.target);
+        
+        if (!isClickInsideNav && !isClickOnToggle && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+    
+    // Fermer le menu avec la touche Échap
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
+            navToggle.focus(); // Remettre le focus sur le bouton
+        }
+    });
+    
+    // Fonction pour fermer le menu proprement
+    function closeMenu() {
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+        
+        // Accessibilité
+        navToggle.setAttribute('aria-expanded', 'false');
+        navMenu.setAttribute('aria-hidden', 'true');
+    }
+    
+    // Gérer le redimensionnement de l'écran
+    window.addEventListener('resize', function() {
+        // Si on repasse en desktop, fermer le menu mobile
+        if (window.innerWidth > 900 && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+    
+    // Initialisation de l'accessibilité
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-controls', 'nav-menu');
+    navMenu.setAttribute('aria-hidden', 'true');
+    navMenu.id = 'nav-menu';
+}

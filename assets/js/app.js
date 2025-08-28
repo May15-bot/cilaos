@@ -16,30 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ================================================
-// MENU HAMBURGER (Navigation mobile)
-// ================================================
-function initNavMenu() {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-        
-        // Fermer le menu quand on clique sur un lien
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
-    }
-}
-
-// ================================================
 // TABS ACCÈS (Section Accès)
 // ================================================
 function initAccessTabs() {
