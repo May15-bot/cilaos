@@ -1,0 +1,36 @@
+
+/* ============================================
+   Reset et styles de base
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--navbar-height);
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-background);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Suppression du scroll snap par défaut (contrôlé par JS si nécessaire) */
+@media (min-width: 901px) {
+    body.enable-snap {
+        scroll-snap-type: y proximity;
+    }
+}
+

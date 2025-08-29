@@ -3,6 +3,249 @@
 // ================================================
 
 // ================================================
+// CORRECTION MENU HAMBURGER - Version complète et robuste
+// ================================================
+
+function initNavMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const body = document.body;
+    
+    // Vérification défensive - s'assurer que les éléments existent
+    if (!navToggle || !navMenu) {
+        console.warn('⚠️ Éléments du menu mobile non trouvés');
+        return;
+    }
+    
+    // DEBUG: Vérifier la structure HTML
+    console.log('🔍 Menu trouvé:', {
+        toggle: navToggle,
+        menu: navMenu,
+        links: document.querySelectorAll('.nav-menu a')
+    });
+    
+    // CORRECTION PRINCIPALE: Toggle du menu avec gestion d'état propre
+    navToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('🍔 Clic hamburger');
+        
+        // Basculer l'état du menu
+        const isCurrentlyOpen = navMenu.classList.contains('active');
+        
+        if (isCurrentlyOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+    
+    // Fonction pour ouvrir le menu
+    function openMenu() {
+        console.log('📱 Ouverture du menu mobile');
+        
+        navToggle.classList.add('active');
+        navMenu.classList.add('active');
+        body.classList.add('menu-open');
+        
+        // Accessibilité améliorée
+        navToggle.setAttribute('aria-expanded', 'true');
+        navMenu.setAttribute('aria-hidden', 'false');
+        
+        // Focus sur le premier lien pour la navigation clavier
+        const firstLink = navMenu.querySelector('a');
+        if (firstLink) {
+            setTimeout(() => firstLink.focus(), 100);
+        }
+    }
+    
+    // Fonction pour fermer le menu
+    function closeMenu() {
+        console.log('❌ Fermeture du menu mobile');
+        
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+        
+        // Accessibilité
+        navToggle.setAttribute('aria-expanded', 'false');
+        navMenu.setAttribute('aria-hidden', 'true');
+    }
+    
+    // CORRECTION: Fermer le menu quand on clique sur un lien
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    console.log('🔗 Liens trouvés:', navLinks.length);
+    
+    navLinks.forEach((link, index) => {
+        link.addEventListener('click', function(e) {
+            console.log(`🖱️ Clic sur lien ${index + 1}: ${this.textContent}`);
+            
+            // Délai court pour permettre la navigation avant fermeture
+            setTimeout(() => {
+                closeMenu();
+            }, 150);
+        });
+    });
+    
+    // Fermer le menu quand on clique en dehors
+    document.addEventListener('click', function(e) {
+        const isClickInsideNav = navMenu.contains(e.target);
+        const isClickOnToggle = navToggle.contains(e.target);
+        
+        if (!isClickInsideNav && !isClickOnToggle && navMenu.classList.contains('active')) {
+            console.log('🖱️ Clic extérieur - fermeture du menu');
+            closeMenu();
+        }
+    });
+    
+    // CORRECTION: Fermer avec Échap + navigation clavier améliorée
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            console.log('⌨️ Échap pressé - fermeture du menu');
+            closeMenu();
+            navToggle.focus(); // Remettre le focus sur le bouton
+        }
+        
+        // Navigation au clavier dans le menu
+        if (navMenu.classList.contains('active')) {
+            const links = Array.from(navMenu.querySelectorAll('a, .btn-pro'));
+            const currentIndex = links.findIndex(link => link === document.activeElement);
+            
+            if (e.key === 'Tab') {
+                // Gérer le cycle du focus dans le menu
+                if (e.shiftKey && currentIndex === 0) {
+                    // Shift+Tab sur le premier élément = aller au dernier
+                    e.preventDefault();
+                    links[links.length - 1].focus();
+                } else if (!e.shiftKey && currentIndex === links.length - 1) {
+                    // Tab sur le dernier élément = aller au premier
+                    e.preventDefault();
+                    links[0].focus();
+                }
+            }
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const nextIndex = currentIndex < links.length - 1 ? currentIndex + 1 : 0;
+                links[nextIndex].focus();
+            }
+            
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prevIndex = currentIndex > 0 ? currentIndex - 1 : links.length - 1;
+                links[prevIndex].focus();
+            }
+        }
+    });
+    
+    // CORRECTION: Gérer le redimensionnement proprement
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        // Débouncer pour éviter les appels multiples
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const currentWidth = window.innerWidth;
+            console.log('📏 Redimensionnement:', currentWidth);
+            
+            // Si on repasse en desktop ET le menu est ouvert
+            if (currentWidth > 900 && navMenu.classList.contains('active')) {
+                console.log('💻 Retour desktop - fermeture auto du menu');
+                closeMenu();
+            }
+        }, 100);
+    });
+    
+    // CORRECTION: Initialisation de l'accessibilité
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-controls', 'nav-menu');
+    navToggle.setAttribute('aria-label', 'Menu de navigation');
+    navMenu.setAttribute('aria-hidden', 'true');
+    navMenu.id = 'nav-menu';
+    
+    // DEBUG: État initial
+    console.log('✅ Menu hamburger initialisé avec succès');
+    console.log('📱 État initial:', {
+        toggleVisible: getComputedStyle(navToggle).display !== 'none',
+        menuHidden: !navMenu.classList.contains('active')
+    });
+}
+
+// ================================================
+// CORRECTION SCROLL SNAP - Logique améliorée
+// ================================================
+
+function initScrollSnapControl() {
+    // Détecter si on est sur mobile
+    const isMobile = window.innerWidth <= 900;
+    
+    if (isMobile) {
+        // Sur mobile: désactiver complètement le scroll snap
+        document.documentElement.style.scrollSnapType = 'none';
+        document.body.style.scrollSnapType = 'none';
+        
+        // Retirer le snap de toutes les sections
+        document.querySelectorAll('.section-snap').forEach(section => {
+            section.style.scrollSnapAlign = 'none';
+            section.style.scrollSnapStop = 'normal';
+        });
+        
+        console.log('📱 Scroll snap désactivé sur mobile');
+    } else {
+        // Sur desktop: activer le scroll snap
+        document.body.style.scrollSnapType = 'y proximity';
+        
+        console.log('💻 Scroll snap activé sur desktop');
+    }
+}
+
+// Réinitialiser le scroll snap au redimensionnement
+window.addEventListener('resize', function() {
+    setTimeout(initScrollSnapControl, 100);
+});
+
+// ================================================
+// INTÉGRATION DANS LE SYSTÈME EXISTANT
+// ================================================
+
+// Modifier la fonction d'initialisation principale
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Site Cilaos - Initialisation avec corrections');
+    
+    // Initialiser dans l'ordre
+    initNavMenu(); // Menu corrigé en premier
+    initScrollSnapControl(); // Contrôle du scroll snap
+    initAccessTabs(); // Tabs d'accès
+    initMapWithParallax(); // Carte et parallax
+    initStoriesFixed(); // Stories avec swiper
+    
+    console.log('✅ Toutes les corrections appliquées avec succès !');
+});
+
+// ================================================
+// GESTION D'ERREURS ET DEBUGGING
+// ================================================
+
+// Fonction pour diagnostiquer les problèmes de menu
+function debugMenu() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.nav-menu');
+    
+    console.log('🔍 Diagnostic du menu:', {
+        toggleExists: !!toggle,
+        menuExists: !!menu,
+        toggleDisplay: toggle ? getComputedStyle(toggle).display : 'N/A',
+        menuTransform: menu ? getComputedStyle(menu).transform : 'N/A',
+        screenWidth: window.innerWidth,
+        isMobile: window.innerWidth <= 900
+    });
+}
+
+// Appeler le diagnostic si nécessaire (pour développement)
+// debugMenu();
+
+
+// ================================================
 // INITIALISATION AU CHARGEMENT DE LA PAGE
 // ================================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -451,241 +694,3 @@ function initMapWithParallax() {
         updateMapInfo(1);
     }, 1000);
 }
-
-// ================================================
-// STORIES RÉPARÉES AVEC SWIPER
-// ================================================
-let currentSwiper = null;
-
-function initStoriesFixed() {
-    const storyBubbles = document.querySelectorAll('.story-bubble');
-    const storiesIntro = document.getElementById('storiesIntro');
-    const swiperContainer = document.getElementById('storySwiper');
-    
-    if (!storyBubbles.length || !storiesIntro || !swiperContainer) {
-        console.warn('Éléments stories manquants');
-        return;
-    }
-    
-    // Données des 4 stories
-    const storiesData = {
-        actualites: {
-            title: 'Actualités',
-            slides: [
-                {
-                    image: './assets/images/local1.png',
-                    title: 'Festival Sakifo 2025',
-                    description: 'Le plus grand festival de musique de l\'océan Indien revient à Cilaos.'
-                },
-                {
-                    image: './assets/images/local2.png',
-                    title: 'Marché forain du dimanche',
-                    description: 'Chaque dimanche, le marché s\'anime avec les produits locaux.'
-                },
-                {
-                    image: './assets/images/local3.png',
-                    title: 'Fête des Lentilles',
-                    description: 'Célébration annuelle de la lentille de Cilaos.'
-                }
-            ]
-        },
-        randonnees: {
-            title: 'Gravir Cilaos - Randonnées',
-            slides: [
-                {
-                    image: './assets/images/rando1.png',
-                    title: 'Piton des Neiges',
-                    description: 'Le plus haut sommet de l\'océan Indien (3070m).'
-                },
-                {
-                    image: './assets/images/rando2.png',
-                    title: 'Col du Taïbit',
-                    description: 'Passage historique entre Cilaos et Mafate.'
-                },
-                {
-                    image: './assets/images/rando3.png',
-                    title: 'Roche Merveilleuse',
-                    description: 'Vue panoramique exceptionnelle sur tout le cirque.'
-                }
-            ]
-        },
-        saveurs: {
-            title: 'Saveurs locales',
-            slides: [
-                {
-                    image: './assets/images/gastronomie1.png',
-                    title: 'Lentilles de Cilaos IGP',
-                    description: 'Cultivées en terrasses depuis des générations.'
-                },
-                {
-                    image: './assets/images/gastronomie2.png',
-                    title: 'Carry créole traditionnel',
-                    description: 'Découvrez les saveurs authentiques créoles.'
-                },
-                {
-                    image: './assets/images/gastronomie3.png',
-                    title: 'Vin de Cilaos',
-                    description: 'Le seul vignoble tropical d\'altitude de France.'
-                }
-            ]
-        },
-        office: {
-            title: 'Notre office',
-            slides: [
-                {
-                    image: './assets/images/officedetourisme.png',
-                    title: 'Accueil personnalisé',
-                    description: 'Notre équipe vous accueille 7j/7.'
-                },
-                {
-                    image: './assets/images/officedetourisme2.png',
-                    title: 'Services et réservations',
-                    description: 'Hébergements, activités, guides de montagne.'
-                }
-            ]
-        }
-    };
-    
-    // Fonction pour afficher une story
-    window.showStory = function(storyType) {
-        const data = storiesData[storyType];
-        if (!data) return;
-        
-        // Cacher le texte d'intro et montrer Swiper
-        storiesIntro.classList.remove('active');
-        setTimeout(() => {
-            storiesIntro.style.display = 'none';
-            swiperContainer.style.display = 'block';
-            
-            // Créer les slides
-            const swiperWrapper = document.getElementById('swiperWrapper');
-            swiperWrapper.innerHTML = '';
-            
-            data.slides.forEach(slide => {
-                const slideElement = document.createElement('div');
-                slideElement.className = 'swiper-slide';
-                slideElement.innerHTML = `
-                    <img src="${slide.image}" alt="${slide.title}">
-                    <div class="slide-content">
-                        <h3>${slide.title}</h3>
-                        <p>${slide.description}</p>
-                    </div>
-                `;
-                swiperWrapper.appendChild(slideElement);
-            });
-            
-            // Détruire l'ancien swiper s'il existe
-            if (currentSwiper) {
-                currentSwiper.destroy();
-            }
-            
-            // Créer le nouveau swiper
-            currentSwiper = new Swiper('.story-swiper', {
-                effect: 'coverflow',
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: 'auto',
-                coverflowEffect: {
-                    rotate: 50,
-                    stretch: 0,
-                    depth: 100,
-                    modifier: 1,
-                    slideShadows: true,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                autoplay: {
-                    delay: 4000,
-                    disableOnInteraction: false,
-                },
-                observer: true,
-                observeParents: true,
-            });
-        }, 300);
-    };
-    
-    // Fonction pour fermer une story
-    window.closeStory = function() {
-        swiperContainer.style.display = 'none';
-        storiesIntro.style.display = 'block';
-        setTimeout(() => {
-            storiesIntro.classList.add('active');
-        }, 10);
-        
-        if (currentSwiper) {
-            currentSwiper.destroy();
-            currentSwiper = null;
-        }
-        
-        storyBubbles.forEach(bubble => bubble.classList.remove('active'));
-    };
-    
-    // Événements sur les bulles
-    storyBubbles.forEach(bubble => {
-        bubble.addEventListener('click', function() {
-            const storyType = this.getAttribute('data-story');
-            
-            storyBubbles.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            showStory(storyType);
-        });
-    });
-    
-    // Afficher l'intro par défaut
-    storiesIntro.classList.add('active');
-}
-
-(function() {
-  const btnPro = document.querySelector('.btn-pro');
-  const modal = document.getElementById('loginModal');
-  const overlay = document.getElementById('loginOverlay');
-  const closeBtn = document.getElementById('loginClose');
-  const form = document.getElementById('loginForm');
-  const email = document.getElementById('email');
-  const password = document.getElementById('password');
-
-  function openModal() {
-    modal.classList.add('active');
-    overlay.classList.add('active');
-    document.body.classList.add('no-scroll');
-    modal.setAttribute('aria-hidden','false');
-    overlay.setAttribute('aria-hidden','false');
-    setTimeout(() => email && email.focus(), 10);
-  }
-  function closeModal() {
-    modal.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-    modal.setAttribute('aria-hidden','true');
-    overlay.setAttribute('aria-hidden','true');
-  }
-
-  if (btnPro) {
-    btnPro.addEventListener('click', (e) => {
-      e.preventDefault();
-      openModal();
-    });
-  }
-  [closeBtn, overlay].forEach(el => el && el.addEventListener('click', closeModal));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-  });
-
-  // Demo submit (prevent navigation)
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // Here you can hook your real auth flow
-      // For now, just close and log
-      console.log('Login attempt:', { email: email.value, password: password.value });
-      closeModal();
-    });
-  }
-})();

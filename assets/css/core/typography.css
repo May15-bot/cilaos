@@ -1,0 +1,419 @@
+/**
+ * FICHIER: assets/css/core/typography.css
+ * Typographie centralisée - Tous les styles de texte
+ */
+
+/* ========================================
+   IMPORTS DE POLICES
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;600;700;900&display=swap');
+
+/* ========================================
+   STYLES DE BASE DU TEXTE
+   ======================================== */
+html {
+    font-size: 16px; /* Base pour les rem */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.6;
+    color: var(--color-text);
+    letter-spacing: 0.01em;
+}
+
+/* ========================================
+   TITRES (HEADINGS)
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, var(--font-size-5xl));
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 4vw, var(--font-size-4xl));
+    font-weight: var(--font-weight-semibold);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 3vw, var(--font-size-3xl));
+    font-weight: var(--font-weight-semibold);
+}
+
+h4 {
+    font-size: clamp(1.125rem, 2.5vw, var(--font-size-2xl));
+    font-weight: var(--font-weight-medium);
+}
+
+h5 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+}
+
+h6 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Titres avec couleur d'accent */
+.heading-accent {
+    color: var(--color-primary);
+}
+
+.heading-center {
+    text-align: center;
+}
+
+/* ========================================
+   PARAGRAPHES ET TEXTE
+   ======================================== */
+p {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+}
+
+/* Lead paragraph */
+.lead {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-muted);
+}
+
+/* Petit texte */
+.small {
+    font-size: var(--font-size-sm);
+}
+
+.text-xs {
+    font-size: var(--font-size-xs);
+}
+
+/* Texte en gras */
+strong, b {
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Texte en italique */
+em, i {
+    font-style: italic;
+}
+
+/* Texte souligné */
+u {
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary);
+    text-underline-offset: 0.2em;
+}
+
+/* Texte barré */
+s, del {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* Marque de surbrillance */
+mark {
+    background-color: rgba(255, 138, 80, 0.2);
+    padding: 0.1em 0.2em;
+    border-radius: 2px;
+}
+
+/* ========================================
+   LIENS
+   ======================================== */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+a:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+a:visited {
+    color: var(--color-secondary);
+}
+
+/* Liens externes */
+a[target="_blank"]::after {
+    content: " ↗";
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
+/* ========================================
+   LISTES
+   ======================================== */
+ul, ol {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+ul ul, ol ol, ul ol, ol ul {
+    margin-bottom: 0;
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Liste sans puces */
+.list-unstyled {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* Liste en ligne */
+.list-inline {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+/* Liste avec icônes */
+.list-icon {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-icon li {
+    position: relative;
+    padding-left: var(--spacing-xl);
+}
+
+.list-icon li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* ========================================
+   CODE ET PRE
+   ======================================== */
+code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-sm);
+    color: var(--color-accent);
+}
+
+pre {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: var(--font-size-sm);
+    background: var(--color-text);
+    color: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    line-height: 1.5;
+}
+
+pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+}
+
+/* ========================================
+   TABLEAUX
+   ======================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-xl);
+}
+
+thead {
+    background: var(--color-surface);
+}
+
+th {
+    font-weight: var(--font-weight-semibold);
+    text-align: left;
+    padding: var(--spacing-md);
+    border-bottom: 2px solid var(--color-border);
+}
+
+td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:hover {
+    background: var(--color-surface);
+}
+
+/* ========================================
+   ÉLÉMENTS DE FORMULAIRE
+   ======================================== */
+label {
+    display: inline-block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+/* ========================================
+   CLASSES UTILITAIRES DE TEXTE
+   ======================================== */
+
+/* Alignement */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Poids de police */
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* Transformation */
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+/* Couleurs de texte */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-accent { color: var(--color-accent); }
+.text-muted { color: var(--color-text-muted); }
+.text-white { color: var(--color-white); }
+.text-inherit { color: inherit; }
+
+/* Décoration */
+.no-underline { text-decoration: none; }
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+
+/* Espacement des lettres */
+.tracking-tight { letter-spacing: -0.05em; }
+.tracking-normal { letter-spacing: 0; }
+.tracking-wide { letter-spacing: 0.05em; }
+.tracking-wider { letter-spacing: 0.1em; }
+.tracking-widest { letter-spacing: 0.2em; }
+
+/* Hauteur de ligne */
+.leading-none { line-height: 1; }
+.leading-tight { line-height: 1.25; }
+.leading-snug { line-height: 1.375; }
+.leading-normal { line-height: 1.5; }
+.leading-relaxed { line-height: 1.625; }
+.leading-loose { line-height: 2; }
+
+/* Coupure de mots */
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.break-words {
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.break-all {
+    word-break: break-all;
+}
+
+/* ========================================
+   RESPONSIVE TYPOGRAPHY
+   ======================================== */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+    
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+    h5 { font-size: 1.125rem; }
+    h6 { font-size: 1rem; }
+    
+    .lead {
+        font-size: 1.125rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    
+    p {
+        line-height: 1.6;
+    }
+}
+
+/* ========================================
+   ANIMATIONS DE TEXTE
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.text-animate-fade {
+    animation: fadeIn 0.6s ease;
+}
+
+.text-animate-slide {
+    animation: slideInFromBottom 0.6s ease;
+}
