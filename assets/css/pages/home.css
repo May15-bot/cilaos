@@ -26,7 +26,7 @@
     padding: 40px 20px;
     /* CORRIGÉ: utiliser margin-top au lieu de padding-top */
     margin-top: calc(-1 * var(--hauteur-navbar));
-    padding-top: calc(var(--hauteur-navbar) + 40px);
+    padding-top: calc(var(--hauteur-navbar) + 10px);
     /* Cela compense la hauteur de la navbar sans créer d'espacement visuel */
 }
 

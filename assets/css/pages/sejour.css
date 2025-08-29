@@ -1511,3 +1511,55 @@
             40% { content: "Chargement.."; }
             60%, 100% { content: "Chargement..."; }
         }
+
+
+
+        /* Empêche le scroll de l’arrière-plan quand un modal/popup est ouvert */
+body.no-scroll { overflow: hidden; }
+
+/* Popup plein écran avec scroll interne possible */
+#categoryPopup {
+  position: fixed;
+  inset: 0;
+  display: none;          /* tu le passes à flex dans ton JS */
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0,0,0,0.4);
+  overflow: auto;         /* IMPORTANT: le wrapper peut scroller si besoin */
+}
+
+/* Panneau interne du popup */
+#categoryPopup .popup-panel {
+  width: min(100%, 1000px);
+  max-height: 90vh;       /* limite la hauteur */
+  overflow: auto;         /* le contenu scrolle à l’intérieur */
+  overscroll-behavior: contain;      /* évite le "scroll chaining" */
+  -webkit-overflow-scrolling: touch; /* fluide sur iOS */
+  border-radius: 16px;
+  background: var(--couleur-surface, #fff);
+}
+
+/* Le slideshow ne doit pas pousser toute la hauteur */
+#slideshowContainer {
+  max-height: 40vh;
+  overflow: hidden;
+}
+#slideshowContainer img {
+  width: 100%;
+  height: 40vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* La liste scrolle indépendamment si elle est longue */
+#hebergementsPopupList {
+  max-height: 45vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+
+

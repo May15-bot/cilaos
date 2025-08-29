@@ -208,12 +208,12 @@
                 },
                 gite: {
                     title: 'Gîtes à Cilaos', 
-                    subtitle: '20 gîtes authentiques dans le cirque',
+                    subtitle: '3 gîtes authentiques dans le cirque',
                     icon: '🏡'
                 },
                 camping: {
                     title: 'Campings à Cilaos',
-                    subtitle: '6 campings nature pour les aventuriers',
+                    subtitle: '3 campings nature pour les aventuriers',
                     icon: '⛺'
                 }
             };
