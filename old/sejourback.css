@@ -10,16 +10,6 @@
             --hauteur-navbar: 70px;
         }
 
-        /* Désactiver le scroll snap pour cette page */
-        html {
-            scroll-snap-type: none !important;
-        }
-
-        body {
-            scroll-snap-type: none !important;
-        }
-
-        
         * {
             margin: 0;
             padding: 0;
@@ -233,7 +223,6 @@
             padding: 2rem;
             backdrop-filter: blur(5px);
         }
-
         .popup-content {
             background: var(--couleur-blanc);
             border-radius: 20px;
@@ -245,7 +234,6 @@
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
         .close-popup {
             position: absolute;
             top: 2rem;
@@ -1569,195 +1557,7 @@ body.no-scroll { overflow: hidden; }
   -webkit-overflow-scrolling: touch;
 }
 
-/* ==== Ajouts du  client (popup & slideshow) | 2025-08-29 ==== */
 
-/* Modifications pour le popup et le slideshow */
 
-/* Structure principale du popup - garde la grille 50/50 */
-.popup-content {
-    background: var(--couleur-blanc);
-    border-radius: 20px;
-    width: 90%;
-    max-width: 1200px;
-    height: 80vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
 
-/* Le conteneur du slideshow prend toute la hauteur disponible */
-.popup-slideshow {
-    position: relative;
-    background: var(--couleur-surface);
-    height: 100%; /* Prend toute la hauteur du parent */
-    display: flex;
-    flex-direction: column;
-}
 
-/* Le slideshow container occupe tout l'espace disponible */
-.slideshow-container {
-    width: 100%;
-    height: 100%; /* Prend toute la hauteur */
-    position: relative;
-    flex: 1; /* S'étend pour remplir l'espace */
-    overflow: hidden; /* Cache le débordement */
-}
-
-/* Les slides prennent toute la hauteur */
-.slide {
-    display: none;
-    width: 100%;
-    height: 100%; /* Hauteur complète */
-    position: absolute; /* Positionnement absolu pour superposition */
-    top: 0;
-    left: 0;
-}
-
-.slide.active {
-    display: block;
-}
-
-/* Les images remplissent complètement leur conteneur */
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* L'image couvre tout l'espace en gardant ses proportions */
-    display: block;
-}
-
-/* Ajustement des boutons de navigation */
-.slideshow-prev, .slideshow-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    padding: 1rem;
-    cursor: pointer;
-    font-size: 1.2rem;
-    border-radius: 50%;
-    transition: all 0.3s;
-    z-index: 10; /* S'assure qu'ils restent au-dessus */
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.slideshow-prev {
-    left: 1rem;
-}
-
-.slideshow-next {
-    right: 1rem;
-}
-
-.slideshow-prev:hover, .slideshow-next:hover {
-    background: rgba(0,0,0,0.8);
-    transform: translateY(-50%) scale(1.1);
-}
-
-/* Les points de navigation restent en bas */
-.slideshow-dots {
-    position: absolute;
-    bottom: 1.5rem; /* Un peu plus d'espace depuis le bas */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.5rem;
-    z-index: 10; /* Au-dessus de l'image */
-    padding: 0.5rem 1rem;
-    background: rgba(0,0,0,0.3); /* Fond semi-transparent pour meilleure visibilité */
-    border-radius: 20px;
-    backdrop-filter: blur(5px);
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.dot.active {
-    background: var(--couleur-accent);
-    transform: scale(1.2);
-}
-
-.dot:hover {
-    background: rgba(255,255,255,0.8);
-}
-
-/* La partie droite avec la liste garde sa structure */
-.popup-list {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: var(--couleur-blanc);
-}
-
-.popup-header {
-    padding: 2rem 2rem 1rem;
-    border-bottom: 1px solid #eee;
-    flex-shrink: 0; /* Ne rétrécit pas */
-}
-
-.hebergements-scroll {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem 2rem 2rem;
-}
-
-/* Responsive : passage en colonne unique sur mobile */
-@media (max-width: 1024px) {
-    .popup-content {
-        grid-template-columns: 1fr;
-        grid-template-rows: 40% 60%; /* 40% pour slideshow, 60% pour liste */
-        height: 90vh;
-    }
-    
-    #hebergementsPopupList {
-     min-height: 70vh;}
-    .popup-slideshow {
-        height: 100%;
-    }
-
-    .popup-list {
-        height: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .popup-content {
-        width: 95%;
-        height: 95vh;
-        grid-template-rows: 35% 65%; /* Ajustement pour mobile */
-    }
-
-    .slideshow-prev, .slideshow-next {
-        width: 40px;
-        height: 40px;
-        padding: 0.5rem;
-        font-size: 1rem;
-    }
-
-    #hebergementsPopupList {
-     min-height: 70vh;}
-    .popup-slideshow {
-        height: 100%;
-    }
-    .slideshow-dots {
-        bottom: 1rem;
-        padding: 0.3rem 0.8rem;
-    }
-
-    .dot {
-        width: 10px;
-        height: 10px;
-    }
-}

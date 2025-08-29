@@ -163,24 +163,7 @@
 
         // Images pour les slideshows par catégorie
         const categoryImages = {
-            hotel: [
-                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
-                'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
-                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800'
-            ],
-            gite: [
-                'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800',
-                'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800',
-                'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800',
-                'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800'
-            ],
-            camping: [
-                'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800',
-                'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800',
-                'https://images.unsplash.com/photo-1537905569824-f89f14cceb68?w=800',
-                'https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?w=800'
-            ]
+    
         };
 
         
@@ -188,197 +171,132 @@
         let currentSlideIndex = 0;
         let currentCategoryImages = [];
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ Hébergements Cilaos initialisé !');
-        });
 
-        // Ouvrir une catégorie
-        function openCategory(categoryType) {
-            const popup = document.getElementById('categoryPopup');
-            const title = document.getElementById('popupTitle');
-            const subtitle = document.getElementById('popupSubtitle');
-            
-            // Configuration selon la catégorie
-            const categoryConfig = {
-                hotel: {
-                    title: 'Hôtels à Cilaos',
-                    subtitle: '6 hôtels de charme pour votre séjour',
-                    icon: '🏨'
-                },
-                gite: {
-                    title: 'Gîtes à Cilaos', 
-                    subtitle: '3 gîtes authentiques dans le cirque',
-                    icon: '🏡'
-                },
-                camping: {
-                    title: 'Campings à Cilaos',
-                    subtitle: '3 campings nature pour les aventuriers',
-                    icon: '⛺'
-                }
-            };
+// Variables globales
+// (slideshow supprimé, donc rien à déclarer ici)
 
-            const config = categoryConfig[categoryType];
-            
-            // Mettre à jour le titre
-            title.textContent = config.title;
-            subtitle.textContent = config.subtitle;
-            
-            // Préparer les images du slideshow
-            currentCategoryImages = categoryImages[categoryType];
-            setupSlideshow();
-            
-            // Afficher la liste des hébergements
-            displayCategoryHebergements(categoryType);
-            
-            // Afficher le popup
-            popup.style.display = 'flex';
-            setTimeout(() => {
-                popup.style.opacity = '1';
-            }, 10);
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Hébergements Cilaos initialisé sans slideshow !');
+});
+
+// Ouvrir une catégorie
+function openCategory(categoryType) {
+    const popup = document.getElementById('categoryPopup');
+    const title = document.getElementById('popupTitle');
+    const subtitle = document.getElementById('popupSubtitle');
+    
+    // Configuration selon la catégorie
+    const categoryConfig = {
+        hotel: {
+            title: 'Hôtels à Cilaos',
+            subtitle: '6 hôtels de charme pour votre séjour',
+            icon: '🏨'
+        },
+        gite: {
+            title: 'Gîtes à Cilaos', 
+            subtitle: '3 gîtes authentiques dans le cirque',
+            icon: '🏡'
+        },
+        camping: {
+            title: 'Campings à Cilaos',
+            subtitle: '3 campings nature pour les aventuriers',
+            icon: '⛺'
         }
+    };
 
-        // Fermer la catégorie
-        function closeCategory() {
-            const popup = document.getElementById('categoryPopup');
-            popup.style.opacity = '0';
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 300);
-        }
+    const config = categoryConfig[categoryType];
+    
+    // Mettre à jour le titre
+    title.textContent = config.title;
+    subtitle.textContent = config.subtitle;
+    
+    // Afficher la liste des hébergements (uniquement)
+    displayCategoryHebergements(categoryType);
+    
+    // Afficher le popup
+    popup.style.display = 'flex';
+    setTimeout(() => {
+        popup.style.opacity = '1';
+    }, 10);
+}
 
-        // Configurer le slideshow
-        function setupSlideshow() {
-            const container = document.getElementById('slideshowContainer');
-            const dotsContainer = document.getElementById('slideshowDots');
-            
-            // Vider le container
-            container.innerHTML = '';
-            dotsContainer.innerHTML = '';
-            
-            // Créer les slides
-            currentCategoryImages.forEach((imageUrl, index) => {
-                const slide = document.createElement('div');
-                slide.className = `slide ${index === 0 ? 'active' : ''}`;
-                slide.innerHTML = `<img src="${imageUrl}" alt="Image ${index + 1}">`;
-                container.appendChild(slide);
-                
-                // Créer les dots
-                const dot = document.createElement('span');
-                dot.className = `dot ${index === 0 ? 'active' : ''}`;
-                dot.onclick = () => goToSlide(index);
-                dotsContainer.appendChild(dot);
-            });
-            
-            currentSlideIndex = 0;
-        }
+// Fermer la catégorie
+function closeCategory() {
+    const popup = document.getElementById('categoryPopup');
+    popup.style.opacity = '0';
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 300);
+}
 
-        // Changer de slide
-        function changeSlide(direction) {
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            
-            // Cacher le slide actuel
-            slides[currentSlideIndex].classList.remove('active');
-            dots[currentSlideIndex].classList.remove('active');
-            
-            // Calculer le nouvel index
-            currentSlideIndex += direction;
-            if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
-            if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
-            
-            // Afficher le nouveau slide
-            slides[currentSlideIndex].classList.add('active');
-            dots[currentSlideIndex].classList.add('active');
-        }
-
-        // Aller à un slide spécifique
-        function goToSlide(index) {
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            
-            slides[currentSlideIndex].classList.remove('active');
-            dots[currentSlideIndex].classList.remove('active');
-            
-            currentSlideIndex = index;
-            
-            slides[currentSlideIndex].classList.add('active');
-            dots[currentSlideIndex].classList.add('active');
-        }
-
-        // Afficher les hébergements d'une catégorie
-        function displayCategoryHebergements(categoryType) {
-            const listContainer = document.getElementById('hebergementsPopupList');
-            const filtered = hebergements.filter(h => h.type === categoryType);
-            
-            let html = '';
-            
-            filtered.forEach(item => {
-                const stars = generateStars(item.rating);
-                html += `
-                    <div class="hebergement-item" style="margin-bottom: 1rem; padding: 1rem; background: var(--couleur-surface); border-radius: 10px;">
-                        <div class="hebergement-header-item" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <div>
-                                <div class="hebergement-name" style="font-size: 1.2rem; font-weight: 600;">${item.name}</div>
-                                <span class="hebergement-type" style="background: var(--couleur-accent); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">${getTypeLabel(item.type)}</span>
-                            </div>
-                            <div class="hebergement-price" style="color: var(--couleur-accent); font-weight: bold;">€${item.price}/nuit</div>
-                        </div>
-                        <div class="hebergement-details" style="color: #666; margin: 0.5rem 0;">${item.description}</div>
-                        <div class="hebergement-details" style="color: #666;">👥 ${item.capacity} personnes</div>
-                        <div class="hebergement-features" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0;">
-                            ${item.features.map(f => `<span style="background: rgba(160,200,120,0.1); color: var(--couleur-accent); padding: 2px 6px; border-radius: 5px; font-size: 0.8rem;">${f}</span>`).join('')}
-                        </div>
-                        <div class="rating" style="display: flex; align-items: center; gap: 0.3rem;">
-                            ${stars} <span style="color: #999; font-size: 0.9rem;">(${item.rating})</span>
-                        </div>
+// Afficher les hébergements d'une catégorie
+function displayCategoryHebergements(categoryType) {
+    const listContainer = document.getElementById('hebergementsPopupList');
+    const filtered = hebergements.filter(h => h.type === categoryType);
+    
+    let html = '';
+    
+    filtered.forEach(item => {
+        const stars = generateStars(item.rating);
+        html += `
+            <div class="hebergement-item" style="margin-bottom: 1rem; padding: 1rem; background: var(--couleur-surface); border-radius: 10px;">
+                <div class="hebergement-header-item" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <div>
+                        <div class="hebergement-name" style="font-size: 1.2rem; font-weight: 600;">${item.name}</div>
+                        <span class="hebergement-type" style="background: var(--couleur-accent); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">${getTypeLabel(item.type)}</span>
                     </div>
-                `;
-            });
-            
-            listContainer.innerHTML = html;
-        }
+                    <div class="hebergement-price" style="color: var(--couleur-accent); font-weight: bold;">€${item.price}/nuit</div>
+                </div>
+                <div class="hebergement-details" style="color: #666; margin: 0.5rem 0;">${item.description}</div>
+                <div class="hebergement-details" style="color: #666;">👥 ${item.capacity} personnes</div>
+                <div class="hebergement-features" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0;">
+                    ${item.features.map(f => `<span style="background: rgba(160,200,120,0.1); color: var(--couleur-accent); padding: 2px 6px; border-radius: 5px; font-size: 0.8rem;">${f}</span>`).join('')}
+                </div>
+                <div class="rating" style="display: flex; align-items: center; gap: 0.3rem;">
+                    ${stars} <span style="color: #999; font-size: 0.9rem;">(${item.rating})</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    listContainer.innerHTML = html;
+}
 
-        // Générer les étoiles
-        function generateStars(rating) {
-            const fullStars = Math.floor(rating);
-            const halfStar = rating % 1 >= 0.5;
-            let stars = '';
-            
-            for (let i = 0; i < fullStars; i++) {
-                stars += '<span class="star" style="color: #FFD700;">★</span>';
-            }
-            if (halfStar) {
-                stars += '<span class="star" style="color: #FFD700;">☆</span>';
-            }
-            
-            return stars;
-        }
+// Générer les étoiles
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5;
+    let stars = '';
+    
+    for (let i = 0; i < fullStars; i++) {
+        stars += '<span class="star" style="color: #FFD700;">★</span>';
+    }
+    if (halfStar) {
+        stars += '<span class="star" style="color: #FFD700;">☆</span>';
+    }
+    
+    return stars;
+}
 
-        // Obtenir le label du type
-        function getTypeLabel(type) {
-            const labels = {
-                hotel: '🏨 Hôtel',
-                gite: '🏡 Gîte',
-                chambre: '🛏️ Chambre d\'hôtes',
-                camping: '⛺ Camping'
-            };
-            return labels[type] || type;
-        }
+// Obtenir le label du type
+function getTypeLabel(type) {
+    const labels = {
+        hotel: '🏨 Hôtel',
+        gite: '🏡 Gîte',
+        chambre: '🛏️ Chambre d\'hôtes',
+        camping: '⛺ Camping'
+    };
+    return labels[type] || type;
+}
 
-        // Auto-slideshow
-        setInterval(() => {
-            if (document.getElementById('categoryPopup').style.display === 'flex') {
-                changeSlide(1);
-            }
-        }, 4000);
+// Fermer avec Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeCategory();
+    }
+});
 
-        // Fermer avec Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeCategory();
-            }
-        });
 
 
 
@@ -630,51 +548,3 @@
             });
         }
 
-        
-(function() {
-  const btnPro = document.querySelector('.btn-pro');
-  const modal = document.getElementById('loginModal');
-  const overlay = document.getElementById('loginOverlay');
-  const closeBtn = document.getElementById('loginClose');
-  const form = document.getElementById('loginForm');
-  const email = document.getElementById('email');
-  const password = document.getElementById('password');
-
-  function openModal() {
-    modal.classList.add('active');
-    overlay.classList.add('active');
-    document.body.classList.add('no-scroll');
-    modal.setAttribute('aria-hidden','false');
-    overlay.setAttribute('aria-hidden','false');
-    setTimeout(() => email && email.focus(), 10);
-  }
-  function closeModal() {
-    modal.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-    modal.setAttribute('aria-hidden','true');
-    overlay.setAttribute('aria-hidden','true');
-  }
-
-  if (btnPro) {
-    btnPro.addEventListener('click', (e) => {
-      e.preventDefault();
-      openModal();
-    });
-  }
-  [closeBtn, overlay].forEach(el => el && el.addEventListener('click', closeModal));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-  });
-
-  // Demo submit (prevent navigation)
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // Here you can hook your real auth flow
-      // For now, just close and log
-      console.log('Login attempt:', { email: email.value, password: password.value });
-      closeModal();
-    });
-  }
-})();

@@ -232,12 +232,14 @@ body.no-scroll { overflow: hidden; }
 }
 
 .footer-content {
-    max-width: var(--max-width);
+    max-width: var(--max-width); 
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--espacement-grand);
 }
+
+
 
 /* Cards hébergement */
 .accommodation-card {

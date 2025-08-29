@@ -37,13 +37,15 @@
                 <li><a href="#sejour">Séjours</a></li>
                 <li><a href="./tourisme.html">Tourisme</a></li>
                 <li><a href="./pratique.html">Info pratiques</a></li>
-                <li><a href="">Contact</a></li>
+                <li><a href="#footer">Contact</a></li>
             </ul>
             <a href="#" class="btn btn-pro">PRO</a>
         </nav>
     </header>
 
-        <!-- Login Modal -->
+
+
+    <!-- Login Modal -->
 <div class="modal-overlay" id="loginOverlay" aria-hidden="true"></div>
 <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
   <div class="login-card" role="document">
@@ -69,6 +71,7 @@
       <button class="btn-primary" id="submitLogin">Se connecter</button>
     </form>
   </div>
+</div>
 </div>
 
 
@@ -129,17 +132,6 @@
                 <button class="close-popup" onclick="closeCategory()">✕</button>
                 
                 <div class="popup-content">
-                    <!-- Slideshow d'images -->
-                    <div class="popup-slideshow">
-                        <div class="slideshow-container" id="slideshowContainer">
-                            <!-- Les images seront ajoutées dynamiquement -->
-                        </div>
-                        <button class="slideshow-prev" onclick="changeSlide(-1)">❮</button>
-                        <button class="slideshow-next" onclick="changeSlide(1)">❯</button>
-                        <div class="slideshow-dots" id="slideshowDots"></div>
-                    </div>
-
-                    <!-- Liste des hébergements -->
                     <div class="popup-list">
                         <div class="popup-header">
                             <h3 id="popupTitle">Hébergements</h3>
@@ -181,7 +173,7 @@
    
     
       <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer"  id="footer">
         <div class="footer-content">
             <!-- Mairie en premier -->
             <div class="footer-column">
@@ -248,7 +240,7 @@
     <script src="./assets/js/data-module.js"></script>
     <script src="./assets/js/restaurant-display.js"></script>
     <script src="./assets/js/login.js"></script>
-
+    <script src="./assets/js/login2.js"></script>
 
 </body>
 </html>

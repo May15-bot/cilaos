@@ -8,6 +8,16 @@
   --accent:#ec992c;
 }
 
+
+        /* Désactiver le scroll snap pour cette page */
+        html {
+            scroll-snap-type: none !important;
+        }
+
+        body {
+            scroll-snap-type: none !important;
+        }
+
 .transports-compact {
   padding: 80px 12px 40px;
   border-radius: 14px;

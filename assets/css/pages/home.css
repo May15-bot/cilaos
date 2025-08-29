@@ -550,21 +550,10 @@ body {
 
 
 /* Casse le snap entre la dernière section (stories) et le footer */
-.snap-breaker {
-  height: clamp(80px, 15vh, 220px); /* espace libre pour "sortir" du snap */
-  scroll-snap-align: none;          /* aucun point d'accroche ici */
-}
 
-/* Par sécurité, s'assurer que le footer n'est jamais snap */
-.footer {
-  scroll-snap-align: none !important;
-}
 
-/* Si tu as .section-snap qui force l'align, on neutralise juste pour stories */
-.section-stories {
-  scroll-snap-align: none !important;
-  scroll-snap-stop: normal !important;
-}
+
+
 
 
 
@@ -905,24 +894,17 @@ html {
 /* SOLUTION : Section stories - PAS de snap ! */
 .section-stories {
     /* On retire complètement le scroll-snap pour cette section */
-    scroll-snap-align: none !important;
-    scroll-snap-stop: normal !important;
+    scroll-snap-align: start;
     min-height: 100vh;
     /* Cette section devient "fluide" dans le scroll */
 }
 
-/* Zone de transition pour sortir du snap */
-.snap-breaker {
-    height: 200px; /* Zone suffisante pour "casser" l'effet snap */
-    scroll-snap-align: none !important;
-    scroll-snap-stop: normal !important;
-    /* Cette zone permet une transition naturelle vers le footer */
-}
+
 
 /* Footer - jamais de snap */
 .footer {
-    scroll-snap-align: none !important;
-    scroll-snap-stop: normal !important;
+    scroll-snap-align: start ;
+    scroll-snap-stop: normal ;
     /* Le footer doit toujours être accessible naturellement */
 }
 
