@@ -1,6 +1,97 @@
 
 /* Styles spécifiques à la page d'accueil */
 
+/* =================================================
+   CORRECTION ESPACEMENT SECTIONS - home.css
+   ================================================= */
+
+/* Solution: Utiliser margin-top négatif au lieu de padding-top */
+
+.section-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* RETIRÉ: padding-top: var(--hauteur-navbar); */
+    /* La navbar est en position fixed, donc pas besoin de padding-top ici */
+}
+
+.section-acces {
+    min-height: 100vh;
+    background: var(--couleur-surface);
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+    /* CORRIGÉ: utiliser margin-top au lieu de padding-top */
+    margin-top: calc(-1 * var(--hauteur-navbar));
+    padding-top: calc(var(--hauteur-navbar) + 40px);
+    /* Cela compense la hauteur de la navbar sans créer d'espacement visuel */
+}
+
+.section-stories {
+    min-height: 100vh;
+    background: var(--couleur-surface);
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+    /* Pas de padding-top ici car c'est après la section carte */
+}
+
+/* Alternative plus propre: Utiliser des pseudo-éléments pour l'ancrage */
+.section-acces::before {
+    content: '';
+    display: block;
+    height: var(--hauteur-navbar);
+    margin-top: calc(-1 * var(--hauteur-navbar));
+    /* Crée un point d'ancrage invisible pour la navigation */
+}
+
+/* =================================================
+   CORRECTION RESPONSIVE HEIGHTS
+   ================================================= */
+
+@media (max-height: 700px) {
+    .section-hero,
+    .section-acces,
+    .section-stories {
+        min-height: auto;
+        padding: calc(var(--hauteur-navbar) + 20px) 20px 40px;
+    }
+}
+
+/* =================================================
+   UNIFORMISATION BACKGROUNDS
+   ================================================= */
+
+/* S'assurer que toutes les sections ont un background défini */
+.section-hero {
+    background: #000; /* Pour la vidéo */
+}
+
+.section-acces {
+    background: var(--couleur-surface);
+}
+
+.section-voyage {
+    background: var(--couleur-blanc);
+}
+
+.section-stories {
+    background: var(--couleur-surface);
+}
+
+/* Éliminer tout gap entre sections */
+.section-snap + .section-snap {
+    margin-top: 0;
+}
+
+/* Forcer la continuité visuelle */
+body {
+    background: var(--couleur-fond);
+    /* Couleur de fond uniforme pour éviter les "trous" */
+}
 /* Hero Section */
 .section-hero {
     position: relative;
